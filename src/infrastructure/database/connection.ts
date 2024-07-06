@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import { config } from '../../config/config'
 
-const MONGO_URI = config.mongoURI;
+const MONGO_URI = config.mongo.mongoURI;
 
 const connectDB = async (): Promise<void> => {
   try {

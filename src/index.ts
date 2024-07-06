@@ -1,19 +1,20 @@
 import mongoose, { MongooseError } from 'mongoose';
 import { config } from './config/config'
 import connectDB from './infrastructure/database/connection';
-import app from './presentation/app'
+import app from './infrastructure/webserver/express/app'
 
 
-const PORT = config.port;
+const PORT = config.http.port;
+const HOST = config.http.host;
 
 (async()=>{
 
   try {
 
     await connectDB();
-
+     
     app.listen(PORT,()=>{
-      console.log(`server is running http://localhost:${PORT}`)
+      console.log(`server is running http://${HOST}:${PORT}`)
     })
  
   } catch (error) {
