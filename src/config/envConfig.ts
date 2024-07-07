@@ -17,4 +17,8 @@ export const config = {
     refresh_token:envString('JWT_REFRESH_SECRET'),
     short_lived_access_token:envString('JWT_SHORT_LIVED_ACCESS_SECRET') 
   },
+  app:{
+    email:envString('CINEPASS_AUTH_EMAIL'),
+    password:envString('CINEPASS_AUTH_PASSWORD')
+  }
 } 

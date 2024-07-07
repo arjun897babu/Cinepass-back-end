@@ -1,5 +1,5 @@
 import mongoose, { MongooseError } from 'mongoose';
-import { config } from './config/config'
+import { config } from './config/envConfig'
 import connectDB from './infrastructure/database/connection';
 import app from './infrastructure/webserver/express/app'
 

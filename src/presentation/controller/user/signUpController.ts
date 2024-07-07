@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express"
 import { IDependencies } from "../../../application/interface/user/IDependencies"
+import { validateEmail, validateMobileNumber, validateName } from "../../../utils/validator"
+import { CustomError } from "../../../utils/CustomError"
 
 const signup = (dependencies: IDependencies) => {
 
@@ -7,12 +9,32 @@ const signup = (dependencies: IDependencies) => {
   return async (req: Request, res: Response, next: NextFunction) => {
 
     try {
-      const value = req.body
-      const newUser = signupUseCase(dependencies).execute(value)
-      
+      const { name, email, mobile_number, password } = req.body
+
+      //validating name
+      const nameValidation = validateName(name);
+      if (!nameValidation.isValid) {
+        throw new CustomError(nameValidation.message, 400)
+      }
+
+      //validating email
+      const emailValidation = validateEmail(email);
+      if (!emailValidation.isValid) {
+        throw new CustomError(emailValidation.message, 400)
+      }
+
+      //validating mobile_number
+      const mobileNumberValidation = validateMobileNumber(mobile_number);
+      if (!mobileNumberValidation.isValid) {
+        throw new CustomError(mobileNumberValidation.message, 400)
+      }
+ 
+      await signupUseCase(dependencies).execute({ name, email, mobile_number, password })
+
       return res.status(201).json({
         status: true,
-        message: 'Account Registered Successfully'
+        message: 'Account Registered Successfully',
+        email
       })
     } catch (error) {
       next(error)
