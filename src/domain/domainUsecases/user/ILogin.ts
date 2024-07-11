@@ -1,13 +1,16 @@
-import { UserEntity } from "../../entities/user/IUserEntity";
-interface TokenPayLoad {
-  accessToken: string;
-  refreshToken: string
+import { IResponse } from "..";
+
+  
+interface LoginResponse extends IResponse {
+  accessToken?: string;
+  refreshToken?: string
 }
 
 interface ILogin {
-  execute: (email: string, password: string) => Promise<TokenPayLoad>;
+  execute: (email: string, password: string) => Promise<LoginResponse>;
 }
 
 export {
-  ILogin
+  ILogin,
+  LoginResponse,
 }

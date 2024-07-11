@@ -13,7 +13,7 @@ const signupUseCase = (dependencies: IDependencies) => {
         const existingUser = await findByEmail(data.email);
 
         if (existingUser) {
-          throw new CustomError('User already exists', 409);
+          throw new CustomError('User already exists', 409,'email');
         }
         const hashedPassword = await hashPassword(data.password);
         const OTP = generateOTP();

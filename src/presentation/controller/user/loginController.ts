@@ -12,35 +12,43 @@ const login = (dependencies: IDependencies) => {
       //validate email
       const emailValidation = validateEmail(email);
       if (!emailValidation.isValid) {
-        throw new CustomError(emailValidation.message, 400)
+        throw new CustomError(emailValidation.message, 400,'email')
       }
 
       //validate password
       const passwordValidation = validatePassword(password);
       if (!passwordValidation.isValid) {
-        throw new CustomError(passwordValidation.message, 400)
+        throw new CustomError(passwordValidation.message, 400,'email')
       }
 
-      const { accessToken, refreshToken } = await loginUseCase(dependencies).execute(email, password);
-      
-      // return res.cookie('userJWT', accessToken, {
-      //   httpOnly: true,
-      //   sameSite: 'lax',
-      //   maxAge:   60 * 60 * 1000
-      // })  // 30 days
-      //   .status(200).json({
-      //     status: 'success',
-      //     refreshToken,
-      //     accessToken,
-      //     message: 'User logged in successfully'
+      const response = await loginUseCase(dependencies).execute(email, password);
 
-      //   })
+      if (response.status === 'error') {
 
-      return res.status(200).json({
-        status:true,
-        message:'created successFully'
+        return res.status(403).json({
+          status: response.status,
+          message: response.message,
+          redirectURL: response.redirectURL
+        });
+      }
+
+      const { accessToken, refreshToken } = response
+      console.log('in use cased',response.data)
+
+      return res.cookie('userJWT', accessToken, {
+        httpOnly: true,
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 1000
       })
-      } catch (error) {
+        .status(200).json({
+          status: response.status,
+          accessToken,
+          message: response.message,
+          data: response.data
+        })
+
+
+    } catch (error) {
       next(error)
     }
   }

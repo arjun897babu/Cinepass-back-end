@@ -1,3 +1,5 @@
+import { LoginResponse } from "../../../domain/domainUsecases/user";
+import { OTPEntity } from "../../../domain/entities/common";
 import { UserEntity } from "../../../domain/entities/user/IUserEntity";
 
 interface IRepositories {
@@ -5,6 +7,9 @@ interface IRepositories {
   findByEmail: (data: string) => Promise<boolean>;
   login: (email: string) => Promise<UserEntity | null>;
   createOTP: (email: string, OTP: string) => Promise<void>;
+  findOtp: (email: string) => Promise<OTPEntity | null>;
+  findUserById: (_id: string) => Promise<string | undefined>
+
 }
 
 export {

@@ -9,24 +9,25 @@ const signup = (dependencies: IDependencies) => {
   return async (req: Request, res: Response, next: NextFunction) => {
 
     try {
+      console.log('recieved',req.body)
       const { name, email, mobile_number, password } = req.body
 
       //validating name
       const nameValidation = validateName(name);
       if (!nameValidation.isValid) {
-        throw new CustomError(nameValidation.message, 400)
+        throw new CustomError(nameValidation.message, 400,'name')
       }
 
       //validating email
       const emailValidation = validateEmail(email);
       if (!emailValidation.isValid) {
-        throw new CustomError(emailValidation.message, 400)
+        throw new CustomError(emailValidation.message, 400,'email')
       }
 
       //validating mobile_number
       const mobileNumberValidation = validateMobileNumber(mobile_number);
       if (!mobileNumberValidation.isValid) {
-        throw new CustomError(mobileNumberValidation.message, 400)
+        throw new CustomError(mobileNumberValidation.message, 400,'mobile_number')
       }
  
       await signupUseCase(dependencies).execute({ name, email, mobile_number, password })
@@ -34,7 +35,7 @@ const signup = (dependencies: IDependencies) => {
       return res.status(201).json({
         status: true,
         message: 'Account Registered Successfully',
-        email
+        
       })
     } catch (error) {
       next(error)

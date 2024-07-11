@@ -8,6 +8,7 @@ export const config = {
   http: {
     host: envString( 'HOST', 'localhost'),
     port: envNumber('PORT',8080),
+    origin:envString('ORIGIN')
   },
   mongo: {
     mongoURI: envString('MONGO_URI')

@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import { UserEntity} from '../../../../domain/entities/user/IUserEntity';
+import { UserEntity } from '../../../../domain/entities/user/IUserEntity';
 import { Status } from '../../../../domain/entities/common';
 const userSchema = new Schema<UserEntity>({
   name: {
@@ -27,6 +27,10 @@ const userSchema = new Schema<UserEntity>({
     enum: ["active", "blocked"],
     default: Status.active,
   },
+  profile_picture: {
+    type: String,
+    default:null
+  }
 });
 
 export const Users = model<UserEntity>('User', userSchema);

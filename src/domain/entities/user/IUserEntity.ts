@@ -8,7 +8,8 @@ interface UserEntity {
   mobile_number: number;
   password: string;
   verified?: boolean;
-  status?: Status
+  status?: Status;
+  profile_picture?:string
 }
 
 export {
