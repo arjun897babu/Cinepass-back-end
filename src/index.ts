@@ -1,7 +1,7 @@
 import mongoose, { MongooseError } from 'mongoose';
 import { config } from './config/envConfig'
 import connectDB from './infrastructure/database/connection';
-import app from './infrastructure/webserver/express/app'
+import app from './infrastructure/webserver/app'
 
 
 const PORT = config.http.port;

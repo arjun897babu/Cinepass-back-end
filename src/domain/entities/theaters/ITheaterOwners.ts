@@ -2,12 +2,13 @@ import { ObjectId } from "mongoose"
 import { UserEntity } from "../user/IUserEntity";
 
 
-interface TheaterOwnerEntity extends UserEntity {
+interface ITheaterOwnerEntity extends UserEntity {
   adhaar_number: number;
-  theater_license_number: string;
+  theater_name:string;
+  theater_license: string;
 }
 
 
 export {
-  TheaterOwnerEntity
+  ITheaterOwnerEntity
 }

@@ -25,7 +25,7 @@ const userSchema = new Schema<UserEntity>({
   status: {
     type: String,
     enum: ["active", "blocked"],
-    default: Status.active,
+    default: Status.ACTIVE,
   },
   profile_picture: {
     type: String,
@@ -33,6 +33,6 @@ const userSchema = new Schema<UserEntity>({
   }
 });
 
-export const Users = model<UserEntity>('User', userSchema);
+export const Users = model<UserEntity>('Users', userSchema);
 
 

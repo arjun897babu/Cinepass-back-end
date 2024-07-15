@@ -1,10 +1,4 @@
-import { IResponse } from "..";
-
-  
-interface LoginResponse extends IResponse {
-  accessToken?: string;
-  refreshToken?: string
-}
+import { LoginResponse} from "..";
 
 interface ILogin {
   execute: (email: string, password: string) => Promise<LoginResponse>;

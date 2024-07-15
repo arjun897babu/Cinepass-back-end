@@ -8,8 +8,8 @@ interface IRepositories {
   login: (email: string) => Promise<UserEntity | null>;
   createOTP: (email: string, OTP: string) => Promise<void>;
   findOtp: (email: string) => Promise<OTPEntity | null>;
-  findUserById: (_id: string) => Promise<string | undefined>
-
+  findUserById: (_id: string) => Promise<string | undefined>;
+  changeUserStatus: (email: string, verified: boolean) => Promise<boolean>
 }
 
 export {

@@ -1,4 +1,7 @@
+
 import { config } from "../../../config/envConfig";
+ 
+import { LoginResponse } from "../../../domain/domainUsecases/user";
 import { Status } from "../../../domain/entities/common";
 import { sendMail } from "../../../infrastructure/email/nodeMailer";
 import { comparePassword } from "../../../utils/bcrypt";
@@ -7,11 +10,11 @@ import { generateToken } from "../../../utils/jwtHandler";
 import { generateOTP } from "../../../utils/OTPGenarator";
 import { IDependencies } from "../../interface/user/IDependencies"
 
-const loginUseCase = (dependencies: IDependencies) => {
+const loginUseCase = (dependencies: IDependencies) => { 
   const { repositories: { login, createOTP } } = dependencies
 
   return {
-    execute: async (email: string, userPassword: string) => {
+    execute: async (email: string, userPassword: string):Promise<LoginResponse> => {
       try {
         const existingUser = await login(email);
         if (!existingUser) {
@@ -20,8 +23,6 @@ const loginUseCase = (dependencies: IDependencies) => {
 
         if (!existingUser.verified) {
           const OTP = generateOTP();
-          console.log('generated otp:', OTP);
-
           // Save OTP in database
           await createOTP(email, OTP);
 
@@ -30,17 +31,18 @@ const loginUseCase = (dependencies: IDependencies) => {
 
           return {
             status: 'Error',
-            message: 'Account not verified,please register again',
-            redirect: '/otp-verification'
+            message: 'Account not verified,please verify your account',
+            redirectURL: '/otp-verification',
+            data:[{email:email}]
           };
         }
 
-        if (existingUser.status === Status.blocked) {
+        if (existingUser.status === Status.BLOCKED) {
           throw new CustomError('Your account is blocked', 403, 'blocked')
         }
 
         const comparedPassword = await comparePassword(userPassword, existingUser.password);
-        console.log('password compare:', comparedPassword)
+
         if (!comparedPassword) {
           throw new CustomError('Password mismatch', 401, 'password')
         }
@@ -53,7 +55,7 @@ const loginUseCase = (dependencies: IDependencies) => {
         const accessToken = generateToken(userId, config.secrets.access_token, '1h')
         const refreshToken = generateToken(userId, config.secrets.refresh_token, '7d')
         const { _id, password, ...rest } = existingUser
-
+        console.log('destructured user',rest)
         return {
           status: 'Success',
           message: 'User Logged successfully',

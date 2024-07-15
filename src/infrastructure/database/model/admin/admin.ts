@@ -16,4 +16,4 @@ const adminSchema = new Schema<AdminEntity>({
 
 })
 
-const Admin = model<AdminEntity>('Admin', adminSchema)
+export const Admin = model<AdminEntity>('Admin', adminSchema)

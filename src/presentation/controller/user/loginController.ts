@@ -23,26 +23,24 @@ const login = (dependencies: IDependencies) => {
 
       const response = await loginUseCase(dependencies).execute(email, password);
 
-      if (response.status === 'error') {
+      if (response.status === 'Error') {
 
         return res.status(403).json({
+
           status: response.status,
           message: response.message,
-          redirectURL: response.redirectURL
+          redirectURL: response.redirectURL,
+          data:response.data
         });
       }
-
-      const { accessToken, refreshToken } = response
-      console.log('in use cased',response.data)
-
-      return res.cookie('userJWT', accessToken, {
+     
+      return res.cookie('userJWT', response.accessToken, {
         httpOnly: true,
         sameSite: 'lax',
         maxAge: 60 * 60 * 1000
       })
         .status(200).json({
-          status: response.status,
-          accessToken,
+          status: response.status, 
           message: response.message,
           data: response.data
         })

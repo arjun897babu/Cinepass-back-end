@@ -5,8 +5,10 @@ interface ReturnObject {
 }
 
 const nameRegex = /^[a-zA-Z]{3,20}(?: [a-zA-Z]+)*$/
-const emailRegex =/^(?=.{11,100}$)([a-zA-Z\d]+([.-_]?[a-zA-Z\d]+)*)\@([a-zA-Z]{5,9})+\.com$/
+const emailRegex = /^(?=.{11,100}$)([a-zA-Z\d]+([.-_]?[a-zA-Z\d]+)*)\@([a-zA-Z]{4,9})+\.com$/
 const mobileNumberRegex = /^\d{10}$/
+const adhaarRegex = /^\d{12}$/
+const theaterNameRegex = /^[a-zA-Z0-9,.]{5,100}(?: [a-zA-Z0-9,.]+)*$/
 
 const validateName = (name: string): ReturnObject => {
   name = name.trim();
@@ -90,17 +92,58 @@ const validateEmail = (email: string): ReturnObject => {
   }
 }
 
-const validatePassword = (password:string):ReturnObject=>{
+const validatePassword = (password: string): ReturnObject => {
   password = password.trim()
-  return{
-    message:'Password is valid',
-    isValid:true
+  return {
+    message: 'Password is valid',
+    isValid: true
   }
 }
+
+const validateAdhaar = (adhaarNumber: string): ReturnObject => {
+  adhaarNumber = adhaarNumber.trim()
+  if (!adhaarRegex.test(adhaarNumber)) {
+     
+    return {
+      message: 'Invalid adhaar number',
+      isValid: false,
+    }
+  }
+  return {
+    message: 'adhaar is valid',
+    isValid: true
+  }
+};
+
+const validateTheaterLicense = (theaterLicense: string): ReturnObject => {
+  theaterLicense = theaterLicense.trim()
+
+  return {
+    message: 'adhaar is valid',
+    isValid: true
+  }
+}
+
+const validateTheaterName = (theaterName: string): ReturnObject => {
+  theaterName = theaterName.trim()
+  if (!theaterNameRegex.test(theaterName)) {
+    return {
+      message: 'Invalid adhaar number',
+      isValid: false,
+    }
+  }
+  return {
+    message: 'adhaar is valid',
+    isValid: true
+  }
+};
 
 export {
   validateName,
   validateMobileNumber,
   validateEmail,
-  validatePassword
+  validatePassword,
+  validateAdhaar,
+  validateTheaterLicense,
+  validateTheaterName
 }

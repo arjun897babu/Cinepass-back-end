@@ -1,7 +1,8 @@
+import { IResponse } from ".."
 
 
 interface IVerifyOTP {
-  execute: (email: string, otp: string) => Promise<void>
+  execute: (email: string, otp: string) => Promise<IResponse>
 }
 
 export {

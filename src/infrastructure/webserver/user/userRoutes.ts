@@ -1,6 +1,6 @@
 import express, { Router, Request, Response, NextFunction } from "express";
-import { IDependencies } from "../../../../application/interface/user/IDependencies";
-import { userController } from "../../../../presentation/controller/user";
+import { IDependencies } from "../../../application/interface/user/IDependencies";
+import { userController } from "../../../presentation/controller/user";
 import { verifyUser } from "../middleware/verifyUser";
 
 

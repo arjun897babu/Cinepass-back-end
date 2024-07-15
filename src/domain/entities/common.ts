@@ -1,7 +1,13 @@
 enum Status {
-  active = "active",
-  blocked = "blocked",
+  ACTIVE = "active",
+  BLOCKED = "blocked",
 }
+
+enum ResponseStatus {
+  SUCCESS = 'Success',
+  ERROR = 'Error',
+}
+
 
 
 interface OTPEntity {
@@ -12,6 +18,7 @@ interface OTPEntity {
 
 export {
   Status,
-  OTPEntity
+  OTPEntity,
+  ResponseStatus
 }
 

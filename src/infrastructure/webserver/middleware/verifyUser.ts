@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { CustomError } from "../../../../utils/CustomError";
-import { verifyToken } from "../../../../utils/jwtHandler";
-import { config } from "../../../../config/envConfig";
+import { CustomError } from "../../../utils/CustomError";
+import { verifyToken } from "../../../utils/jwtHandler";
+import { config } from "../../../config/envConfig";
 
 const verifyUser = (req: Request, res: Response, next: NextFunction) => {
   try {
