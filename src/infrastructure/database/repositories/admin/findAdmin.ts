@@ -1,4 +1,3 @@
-import { ILogin } from "../../../../domain/domainUsecases";
 import { AdminEntity } from "../../../../domain/entities/admin/IAdmin";
 import { Admin } from "../../model/admin/admin";
 

@@ -1,7 +1,8 @@
+import { promises } from "dns"
 import { config } from "../../../config/envConfig"
-import { ILogin } from "../../../domain/domainUsecases"
+import { ILogin, IResponse, LoginResponse } from "../../../domain/domainUsecases"
 import { ResponseStatus } from "../../../domain/entities/common"
-import { comparePassword, hashPassword } from "../../../utils/bcrypt"
+import { comparePassword } from "../../../utils/bcrypt"
 import { CustomError } from "../../../utils/CustomError"
 import { generateToken } from "../../../utils/jwtHandler"
 import { IAdminDependencies } from "../../interface/admin/IAdminDependencies"
@@ -9,7 +10,7 @@ import { IAdminDependencies } from "../../interface/admin/IAdminDependencies"
 const adminLoginUseCase = (dependencies: IAdminDependencies) => {
   const { adminRepositories: { findAdmin } } = dependencies
   return {
-    execute: async (data: ILogin) => {
+    execute: async (data: ILogin): Promise<LoginResponse> => {
       try {
         const existingAdmin = await findAdmin(data.email);
         if (!existingAdmin) {
@@ -35,8 +36,8 @@ const adminLoginUseCase = (dependencies: IAdminDependencies) => {
           status: ResponseStatus.SUCCESS,
           accessToken: accessToken,
           refreshToken: refreshToken,
-          data: [{ email: data.email }],
-          redirectURL:'/admin/home'
+          data: { email: data.email },
+          redirectURL: '/admin/home'
         }
 
       } catch (error) {

@@ -1,6 +1,6 @@
 import { config } from "../../../config/envConfig"
 import { ILogin, LoginResponse } from "../../../domain/domainUsecases"
-import { ResponseStatus, Status } from "../../../domain/entities/common"
+import { ApprovalStatus, ResponseStatus, Status } from "../../../domain/entities/common"
 import { sendMail } from "../../../infrastructure/email/nodeMailer"
 import { comparePassword } from "../../../utils/bcrypt"
 import { CustomError } from "../../../utils/CustomError"
@@ -15,12 +15,12 @@ const theaterLoginUseCase = (dependencies: ITheaterDependencies) => {
     execute: async (data: ILogin): Promise<LoginResponse> => {
       try {
 
-        const existingTheaterOwner = await findTheaterOwnerByEmail(data.email)
+        const existingTheaterOwner = await findTheaterOwnerByEmail(data.email);
+        //Account not found
         if (!existingTheaterOwner) {
-          console.log(existingTheaterOwner)
           throw new CustomError('Email not found', 404, 'email');
         }
-
+        //Resending the otp for non verified account
         if (!existingTheaterOwner.verified) {
           const OTP = generateOTP();
 
@@ -30,15 +30,23 @@ const theaterLoginUseCase = (dependencies: ITheaterDependencies) => {
           return {
             status: ResponseStatus.ERROR,
             message: 'Account not verified,please verify your account',
-            data: [{ email: existingTheaterOwner.email }],
+            data: { email: existingTheaterOwner.email },
             redirectURL: '/theaters/otp-verification'
           }
         }
-
+        //For pending accounts 
+        if (existingTheaterOwner.approval_status === ApprovalStatus.PENDING) {
+          throw new CustomError('Waiting For admin approval', 403, 'approval')
+        }
+        //for rejected accounts
+        if (existingTheaterOwner.approval_status === ApprovalStatus.REJECTED) {
+          throw new CustomError('Your request has been rejected', 401, 'approval')
+        }
+        //For blocked accounts
         if (existingTheaterOwner.status === Status.BLOCKED) {
           throw new CustomError('Your account is blocked', 403, '')
         }
-
+        //Checking password credentials
         const isPassword = comparePassword(data.password, existingTheaterOwner.password);
         if (!isPassword) {
           throw new CustomError('Invalid password', 401, 'password')
@@ -54,7 +62,7 @@ const theaterLoginUseCase = (dependencies: ITheaterDependencies) => {
         return {
           status: ResponseStatus.SUCCESS,
           message: 'Logged Successfully',
-          data: [{ email: data.email }],
+          data: { email: data.email },
           accessToken,
           redirectURL: '/theaters/home'
 

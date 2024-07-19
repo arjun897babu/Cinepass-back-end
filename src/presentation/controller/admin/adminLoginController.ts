@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express"
 import { validateEmail, validatePassword } from "../../../utils/validator";
 import { CustomError } from "../../../utils/CustomError";
 import { IAdminDependencies } from "../../../application/interface/admin/IAdminDependencies";
-import { ResponseStatus } from "../../../domain/entities/common";
 
 const adminLogin = (dependencies: IAdminDependencies) => {
   const { adminUsecase: { adminLoginUseCase } } = dependencies

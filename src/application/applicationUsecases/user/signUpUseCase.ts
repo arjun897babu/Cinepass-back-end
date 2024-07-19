@@ -15,21 +15,22 @@ const signupUseCase = (dependencies: IDependencies) => {
         const existingUser = await findByEmail(data.email);
 
         if (existingUser) {
-          throw new CustomError('User already exists', 409, 'email');
+          throw new CustomError('Email already exists', 409, 'email');
         }
+
+
         const hashedPassword = await hashPassword(data.password);
         const OTP = generateOTP();
 
         await createOTP(data.email, OTP)
-        sendMail(data.email, OTP);
-
         await signUp({ ...data, password: hashedPassword });
+        sendMail(data.email, OTP);
 
         return {
           status: ResponseStatus.SUCCESS,
           message: 'Account registered successfully',
           redirectURL: '/otp-verification',
-          data:[{email:data.email}]
+          data:  {email: data.email }
         }
 
       } catch (error) {

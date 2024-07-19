@@ -28,7 +28,7 @@ const theaterSignupUseCase = (dependencies: ITheaterDependencies) => {
           status: ResponseStatus.SUCCESS,
           message: 'Theater Account created successfully',
           redirectURL: '/theaters/otp-verification',
-          data: [{ email: data.email }],
+          data: { email: data.email },
         }
       } catch (error) {
         throw error

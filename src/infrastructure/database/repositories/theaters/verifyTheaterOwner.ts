@@ -2,7 +2,7 @@ import { IUpdateVerification } from "../../../../domain/domainUsecases"
 import { ITheaterOwnerEntity, ITheaters } from "../../../../domain/entities/theaters"
 import { TheaterOwner } from "../../model/theaters"
 
-const verifyTheaterOwner = async (data: IUpdateVerification): Promise<ITheaterOwnerEntity | null> => {
+const verifyTheaterOwner = async (data: IUpdateVerification): Promise<boolean> => {
   try {
     const updated: ITheaterOwnerEntity | null = await TheaterOwner.findOneAndUpdate(
       { email: data.email },
@@ -10,7 +10,7 @@ const verifyTheaterOwner = async (data: IUpdateVerification): Promise<ITheaterOw
       { new: true })
       .lean()
 
-    return updated
+    return !!updated
   } catch (error) {
     throw error
   }

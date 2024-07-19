@@ -13,7 +13,7 @@ const userSchema = new Schema<UserEntity>({
   },
   mobile_number: {
     type: Number,
-    unique: true,
+
   },
   password: {
     type: String,
@@ -30,6 +30,11 @@ const userSchema = new Schema<UserEntity>({
   profile_picture: {
     type: String,
     default:null
+  },
+  location:{
+    type:String,
+    default:null
+
   }
 });
 

@@ -1,18 +1,25 @@
-import { sign, verify, JwtPayload } from "jsonwebtoken";
+import { sign, verify, JwtPayload, TokenExpiredError } from "jsonwebtoken";
+import { CustomError } from "./CustomError";
+
 
 const generateToken = (payload: string, secret: string, expiresIn: string): string => {
-  console.log(payload,secret,expiresIn)
-  return sign({payload}, secret, { expiresIn:expiresIn });
+
+  return sign({ _id: payload }, secret, { expiresIn: expiresIn });
 
 };
 
-const verifyToken = (token: string, secret: string): JwtPayload | string | null => {
+const verifyToken = (token: string, secret: string): JwtPayload => {
   try {
-    return verify(token, secret);
-  } catch (error) {
-    return null; // Return null or handle error appropriately
+
+    return verify(token, secret) as JwtPayload;
+  } catch (err) {
+    if (err instanceof TokenExpiredError) {
+      throw new CustomError('Token expired', 401, 'token')
+    }
+    throw new CustomError('Unauthorized', 500, '')
   }
 };
+
 
 export {
   generateToken,

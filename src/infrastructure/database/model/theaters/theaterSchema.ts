@@ -19,7 +19,8 @@ const theaterSchema = new Schema<ITheaters>({
     trim: true
   },
   location: {
-    type: String
+    type: String,
+    default:null
   },
   images: {
     type: [String],

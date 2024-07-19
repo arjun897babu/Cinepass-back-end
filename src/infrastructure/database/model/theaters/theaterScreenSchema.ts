@@ -5,7 +5,8 @@ const theaterScreenSchema = new Schema<ITheaterScreen>({
   screen_name: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
+    unique:true
   },
   seating_capacity: {
     type: Number,

@@ -4,7 +4,7 @@ import { UserEntity } from "../../../domain/entities/user/IUserEntity";
 
 interface IRepositories {
   signUp: (data: UserEntity) => Promise<UserEntity | null>;
-  findByEmail: (data: string) => Promise<boolean>;
+  findByEmail: (data: string) =>Promise<UserEntity | null>;
   login: (email: string) => Promise<UserEntity | null>;
   createOTP: (email: string, OTP: string) => Promise<void>;
   findOtp: (email: string) => Promise<OTPEntity | null>;

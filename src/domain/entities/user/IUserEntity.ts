@@ -9,7 +9,8 @@ interface UserEntity {
   password: string;
   verified?: boolean;
   status?: Status;
-  profile_picture?:string
+  profile_picture?:string,
+  location?:string
 }
 
 export {

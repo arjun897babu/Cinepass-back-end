@@ -9,6 +9,7 @@ const verifyOTPUseCase = (dependencies: IDependencies) => {
   return {
     execute: async (email: string, otp: string): Promise<IResponse> => {
       try {
+        
         const OTPDetails = await findOtp(email);
 
         if (!OTPDetails) {

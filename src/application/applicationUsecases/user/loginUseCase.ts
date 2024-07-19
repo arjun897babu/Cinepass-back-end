@@ -33,10 +33,10 @@ const loginUseCase = (dependencies: IDependencies) => {
             status: 'Error',
             message: 'Account not verified,please verify your account',
             redirectURL: '/otp-verification',
-            data:[{email:email}]
+            data:{email:email}
           };
         }
-
+    
         if (existingUser.status === Status.BLOCKED) {
           throw new CustomError('Your account is blocked', 403, 'blocked')
         }
@@ -61,7 +61,7 @@ const loginUseCase = (dependencies: IDependencies) => {
           message: 'User Logged successfully',
           accessToken,
           refreshToken,
-          data: [{ ...rest }]
+          data: { ...rest }
         }
 
 

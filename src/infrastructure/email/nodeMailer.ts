@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer'
 import { config } from '../../config/envConfig'
 
-//nodemailer transported
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -42,7 +42,7 @@ const sendMail = async (email: string, OTP: string) => {
         </body>
       </html>`,
     });
-    console.log('email info : ', info.accepted)
+
   } catch (error) {
     throw error
   }

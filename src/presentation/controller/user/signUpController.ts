@@ -34,6 +34,7 @@ const signup = (dependencies: IDependencies) => {
       return res.status(201).json({
         status: response?.status,
         message: response?.message,
+        data:response?.data,
         redirectURL: response?.redirectURL
       });
 

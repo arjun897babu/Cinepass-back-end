@@ -1,3 +1,5 @@
+import { isValidObjectId } from "mongoose";
+import { CustomError } from "./CustomError";
 
 interface ReturnObject {
   message: string;
@@ -103,7 +105,7 @@ const validatePassword = (password: string): ReturnObject => {
 const validateAdhaar = (adhaarNumber: string): ReturnObject => {
   adhaarNumber = adhaarNumber.trim()
   if (!adhaarRegex.test(adhaarNumber)) {
-     
+
     return {
       message: 'Invalid adhaar number',
       isValid: false,
@@ -138,6 +140,12 @@ const validateTheaterName = (theaterName: string): ReturnObject => {
   }
 };
 
+const mongodbIdValidator = (_id: string): void => {
+  if (!isValidObjectId(_id)) {
+    throw new CustomError('Invalid request', 400, '_id')
+  }
+}
+
 export {
   validateName,
   validateMobileNumber,
@@ -145,5 +153,6 @@ export {
   validatePassword,
   validateAdhaar,
   validateTheaterLicense,
-  validateTheaterName
+  validateTheaterName,
+  mongodbIdValidator
 }

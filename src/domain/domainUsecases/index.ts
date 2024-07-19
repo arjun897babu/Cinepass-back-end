@@ -2,7 +2,9 @@ interface IResponse {
   status: string;
   message: string;
   redirectURL?: string;
-  data?: any[]
+  data?: {
+    [key: string]: string | number | boolean | object | any[];
+  }
 };
 
 interface ILogin {
@@ -22,6 +24,10 @@ interface LoginResponse extends IResponse {
   accessToken?: string;
   refreshToken?: string
 }
+interface IUpdateApproval {
+  theaterOwnerId: string,
+  approval_status: string
+}
 
 export {
   IResponse,
@@ -29,5 +35,6 @@ export {
   IUpdateVerification,
   LoginResponse,
   IOTPVerifcation,
-  
+  IUpdateApproval
+
 };
