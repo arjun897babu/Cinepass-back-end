@@ -1,10 +1,11 @@
 import { NextFunction, Request, Response } from "express"
+import { Cookie } from "../../../utils/jwtHandler"
 
 const adminLogout = () => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
 
-      res.clearCookie('adminJWT', {
+      res.clearCookie(Cookie.adminJWT, {
         httpOnly: true,
         sameSite: 'lax',
         path: '/'

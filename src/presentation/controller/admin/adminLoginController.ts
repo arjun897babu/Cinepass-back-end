@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express"
 import { validateEmail, validatePassword } from "../../../utils/validator";
 import { CustomError } from "../../../utils/CustomError";
 import { IAdminDependencies } from "../../../application/interface/admin/IAdminDependencies";
+import { Cookie } from "../../../utils/jwtHandler";
 
 const adminLogin = (dependencies: IAdminDependencies) => {
   const { adminUsecase: { adminLoginUseCase } } = dependencies
@@ -23,10 +24,10 @@ const adminLogin = (dependencies: IAdminDependencies) => {
 
       const response = await adminLoginUseCase(dependencies).execute({ email, password })
 
-      return res.cookie('adminJWT', response.accessToken, {
+      return res.cookie(Cookie.adminJWT, response.accessToken, {
         httpOnly: true,
         sameSite: "lax",
-        maxAge: 60 * 60 * 1000,
+        maxAge: 24*60 * 60 * 1000,
       })
         .status(200).json({
           message: response.message,

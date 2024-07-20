@@ -3,6 +3,7 @@ import { ITheaterDependencies } from "../../../application/interface/theaters/IT
 import { validateEmail } from "../../../utils/validator";
 import { platform } from "os";
 import { CustomError } from "../../../utils/CustomError";
+import { Cookie } from "../../../utils/jwtHandler";
 
 const theaterLogin = (dependencies: ITheaterDependencies) => {
   const { theaterUseCase: { theaterLoginUseCase } } = dependencies
@@ -28,11 +29,11 @@ const theaterLogin = (dependencies: ITheaterDependencies) => {
         });
       }
 
-      return res.cookie('theaterJWT', response.accessToken, {
+      return res.cookie(Cookie.theaterJWT, response.accessToken, {
 
         httpOnly: true,
         sameSite: "lax",
-        maxAge: 60 * 60 * 1000
+        maxAge: 24*60 * 60 * 1000
 
       })
         .status(200).json({

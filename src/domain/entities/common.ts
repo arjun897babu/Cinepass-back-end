@@ -1,7 +1,3 @@
-enum Status {
-  ACTIVE = "active",
-  BLOCKED = "blocked",
-}
 
 enum ResponseStatus {
   SUCCESS = 'Success',
@@ -21,7 +17,6 @@ interface OTPEntity {
 }
 
 export {
-  Status,
   OTPEntity,
   ResponseStatus,
   ApprovalStatus

@@ -1,3 +1,4 @@
+
 interface IResponse {
   status: string;
   message: string;
@@ -28,6 +29,10 @@ interface IUpdateApproval {
   theaterOwnerId: string,
   approval_status: string
 }
+interface IManageEntity {
+  role: 'user' | 'theaters';
+  _id: string;
+}
 
 export {
   IResponse,
@@ -35,6 +40,6 @@ export {
   IUpdateVerification,
   LoginResponse,
   IOTPVerifcation,
-  IUpdateApproval
-
+  IUpdateApproval,
+  IManageEntity
 };

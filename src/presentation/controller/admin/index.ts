@@ -4,13 +4,15 @@ import { IAdminDependencies } from "../../../application/interface/admin/IAdminD
 import { adminLogout } from "./adminLogoutController"
 import { getTheaterOwner } from "./getTheaterOwnerController"
 import { updateTheaterApprovalByAdmin } from "./updateTheaterApprovalController"
+import { manageEntity } from "./manageUserController"
 
-const adminController  = (dependencies:IAdminDependencies)=>{
+const adminController = (dependencies: IAdminDependencies) => {
   return {
-    login:adminLogin(dependencies),
-    logout:adminLogout(),
-    getTheaterOwner:getTheaterOwner(dependencies),
-    updateTheaterOwnerApproval:updateTheaterApprovalByAdmin(dependencies)
+    login: adminLogin(dependencies),
+    logout: adminLogout(),
+    getTheaterOwner: getTheaterOwner(dependencies),
+    updateTheaterOwnerApproval: updateTheaterApprovalByAdmin(dependencies),
+    manageEntity: manageEntity(dependencies)
   }
 }
 

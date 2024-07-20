@@ -1,5 +1,5 @@
 import { ObjectId } from "mongoose"
-import { ApprovalStatus, Status } from "../common";
+import { ApprovalStatus } from "../common";
 
 
 interface ITheaterOwnerEntity {
@@ -9,7 +9,7 @@ interface ITheaterOwnerEntity {
   mobile_number: number;
   password: string;
   verified?: boolean;
-  status?: Status;
+  status?: boolean;
   adhaar_number: number;
   theater_name:string;
   theater_license: string;

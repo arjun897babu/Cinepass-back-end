@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from "express"
+import { Cookie } from "../../../utils/jwtHandler";
 
 const theaterLogout = () => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      return res.clearCookie('theaterJWT', {
+      return res.clearCookie(Cookie.theaterJWT, {
         httpOnly: true,
         sameSite: 'lax',
         path: '/'

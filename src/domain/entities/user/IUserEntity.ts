@@ -1,5 +1,4 @@
 import { ObjectId } from "mongoose";
-import { Status } from "../common";
 
 interface UserEntity {
   _id?: ObjectId;
@@ -8,7 +7,7 @@ interface UserEntity {
   mobile_number: number;
   password: string;
   verified?: boolean;
-  status?: Status;
+  status?: boolean;
   profile_picture?:string,
   location?:string
 }

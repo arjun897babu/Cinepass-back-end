@@ -1,6 +1,6 @@
 import { config } from "../../../config/envConfig"
 import { ILogin, LoginResponse } from "../../../domain/domainUsecases"
-import { ApprovalStatus, ResponseStatus, Status } from "../../../domain/entities/common"
+import { ApprovalStatus, ResponseStatus } from "../../../domain/entities/common"
 import { sendMail } from "../../../infrastructure/email/nodeMailer"
 import { comparePassword } from "../../../utils/bcrypt"
 import { CustomError } from "../../../utils/CustomError"
@@ -43,7 +43,7 @@ const theaterLoginUseCase = (dependencies: ITheaterDependencies) => {
           throw new CustomError('Your request has been rejected', 401, 'approval')
         }
         //For blocked accounts
-        if (existingTheaterOwner.status === Status.BLOCKED) {
+        if (!existingTheaterOwner.status) {
           throw new CustomError('Your account is blocked', 403, '')
         }
         //Checking password credentials

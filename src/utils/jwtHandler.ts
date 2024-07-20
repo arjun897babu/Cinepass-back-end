@@ -2,6 +2,13 @@ import { sign, verify, JwtPayload, TokenExpiredError } from "jsonwebtoken";
 import { CustomError } from "./CustomError";
 
 
+enum Cookie {
+  adminJWT = 'adminJWT',
+  userJWT = 'userJWT',
+  theaterJWT = 'theaterJWT'
+}
+
+
 const generateToken = (payload: string, secret: string, expiresIn: string): string => {
 
   return sign({ _id: payload }, secret, { expiresIn: expiresIn });
@@ -23,5 +30,6 @@ const verifyToken = (token: string, secret: string): JwtPayload => {
 
 export {
   generateToken,
-  verifyToken
+  verifyToken,
+  Cookie
 };

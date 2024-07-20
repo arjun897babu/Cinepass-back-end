@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { ApprovalStatus, Status } from "../../../../domain/entities/common";
+import { ApprovalStatus } from "../../../../domain/entities/common";
 import { ITheaterOwnerEntity } from "../../../../domain/entities/theaters";
 
 const theaterOwnerSchema = new Schema<ITheaterOwnerEntity>({
@@ -25,9 +25,8 @@ const theaterOwnerSchema = new Schema<ITheaterOwnerEntity>({
     default: false,
   },
   status: {
-    type: String,
-    enum: Object.values(Status),
-    default: Status.ACTIVE,
+    type: Boolean,
+    default:true
   },
   adhaar_number: {
     type: Number,

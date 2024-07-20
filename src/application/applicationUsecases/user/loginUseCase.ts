@@ -1,8 +1,7 @@
 
 import { config } from "../../../config/envConfig";
- 
+
 import { LoginResponse } from "../../../domain/domainUsecases/user";
-import { Status } from "../../../domain/entities/common";
 import { sendMail } from "../../../infrastructure/email/nodeMailer";
 import { comparePassword } from "../../../utils/bcrypt";
 import { CustomError } from "../../../utils/CustomError";
@@ -10,11 +9,11 @@ import { generateToken } from "../../../utils/jwtHandler";
 import { generateOTP } from "../../../utils/OTPGenarator";
 import { IDependencies } from "../../interface/user/IDependencies"
 
-const loginUseCase = (dependencies: IDependencies) => { 
+const loginUseCase = (dependencies: IDependencies) => {
   const { repositories: { login, createOTP } } = dependencies
 
   return {
-    execute: async (email: string, userPassword: string):Promise<LoginResponse> => {
+    execute: async (email: string, userPassword: string): Promise<LoginResponse> => {
       try {
         const existingUser = await login(email);
         if (!existingUser) {
@@ -33,11 +32,11 @@ const loginUseCase = (dependencies: IDependencies) => {
             status: 'Error',
             message: 'Account not verified,please verify your account',
             redirectURL: '/otp-verification',
-            data:{email:email}
+            data: { email: email }
           };
         }
-    
-        if (existingUser.status === Status.BLOCKED) {
+
+        if (!existingUser.status) {
           throw new CustomError('Your account is blocked', 403, 'blocked')
         }
 
@@ -55,7 +54,7 @@ const loginUseCase = (dependencies: IDependencies) => {
         const accessToken = generateToken(userId, config.secrets.access_token, '1h')
         const refreshToken = generateToken(userId, config.secrets.refresh_token, '7d')
         const { _id, password, ...rest } = existingUser
-        console.log('destructured user',rest)
+        console.log('destructured user', rest)
         return {
           status: 'Success',
           message: 'User Logged successfully',
