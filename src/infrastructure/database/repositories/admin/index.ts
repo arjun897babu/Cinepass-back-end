@@ -1,4 +1,4 @@
 export * from './findAdmin'
-export * from './getTheaterOwners'
+export * from './getEntityDataForAdmin'
 export * from './updateTheaterApprovalByAdmin'
 export * from './updateBlockStatus'

@@ -1,8 +1,7 @@
-import { Router } from "express"
 import { adminLogin } from "./adminLoginController"
 import { IAdminDependencies } from "../../../application/interface/admin/IAdminDependencies"
 import { adminLogout } from "./adminLogoutController"
-import { getTheaterOwner } from "./getTheaterOwnerController"
+import { getEntityData } from "./getEntityData"
 import { updateTheaterApprovalByAdmin } from "./updateTheaterApprovalController"
 import { manageEntity } from "./manageUserController"
 
@@ -10,7 +9,7 @@ const adminController = (dependencies: IAdminDependencies) => {
   return {
     login: adminLogin(dependencies),
     logout: adminLogout(),
-    getTheaterOwner: getTheaterOwner(dependencies),
+    getEntityData: getEntityData(dependencies),
     updateTheaterOwnerApproval: updateTheaterApprovalByAdmin(dependencies),
     manageEntity: manageEntity(dependencies)
   }

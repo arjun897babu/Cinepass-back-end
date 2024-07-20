@@ -6,11 +6,11 @@ import { verifyAdmin } from "../middleware/adminMiddleware";
 const adminRoutes = (dependency: IAdminDependencies) => {
 
   const adminRouter = Router();
-  const { login, logout, getTheaterOwner, updateTheaterOwnerApproval, manageEntity } = adminController(dependency)
+  const { login, logout, getEntityData, updateTheaterOwnerApproval, manageEntity } = adminController(dependency)
   adminRouter.route('/login').post(login)
   adminRouter.route('/logout').post(logout)
   adminRouter.use(verifyAdmin)
-  adminRouter.route('/theaters').get(getTheaterOwner)
+  adminRouter.route('/:role').get(getEntityData)
   adminRouter.route('/approval/:theaterOwnerId').put(updateTheaterOwnerApproval)
   adminRouter.route('/manage-status/:role/:_id').put(manageEntity);
   return adminRouter
