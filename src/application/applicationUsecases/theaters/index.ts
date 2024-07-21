@@ -1,3 +1,4 @@
-export * from './TheaterSignUpUseCase'
+export * from './theaterLoginUseCase'
 export * from './verifyTheaterOTPUsecase'
-export * from './TheaterLoginUseCase'
+export * from './theaterSignUpUseCase'
+export * from './theaterForgotPasswordUsecase'

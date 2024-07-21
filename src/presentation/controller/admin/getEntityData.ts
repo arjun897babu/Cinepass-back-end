@@ -10,7 +10,7 @@ const getEntityData = (dependencies: IAdminDependencies) => {
 
       const { role } = req.params
 
-      if (role !== Role.user && role !== Role.theaters) {
+      if (role !== Role.users && role !== Role.theaters) {
         throw new CustomError('InValid Request', 400, 'role')
       }
 

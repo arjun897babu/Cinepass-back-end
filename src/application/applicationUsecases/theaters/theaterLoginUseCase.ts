@@ -1,7 +1,7 @@
 import { config } from "../../../config/envConfig"
 import { ILogin, LoginResponse } from "../../../domain/domainUsecases"
 import { ApprovalStatus, ResponseStatus } from "../../../domain/entities/common"
-import { sendMail } from "../../../infrastructure/email/nodeMailer"
+import { OTPTemplate, sendMail } from "../../../infrastructure/email/nodeMailer"
 import { comparePassword } from "../../../utils/bcrypt"
 import { CustomError } from "../../../utils/CustomError"
 import { generateToken } from "../../../utils/jwtHandler"
@@ -25,7 +25,7 @@ const theaterLoginUseCase = (dependencies: ITheaterDependencies) => {
           const OTP = generateOTP();
 
           await createTheatersOTP(data.email, OTP)
-          sendMail(data.email, OTP);
+          sendMail(data.email, 'OTP Verification', OTPTemplate(OTP));
 
           return {
             status: ResponseStatus.ERROR,

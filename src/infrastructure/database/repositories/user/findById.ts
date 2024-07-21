@@ -1,11 +1,12 @@
 
+import { UserEntity } from "../../../../domain/entities/user/IUserEntity";
 import { Users } from "../../model/user/userSchema";
- 
-const findUserById= async (_id: string): Promise<string | undefined> => {
+
+const findUserById = async (_id: string): Promise<UserEntity | null> => {
   try {
-    const existingUser = await Users.exists({ _id })
-    if (existingUser) { return existingUser._id?.toString() }
-    return undefined
+    const existingUser = await Users.findOne({ _id }).lean()
+    if (!existingUser) { return null}
+    return existingUser
   } catch (error) {
     throw error
   }

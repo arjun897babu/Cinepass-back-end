@@ -1,7 +1,7 @@
 import { IResponse } from "../../../domain/domainUsecases"
 import { ResponseStatus } from "../../../domain/entities/common"
 import { UserEntity } from "../../../domain/entities/user/IUserEntity"
-import { sendMail } from "../../../infrastructure/email/nodeMailer"
+import { OTPTemplate, sendMail } from "../../../infrastructure/email/nodeMailer"
 import { hashPassword } from "../../../utils/bcrypt"
 import { CustomError } from "../../../utils/CustomError"
 import { generateOTP } from "../../../utils/OTPGenarator"
@@ -24,13 +24,13 @@ const signupUseCase = (dependencies: IDependencies) => {
 
         await createOTP(data.email, OTP)
         await signUp({ ...data, password: hashedPassword });
-        sendMail(data.email, OTP);
+        sendMail(data.email,'OTP verification', OTPTemplate(OTP));
 
         return {
           status: ResponseStatus.SUCCESS,
           message: 'Account registered successfully',
           redirectURL: '/otp-verification',
-          data:  {email: data.email }
+          data: { email: data.email }
         }
 
       } catch (error) {

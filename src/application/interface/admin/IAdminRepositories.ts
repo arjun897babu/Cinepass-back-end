@@ -6,7 +6,7 @@ import { Role } from "../../../utils/enum";
 
 interface IAdminRepositories {
   findAdmin: (email: string) => Promise<AdminEntity | null>
-  getEntityData: (role: Role.user | Role.theaters) => Promise<ITheaterOwnerEntity[] | UserEntity[] | []>
+  getEntityData: (role: Role.users | Role.theaters) => Promise<ITheaterOwnerEntity[] | UserEntity[] | []>
   updateTheaterApprovalByAdmin: (payload: IUpdateApproval) => Promise<IUpdateApproval | null>
   updateBlockStatus: (payload: IManageEntity) => Promise<IManageEntity | null>
 

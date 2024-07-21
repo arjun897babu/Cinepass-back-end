@@ -13,14 +13,15 @@ const adhaarRegex = /^\d{12}$/
 const theaterNameRegex = /^[a-zA-Z0-9,.]{5,100}(?: [a-zA-Z0-9,.]+)*$/
 
 const validateName = (name: string): ReturnObject => {
-  name = name.trim();
-
-  if (name === '') {
+  
+  if (!name || name === '') {
     return {
       message: 'Name cannot be empty.',
       isValid: false
     };
   }
+  
+  name = name.trim();
 
   if (name.length < 3) {
     return {
@@ -43,13 +44,14 @@ const validateName = (name: string): ReturnObject => {
 };
 
 const validateMobileNumber = (mobileNumber: string): ReturnObject => {
-  mobileNumber = mobileNumber.trim()
-  if (mobileNumber === '') {
+  if (!mobileNumber || mobileNumber === '') {
     return {
       message: 'Mobile number cannot be empty',
       isValid: false
     }
   }
+  
+  mobileNumber = mobileNumber.trim()
 
   if (mobileNumber.length !== 10) {
     return {
@@ -72,15 +74,16 @@ const validateMobileNumber = (mobileNumber: string): ReturnObject => {
 }
 
 const validateEmail = (email: string): ReturnObject => {
-
-  email = email.trim()
-  if (email === '') {
+  
+  if (!email || email === '') {
     return {
       message: 'Email address cannot be empty',
       isValid: false
     }
   }
-
+  
+  email = email.trim()
+  
   if (!emailRegex.test(email)) {
     return {
       message: 'Invalid email address',
@@ -95,7 +98,14 @@ const validateEmail = (email: string): ReturnObject => {
 }
 
 const validatePassword = (password: string): ReturnObject => {
+  if (password === '' || !password) {
+    return {
+      message: 'Password is required',
+      isValid: true
+    }
+  }
   password = password.trim()
+
   return {
     message: 'Password is valid',
     isValid: true
@@ -103,7 +113,14 @@ const validatePassword = (password: string): ReturnObject => {
 }
 
 const validateAdhaar = (adhaarNumber: string): ReturnObject => {
+  if (!adhaarNumber || adhaarNumber == '') {
+    return {
+      isValid: false,
+      message: 'aaddhaar number is required'
+    }
+  }
   adhaarNumber = adhaarNumber.trim()
+
   if (!adhaarRegex.test(adhaarNumber)) {
 
     return {
@@ -118,6 +135,12 @@ const validateAdhaar = (adhaarNumber: string): ReturnObject => {
 };
 
 const validateTheaterLicense = (theaterLicense: string): ReturnObject => {
+  if (!theaterLicense || theaterLicense === '') {
+    return {
+      isValid: false,
+      message: 'Theater license is required'
+    }
+  }
   theaterLicense = theaterLicense.trim()
 
   return {
@@ -127,7 +150,14 @@ const validateTheaterLicense = (theaterLicense: string): ReturnObject => {
 }
 
 const validateTheaterName = (theaterName: string): ReturnObject => {
+  if (!theaterName || theaterName === '') {
+    return {
+      isValid: false,
+      message: 'Theater name is required'
+    }
+  }
   theaterName = theaterName.trim()
+  
   if (!theaterNameRegex.test(theaterName)) {
     return {
       message: 'Invalid adhaar number',
@@ -141,7 +171,8 @@ const validateTheaterName = (theaterName: string): ReturnObject => {
 };
 
 const mongodbIdValidator = (_id: string): void => {
-  if (!isValidObjectId(_id)) {
+
+  if ((!_id) || !isValidObjectId(_id)) {
     throw new CustomError('Invalid request', 400, '_id')
   }
 }

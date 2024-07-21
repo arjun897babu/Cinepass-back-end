@@ -30,6 +30,7 @@ app.use('/theaters', theaterRoutes(theaterDependencies));
 app.use('/admin', adminRoutes(adminDependencies));
 
 app.use(errorHandler);
+
 app.all("*", (req: Request, res: Response) => {
   res.status(404).json({
     status: false,

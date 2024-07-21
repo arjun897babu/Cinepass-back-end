@@ -2,7 +2,7 @@
 import { IResponse } from "../../../domain/domainUsecases";
 import { ResponseStatus } from "../../../domain/entities/common";
 import { ITheaterOwnerEntity } from "../../../domain/entities/theaters/ITheaterOwners";
-import { sendMail } from "../../../infrastructure/email/nodeMailer";
+import { OTPTemplate, sendMail } from "../../../infrastructure/email/nodeMailer";
 import { hashPassword } from "../../../utils/bcrypt";
 import { CustomError } from "../../../utils/CustomError";
 import { generateOTP } from "../../../utils/OTPGenarator";
@@ -21,7 +21,7 @@ const theaterSignupUseCase = (dependencies: ITheaterDependencies) => {
         const hashedPassword = await hashPassword(data.password);
         const OTP = generateOTP();
         await createTheatersOTP(data.email, OTP)
-        sendMail(data.email, OTP);
+        sendMail(data.email, 'OTP Verification', OTPTemplate(OTP));
 
         await createTheaterOwner({ ...data, password: hashedPassword })
         return {

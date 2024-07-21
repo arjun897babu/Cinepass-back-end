@@ -1,5 +1,5 @@
 enum Role {
-  user = 'user',
+  users = 'users',
   admin = 'admin',
   theaters = 'theaters'
 };

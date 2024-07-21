@@ -5,7 +5,7 @@ import { CustomError } from "./CustomError";
 enum Cookie {
   adminJWT = 'adminJWT',
   userJWT = 'userJWT',
-  theaterJWT = 'theaterJWT'
+  theaterJWT = 'theaterJWT',
 }
 
 

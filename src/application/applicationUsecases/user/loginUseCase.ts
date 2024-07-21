@@ -2,7 +2,7 @@
 import { config } from "../../../config/envConfig";
 
 import { LoginResponse } from "../../../domain/domainUsecases/user";
-import { sendMail } from "../../../infrastructure/email/nodeMailer";
+import { OTPTemplate, sendMail } from "../../../infrastructure/email/nodeMailer";
 import { comparePassword } from "../../../utils/bcrypt";
 import { CustomError } from "../../../utils/CustomError";
 import { generateToken } from "../../../utils/jwtHandler";
@@ -26,7 +26,7 @@ const loginUseCase = (dependencies: IDependencies) => {
           await createOTP(email, OTP);
 
           // Send OTP via email
-          sendMail(email, OTP);
+          sendMail(email, 'OTP Verification' , OTPTemplate(OTP));
 
           return {
             status: 'Error',

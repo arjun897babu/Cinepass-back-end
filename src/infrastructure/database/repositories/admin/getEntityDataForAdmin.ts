@@ -6,11 +6,11 @@ import { Role } from "../../../../utils/enum";
 import { UserEntity } from "../../../../domain/entities/user/IUserEntity";
 
 const model: Record<string, Model<any>> = {
-  [Role.user]: Users,
+  [Role.users]: Users,
   [Role.theaters]: TheaterOwner
 }
 
-const getEntityData = async (role: Role.user | Role.theaters): Promise<ITheaterOwnerEntity[] | UserEntity[] | []> => {
+const getEntityData = async (role: Role.users | Role.theaters): Promise<ITheaterOwnerEntity[] | UserEntity[] | []> => {
 
   const db = model[role];
 
