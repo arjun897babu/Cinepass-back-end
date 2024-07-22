@@ -12,7 +12,7 @@ const verifyTheaterOTPUsecase = (dependencies: ITheaterDependencies) => {
       try {
         const OTPDetails = await findTheaterOwnerOTP(data.email);
         if (!OTPDetails) {
-          throw new CustomError('OTP expired', 400, 'otp');
+          throw new CustomError('OTP expired', 400, 'expired');
         }
 
         if (data.otp !== OTPDetails.otp) {

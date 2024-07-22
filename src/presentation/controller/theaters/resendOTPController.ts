@@ -1,32 +1,33 @@
-import { NextFunction, Request, Response } from "express";
 import { ITheaterDependencies } from "../../../application/interface/theaters/ITheaterDependencies";
+import { NextFunction, Request, Response } from "express";
 import { validateEmail } from "../../../utils/validator";
 import { CustomError } from "../../../utils/CustomError";
 
-const theaterForgotPassword = (dependencies: ITheaterDependencies) => {
-  const { theaterUseCase: { theaterForgotPasswordUsecase } } = dependencies
+const resendOTPTheaters = (dependencies: ITheaterDependencies) => {
+
+  const { theaterUseCase: { resendOTPTheaterUsecase } } = dependencies
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email } = req.body
       console.log(email)
-      const emailValidation = validateEmail(email);
+      const emailValidation = validateEmail(email)
       if (!emailValidation.isValid) {
-        throw new CustomError('Invalid email', 400, 'email')
+        throw new CustomError(emailValidation.message, 400, 'email');
       }
-
-      const response = await theaterForgotPasswordUsecase(dependencies).execute(email);
-
+      const response = await resendOTPTheaterUsecase(dependencies).execute(email)
+      console.log(response)
       return res.status(200).json({
         message: response.message,
         status: response.status,
-        redirectURL: response.redirectURL,
-        data: response.data
+        redirectURL: response.redirectURL
       })
     } catch (error) {
       next(error)
     }
   }
+
 }
+
 export {
-  theaterForgotPassword
+  resendOTPTheaters
 }

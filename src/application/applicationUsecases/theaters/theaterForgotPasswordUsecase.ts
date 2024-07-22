@@ -28,7 +28,8 @@ const theaterForgotPasswordUsecase = (dependencies: ITheaterDependencies) => {
         return {
           status: ResponseStatus.SUCCESS,
           message: 'Password Reset Link has been sent to Your Email',
-          redirectURL: '#'
+          redirectURL: '#',
+          data:{email}
         }
       } catch (error) {
         throw error

@@ -10,7 +10,7 @@ import { IDependencies } from "../../interface/user/IDependencies";
 const forgotPasswordUsecase = (dependencies: IDependencies) => {
   const { repositories: { findByEmail } } = dependencies;
   return {
-    execute: async (email: string):Promise<IResponse> => {
+    execute: async (email: string): Promise<IResponse> => {
 
       const existingUser = await findByEmail(email);
       if (!existingUser) {
@@ -24,12 +24,13 @@ const forgotPasswordUsecase = (dependencies: IDependencies) => {
 
       const token = generateToken(_id, config.secrets.short_lived_access_token, '5m');
       const link = `${config.http.origin}/${Role.users}/reset-password/${token}`
-      sendMail(email, 'Reset Password',resetPasswordTemplate(link))
+      sendMail(email, 'Reset Password', resetPasswordTemplate(link))
 
       return {
         status: ResponseStatus.SUCCESS,
         message: 'Password Reset Link has been sent to Your Email',
-        redirectURL:'#'
+        redirectURL: '#',
+        data: { email }
       }
 
     }

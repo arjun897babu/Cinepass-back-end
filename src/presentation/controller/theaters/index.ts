@@ -1,5 +1,6 @@
 import { ITheaterDependencies } from "../../../application/interface/theaters/ITheaterDependencies";
 import { theaterForgotPassword } from "./forgotPasswordController";
+import { resendOTPTheaters } from "./resendOTPController";
 import { theaterLogin } from "./theaterLoginController";
 import { theaterLogout } from "./theaterLogout";
 import { theaterVerify } from "./theaterOTPVerifiyController";
@@ -15,7 +16,8 @@ const theaterController = (dependencies: ITheaterDependencies) => {
     otpVerification: theaterVerify(dependencies),
     logout: theaterLogout(),
     forgotPassword: theaterForgotPassword(dependencies),
-    resetPassword: resetPasswordTheaters(dependencies)
+    resetPassword: resetPasswordTheaters(dependencies),
+    resendOTPTheaters:resendOTPTheaters(dependencies)
   }
 }
 

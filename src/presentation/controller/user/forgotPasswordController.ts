@@ -21,7 +21,8 @@ const forgotPassword = (dependencies: IDependencies) => {
       res.status(200).json({
         message:response.message,
         status:response.status,
-        redirectURL:response.redirectURL
+        redirectURL:response.redirectURL,
+        data:response.data
       })
     } catch (error) {
       next(error)
