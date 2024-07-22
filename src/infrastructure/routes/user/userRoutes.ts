@@ -13,8 +13,7 @@ const userRoutes = (dependencies: IDependencies) => {
   router.route('/otp-verification').post(verifyOTP);
   router.route('/forgot-password').post(forgotPassword);
   router.route('/reset-password/:token').put(verifyResetPasswordRequest,resetPassword)
-  router.use(verifyUser);
-  router.route('/logout').post(logout);
+  router.route('/logout').post(verifyUser,logout);
 
 
   return router

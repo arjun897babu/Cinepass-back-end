@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { IDependencies } from "../../../application/interface/user/IDependencies";
-import { CustomError } from "../../../utils/CustomError";
 
-const resetPassword = (dependencies: IDependencies) => {
-  const { useCases: { resetPasswordUsecase } } = dependencies;
+import { CustomError } from "../../../utils/CustomError";
+import { ITheaterDependencies } from "../../../application/interface/theaters/ITheaterDependencies";
+
+const resetPasswordTheaters = (dependencies:ITheaterDependencies ) => {
+  const { theaterUseCase: {theaterResetPasswordUsecase  } } = dependencies;
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { password } = req.body;
@@ -16,7 +17,7 @@ const resetPassword = (dependencies: IDependencies) => {
         throw new CustomError('please enter a password', 400, 'password')
       }
 
-      const response = await resetPasswordUsecase(dependencies).execute({ _id: token, password })
+      const response = await theaterResetPasswordUsecase(dependencies).execute({ _id: token, password })
       return res.status(200).json(
         {
           status: response.status,
@@ -32,5 +33,5 @@ const resetPassword = (dependencies: IDependencies) => {
 }
 
 export {
-  resetPassword
+  resetPasswordTheaters
 }

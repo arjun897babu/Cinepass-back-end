@@ -30,13 +30,13 @@ const verifyResetPasswordRequest = async (req: Request, res: Response, next: Nex
     console.log('reaching verify Reset-Password Request middleware')
     const { token } = req.params;
     if (!token) {
-      throw new CustomError('Access Denied', 401, 'tokenError')
+      throw new CustomError('Something went wrong', 401, 'token')
     }
     const decoded = verifyToken(token, config.secrets.short_lived_access_token);
     if (!decoded._id) {
-      throw new CustomError('Access Denied', 401, 'token')
+      throw new CustomError('Something went wrong', 401, 'token')
     }
-    
+
     mongodbIdValidator(decoded._id);
     req.params.token = decoded._id
     next()
