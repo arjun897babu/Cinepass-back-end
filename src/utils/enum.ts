@@ -4,6 +4,12 @@ enum Role {
   theaters = 'theaters'
 };
 
+enum AuthSource{
+  SELF = 'self',
+  GOOGLE = 'google'
+}
+
 export {
-  Role
+  Role,
+  AuthSource
 }

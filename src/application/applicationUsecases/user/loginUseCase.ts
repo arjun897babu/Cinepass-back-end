@@ -16,17 +16,23 @@ const loginUseCase = (dependencies: IDependencies) => {
     execute: async (email: string, userPassword: string): Promise<LoginResponse> => {
       try {
         const existingUser = await login(email);
+
+
         if (!existingUser) {
           throw new CustomError('Email not found', 404, 'email')
         }
 
+        if (existingUser.isGoogleAuth) {
+          throw new CustomError('Please use Google login', 401, 'googleAuth');
+        }
+        
         if (!existingUser.verified) {
           const OTP = generateOTP();
           // Save OTP in database
           await createOTP(email, OTP);
 
           // Send OTP via email
-          sendMail(email, 'OTP Verification' , OTPTemplate(OTP));
+          sendMail(email, 'OTP Verification', OTPTemplate(OTP));
 
           return {
             status: 'Error',
@@ -40,7 +46,7 @@ const loginUseCase = (dependencies: IDependencies) => {
           throw new CustomError('Your account is blocked', 403, 'blocked')
         }
 
-        const comparedPassword = await comparePassword(userPassword, existingUser.password);
+        const comparedPassword = await comparePassword(userPassword, existingUser.password as string);
 
         if (!comparedPassword) {
           throw new CustomError('Password mismatch', 401, 'password')
@@ -54,12 +60,13 @@ const loginUseCase = (dependencies: IDependencies) => {
         const accessToken = generateToken(userId, config.secrets.access_token, '1h')
         const refreshToken = generateToken(userId, config.secrets.refresh_token, '7d')
         const { _id, password, ...rest } = existingUser
-        console.log('destructured user', rest)
+
         return {
           status: 'Success',
           message: 'User Logged successfully',
           accessToken,
           refreshToken,
+          redirectURL: '/',
           data: { ...rest }
         }
 

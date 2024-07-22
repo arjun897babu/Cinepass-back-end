@@ -6,15 +6,17 @@ import { verifyResetPasswordRequest, verifyUser } from "../middleware/userMiddle
 
 const userRoutes = (dependencies: IDependencies) => {
   const router = Router()
-  const { signup, login, verifyOTP, logout, forgotPassword, resetPassword, resendOTP } = userController(dependencies)
+  const { signup, login, verifyOTP, logout, forgotPassword, resetPassword, resendOTP,googleSignUp } = userController(dependencies)
 
   router.route('/login').post(login);
   router.route('/signup').post(signup);
+  router.route('/google-signup').post(googleSignUp);
   router.route('/otp-verification').post(verifyOTP);
   router.route('/forgot-password').post(forgotPassword);
   router.route('/reset-password/:token').put(verifyResetPasswordRequest, resetPassword)
   router.route('/resend-otp').post(resendOTP);
-  router.route('/logout').post(verifyUser, logout);
+  router.route('/logout').post( logout);
+
 
   return router
 }

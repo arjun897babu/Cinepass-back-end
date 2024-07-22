@@ -9,13 +9,16 @@ const userSchema = new Schema<UserEntity>({
     type: String,
     required: true,
     unique: true,
+    index:true
   },
   mobile_number: {
     type: Number,
+    default: null
 
   },
   password: {
     type: String,
+    default: null
   },
   verified: {
     type: Boolean,
@@ -32,7 +35,14 @@ const userSchema = new Schema<UserEntity>({
   location: {
     type: String,
     default: null
-
+  },
+  isGoogleAuth: {
+    type: Boolean,
+    default: false
+  },
+  googleId: {
+    type: String,
+    default: null
   }
 });
 

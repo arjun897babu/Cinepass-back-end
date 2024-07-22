@@ -43,7 +43,8 @@ const login = (dependencies: IDependencies) => {
         .status(200).json({
           status: response.status, 
           message: response.message,
-          data: response.data
+          data: response.data,
+          redirectURL:response.redirectURL
         })
 
 

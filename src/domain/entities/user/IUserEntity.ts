@@ -4,12 +4,14 @@ interface UserEntity {
   _id?: ObjectId;
   name: string;
   email: string;
-  mobile_number: number;
-  password: string;
+  mobile_number?: number;
+  password: string|null;
   verified?: boolean;
   status?: boolean;
   profile_picture?:string,
-  location?:string
+  location?:string,
+  isGoogleAuth?: boolean,
+  googleId?:string
 }
 
 export {

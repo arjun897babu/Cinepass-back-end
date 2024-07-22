@@ -21,5 +21,8 @@ export const config = {
   app:{
     email:envString('CINEPASS_AUTH_EMAIL'),
     password:envString('CINEPASS_AUTH_PASSWORD')
+  },
+  google:{
+    client_id:envString('CLIENT_ID')
   }
 } 

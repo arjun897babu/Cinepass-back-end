@@ -4,5 +4,6 @@ export * from './verifyOTPUsecase'
 export * from './forgotPasswordUsecase'
 export * from './resetPasswordUsecase'
 export * from './resendOTPUsecase'
+export * from './googleAuthUseCase'
 
 

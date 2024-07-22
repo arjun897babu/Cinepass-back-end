@@ -4,6 +4,7 @@ import { UserEntity } from "../../../domain/entities/user/IUserEntity"
 import { OTPTemplate, sendMail } from "../../../infrastructure/email/nodeMailer"
 import { hashPassword } from "../../../utils/bcrypt"
 import { CustomError } from "../../../utils/CustomError"
+import { AuthSource } from "../../../utils/enum"
 import { generateOTP } from "../../../utils/OTPGenarator"
 import { IDependencies } from "../../interface/user/IDependencies"
 
@@ -17,14 +18,13 @@ const signupUseCase = (dependencies: IDependencies) => {
         if (existingUser) {
           throw new CustomError('Email already exists', 409, 'email');
         }
-
-
-        const hashedPassword = await hashPassword(data.password);
+        const hashedPassword = await hashPassword(data.password as string);
         const OTP = generateOTP();
 
         await createOTP(data.email, OTP)
+
+        sendMail(data.email, 'OTP verification', OTPTemplate(OTP));
         await signUp({ ...data, password: hashedPassword });
-        sendMail(data.email,'OTP verification', OTPTemplate(OTP));
 
         return {
           status: ResponseStatus.SUCCESS,
@@ -32,6 +32,7 @@ const signupUseCase = (dependencies: IDependencies) => {
           redirectURL: '/otp-verification',
           data: { email: data.email }
         }
+
 
       } catch (error) {
         throw error
