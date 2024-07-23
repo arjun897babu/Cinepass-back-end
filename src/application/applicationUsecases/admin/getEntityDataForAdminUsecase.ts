@@ -7,13 +7,12 @@ const getEntityDataForAdminUsecase = (dependencies: IAdminDependencies) => {
   const { adminRepositories: { getEntityData } } = dependencies
   return {
     execute: async (role: Role.users | Role.theaters): Promise<IResponse> => {
-
       const data = await getEntityData(role);
 
       return {
         status: ResponseStatus.SUCCESS,
         message: 'Data fetched successfully',
-        data: { [role]: data }
+        data: { [role]: data } 
       }
     }
   }

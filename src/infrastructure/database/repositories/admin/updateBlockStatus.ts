@@ -2,10 +2,11 @@ import { Document, Model } from "mongoose";
 import { IManageEntity } from "../../../../domain/domainUsecases"
 import { TheaterOwner } from "../../model/theaters";
 import { Users } from "../../model/user/userSchema";
+import { Role } from "../../../../utils/enum";
 
 const model: Record<string, Model<any>> = {
-  user: Users,
-  theaters: TheaterOwner
+  [Role.users]: Users,
+  [Role.theaters]: TheaterOwner
 };
 
 const updateBlockStatus = async (payload: IManageEntity): Promise<IManageEntity | null> => {

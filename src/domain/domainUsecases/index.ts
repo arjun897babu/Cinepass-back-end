@@ -1,3 +1,4 @@
+import { Role } from "../../utils/enum";
 
 interface IResponse {
   status: string;
@@ -30,7 +31,7 @@ interface IUpdateApproval {
   approval_status: string
 }
 interface IManageEntity {
-  role: 'user' | 'theaters';
+  role: Role.users | Role.theaters;
   _id: string;
 }
 

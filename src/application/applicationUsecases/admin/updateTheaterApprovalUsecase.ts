@@ -1,10 +1,11 @@
+import { ObjectId } from "mongoose";
 import { IResponse, IUpdateApproval } from "../../../domain/domainUsecases";
 import { ApprovalStatus, ResponseStatus } from "../../../domain/entities/common";
 import { CustomError } from "../../../utils/CustomError";
 import { IAdminDependencies } from "../../interface/admin/IAdminDependencies";
 
 const updateTheaterApprovalByAdminUseCase = (dependencies: IAdminDependencies) => {
-  const { adminRepositories: { updateTheaterApprovalByAdmin } } = dependencies
+  const { adminRepositories: { updateTheaterApprovalByAdmin,createTheater } } = dependencies
   return {
     execute: async (payload: IUpdateApproval): Promise<IResponse> => {
       try {
@@ -31,12 +32,22 @@ const updateTheaterApprovalByAdminUseCase = (dependencies: IAdminDependencies) =
             responseMessage = 'Account permission pending'
         };
 
+        if(updatedTheater.approval_status===ApprovalStatus.APPROVED){
+          await createTheater(
+            {
+              ownerId: updatedTheater._id as ObjectId  ,
+              theater_Name: updatedTheater.theater_name,
+              theater_license: updatedTheater.theater_license,
+            }
+          )
+        }
+
         return {
           status: ResponseStatus.SUCCESS,
           message: responseMessage,
           data: {
             theater: {
-              _id: updatedTheater.theaterOwnerId,
+              _id: updatedTheater._id,
               approval_status: updatedTheater.approval_status
             }
           }
