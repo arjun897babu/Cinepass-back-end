@@ -5,6 +5,7 @@ import { LoginResponse } from "../../../domain/domainUsecases/user";
 import { OTPTemplate, sendMail } from "../../../infrastructure/email/nodeMailer";
 import { comparePassword } from "../../../utils/bcrypt";
 import { CustomError } from "../../../utils/CustomError";
+import { Role } from "../../../utils/enum";
 import { generateToken } from "../../../utils/jwtHandler";
 import { generateOTP } from "../../../utils/OTPGenarator";
 import { IDependencies } from "../../interface/user/IDependencies"
@@ -25,7 +26,7 @@ const loginUseCase = (dependencies: IDependencies) => {
         if (existingUser.isGoogleAuth) {
           throw new CustomError('Please use Google login', 401, 'googleAuth');
         }
-        
+
         if (!existingUser.verified) {
           const OTP = generateOTP();
           // Save OTP in database
@@ -57,15 +58,14 @@ const loginUseCase = (dependencies: IDependencies) => {
           throw new CustomError('Email not found', 404, 'email');
         }
 
-        const accessToken = generateToken(userId, config.secrets.access_token, '1h')
-        const refreshToken = generateToken(userId, config.secrets.refresh_token, '7d')
+        const accessToken = generateToken({ _id: userId, role: Role.users }, config.secrets.access_token, '1h')
+        // const refreshToken = generateToken({_id:userId,role:Role.users}, config.secrets.refresh_token, '7d')
         const { _id, password, ...rest } = existingUser
 
         return {
           status: 'Success',
           message: 'User Logged successfully',
           accessToken,
-          refreshToken,
           redirectURL: '/',
           data: { ...rest }
         }

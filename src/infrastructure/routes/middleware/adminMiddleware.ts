@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from "express"
 import { Cookie, verifyToken } from "../../../utils/jwtHandler";
 import { config } from "../../../config/envConfig";
 import { CustomError } from "../../../utils/CustomError";
+import { Role } from "../../../utils/enum";
+import { mongodbIdValidator } from "../../../utils/validator";
 
 const verifyAdmin = (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -10,11 +12,15 @@ const verifyAdmin = (req: Request, res: Response, next: NextFunction) => {
     if (!adminJWT) {
       throw new CustomError('Access Denied', 403, 'token')
     }
+
     const decoded = verifyToken(adminJWT, config.secrets.access_token)
-    if (!decoded._id) {
+  
+    if (decoded._id && decoded.role === Role.admin) {
+      mongodbIdValidator(decoded._id);
+      next()
+    } else {
       throw new CustomError('Access Denied', 401, 'tokenError')
     }
-    next()
 
   } catch (error) {
     next(error)

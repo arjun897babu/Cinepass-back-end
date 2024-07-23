@@ -22,14 +22,14 @@ const theaterForgotPasswordUsecase = (dependencies: ITheaterDependencies) => {
           throw new CustomError('Email not exists', 404, 'email')
         }
 
-        const token = generateToken(_id, config.secrets.short_lived_access_token, '5m')
+        const token = generateToken({ _id, role: Role.theaters }, config.secrets.short_lived_access_token, '5m')
         const link = `${config.http.origin}/${Role.theaters}/reset-password/${token}`;
         sendMail(email, 'Reset Password', resetPasswordTemplate(link))
         return {
           status: ResponseStatus.SUCCESS,
           message: 'Password Reset Link has been sent to Your Email',
           redirectURL: '#',
-          data:{email}
+          data: { email }
         }
       } catch (error) {
         throw error

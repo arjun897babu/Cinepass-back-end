@@ -4,6 +4,7 @@ import { ApprovalStatus, ResponseStatus } from "../../../domain/entities/common"
 import { OTPTemplate, sendMail } from "../../../infrastructure/email/nodeMailer"
 import { comparePassword } from "../../../utils/bcrypt"
 import { CustomError } from "../../../utils/CustomError"
+import { Role } from "../../../utils/enum"
 import { generateToken } from "../../../utils/jwtHandler"
 import { generateOTP } from "../../../utils/OTPGenarator"
 import { ITheaterDependencies } from "../../interface/theaters/ITheaterDependencies"
@@ -53,12 +54,12 @@ const theaterLoginUseCase = (dependencies: ITheaterDependencies) => {
           throw new CustomError('Invalid password', 401, 'password')
         }
 
-        const userId = existingTheaterOwner._id?.toString()
-        if (!userId) {
+        const theaterId = existingTheaterOwner._id?.toString()
+        if (!theaterId) {
           throw new CustomError('Email not found', 404, 'email');
         }
 
-        const accessToken = generateToken(userId, config.secrets.access_token, '1d')
+        const accessToken = generateToken({ _id: theaterId, role: Role.theaters }, config.secrets.access_token, '1d')
 
         return {
           status: ResponseStatus.SUCCESS,

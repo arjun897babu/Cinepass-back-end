@@ -6,7 +6,7 @@ import { verifyTheaterOwner, verifyTheaterResetPasswordRequest } from "../middle
 const theaterRoutes = (dependencies: ITheaterDependencies) => {
   const theaterRouter = Router();
 
-  const { signup, otpVerification, login, logout, forgotPassword, resetPassword,resendOTPTheaters } = theaterController(dependencies)
+  const { signup, otpVerification, login, logout, forgotPassword, resetPassword,resendOTPTheaters,getTheaterDetails } = theaterController(dependencies)
 
   theaterRouter.route('/login').post(login);
   theaterRouter.route('/signup').post(signup);
@@ -15,6 +15,7 @@ const theaterRoutes = (dependencies: ITheaterDependencies) => {
   theaterRouter.route('/reset-password/:token').put(verifyTheaterResetPasswordRequest, resetPassword)
   theaterRouter.route('/logout').post(verifyTheaterOwner,logout)
   theaterRouter.route('/resend-otp').post(resendOTPTheaters)
+  theaterRouter.route('/get-theater').get(verifyTheaterOwner,getTheaterDetails)
 
 
   return theaterRouter

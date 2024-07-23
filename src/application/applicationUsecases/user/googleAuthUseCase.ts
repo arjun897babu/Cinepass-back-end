@@ -6,6 +6,7 @@ import { CustomError } from "../../../utils/CustomError"
 import { IDependencies } from "../../interface/user/IDependencies"
 import { generateToken } from "../../../utils/jwtHandler"
 import { config } from "../../../config/envConfig"
+import { Role } from "../../../utils/enum"
 
 const handleUserResponse = (user: UserEntity): LoginResponse => {
   const userId = user._id?.toString();
@@ -14,7 +15,7 @@ const handleUserResponse = (user: UserEntity): LoginResponse => {
   }
 
   const { password, ...rest } = user;
-  const accessToken = generateToken(userId, config.secrets.access_token, '1h')
+  const accessToken = generateToken({ _id: userId, role: Role.users }, config.secrets.access_token, '1h')
 
   return {
     message: 'Logged successfully',
