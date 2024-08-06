@@ -10,10 +10,8 @@ const theaterVerify = (dependencies: ITheaterDependencies) => {
     try {
       const payload = req.body;
       //validate email 
-      const emailValidaton = validateEmail(payload.email);
-      if (!emailValidaton.isValid) {
-        throw new CustomError('Invalid email', 400, 'email');
-      }
+      validateEmail(payload.email);
+     
       const response = await verifyTheaterOTPUsecase(dependencies).execute(payload);
 
       return res.status(200).json({

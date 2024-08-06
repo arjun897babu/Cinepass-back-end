@@ -11,10 +11,8 @@ const verifyOTP = (dependencies: IDependencies) => {
 
       const { email, otp } = req.body
 
-      const emailValidation = validateEmail(email)
-      if (!emailValidation.isValid) {
-        throw new CustomError('Invalid email', 400, 'otp')
-      }
+      validateEmail(email)
+      
       const result = await verifyOTPUseCase(dependencies).execute(email, otp);
 
       return res.status(200).json({

@@ -15,14 +15,14 @@ const updateBlockStatus = async (payload: IManageEntity): Promise<IManageEntity 
     const db = model[payload.role]
    
     const updated = await db.findOneAndUpdate(
-      { _id: payload._id },
+      { _id: payload.entityId },
       [{ $set: { status: { $not: "$status" } } }],
       { new: true }
     );
 
     return updated ?
       {
-        _id: updated._id.toString(),
+        entityId: updated._id.toString(),
         role: payload.role
       } : null;
 

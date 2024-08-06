@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 
 import { CustomError } from "../../../utils/CustomError";
 import { ITheaterDependencies } from "../../../application/interface/theaters/ITheaterDependencies";
+import { validatePassword } from "../../../utils/validator";
 
 const resetPasswordTheaters = (dependencies:ITheaterDependencies ) => {
   const { theaterUseCase: {theaterResetPasswordUsecase  } } = dependencies;
@@ -13,9 +14,7 @@ const resetPasswordTheaters = (dependencies:ITheaterDependencies ) => {
       if (!token) {
         throw new CustomError('Something went wrong', 400, '_id')
       }
-      if (!password || password === '') {
-        throw new CustomError('please enter a password', 400, 'password')
-      }
+      validatePassword(password as string)
 
       const response = await theaterResetPasswordUsecase(dependencies).execute({ _id: token, password })
       return res.status(200).json(

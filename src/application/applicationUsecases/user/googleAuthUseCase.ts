@@ -14,7 +14,7 @@ const handleUserResponse = (user: UserEntity): LoginResponse => {
     throw new CustomError('Email not found', 404, 'email');
   }
 
-  const { password, ...rest } = user;
+  const { password,googleId, ...rest } = user;
   const accessToken = generateToken({ _id: userId, role: Role.users }, config.secrets.access_token, '1h')
 
   return {

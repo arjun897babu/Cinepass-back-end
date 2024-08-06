@@ -13,6 +13,8 @@ const verifyTheaterOwner = async (req: Request, res: Response, next: NextFunctio
     const decoded = verifyToken(theaterJWT, config.secrets.access_token);
     if (decoded._id && decoded.role === Role.theaters) {
       mongodbIdValidator(decoded._id);
+      req.params._id = decoded._id
+      req.params.roles = decoded.role
       next()
     } else {
       throw new CustomError('Something went wrong', 401, 'token')

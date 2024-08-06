@@ -5,7 +5,7 @@ import { CustomError } from "../../../utils/CustomError";
 import { IAdminDependencies } from "../../interface/admin/IAdminDependencies";
 
 const updateTheaterApprovalByAdminUseCase = (dependencies: IAdminDependencies) => {
-  const { adminRepositories: { updateTheaterApprovalByAdmin,createTheater } } = dependencies
+  const { adminRepositories: { updateTheaterApprovalByAdmin, createTheater } } = dependencies
   return {
     execute: async (payload: IUpdateApproval): Promise<IResponse> => {
       try {
@@ -32,12 +32,14 @@ const updateTheaterApprovalByAdminUseCase = (dependencies: IAdminDependencies) =
             responseMessage = 'Account permission pending'
         };
 
-        if(updatedTheater.approval_status===ApprovalStatus.APPROVED){
+        if (updatedTheater.approval_status === ApprovalStatus.APPROVED) {
           await createTheater(
             {
-              ownerId: updatedTheater._id as ObjectId  ,
+              ownerId: updatedTheater._id as ObjectId,
               theater_Name: updatedTheater.theater_name,
               theater_license: updatedTheater.theater_license,
+              address: updatedTheater.address,
+              city: updatedTheater.city
             }
           )
         }

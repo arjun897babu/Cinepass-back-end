@@ -11,16 +11,12 @@ const login = (dependencies: IDependencies) => {
       const { email, password } = req.body;
 
       //validate email
-      const emailValidation = validateEmail(email);
-      if (!emailValidation.isValid) {
-        throw new CustomError(emailValidation.message, 400,'email')
-      }
+        validateEmail(email);
+       
 
       //validate password
-      const passwordValidation = validatePassword(password);
-      if (!passwordValidation.isValid) {
-        throw new CustomError(passwordValidation.message, 400,'email')
-      }
+     validatePassword(password);
+     
 
       const response = await loginUseCase(dependencies).execute(email, password);
 

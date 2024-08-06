@@ -12,10 +12,8 @@ const theaterLogin = (dependencies: ITheaterDependencies) => {
 
     try {
       const payload = req.body
-      const emailValidation = validateEmail(payload.email);
-      if (!emailValidation.isValid) {
-        throw new CustomError(emailValidation.message, 400, 'email')
-      }
+       validateEmail(payload.email);
+      
       const response = await theaterLoginUseCase(dependencies).execute(payload);
 
       if (response.status === 'Error') {

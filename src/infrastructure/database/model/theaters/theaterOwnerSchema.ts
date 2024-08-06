@@ -15,7 +15,7 @@ const theaterOwnerSchema = new Schema<ITheaterOwnerEntity>({
   },
   mobile_number: {
     type: Number,
-    required:true
+    required: true
   },
   password: {
     type: String,
@@ -26,7 +26,7 @@ const theaterOwnerSchema = new Schema<ITheaterOwnerEntity>({
   },
   status: {
     type: Boolean,
-    default:true
+    default: true
   },
   adhaar_number: {
     type: Number,
@@ -38,13 +38,22 @@ const theaterOwnerSchema = new Schema<ITheaterOwnerEntity>({
   },
   theater_license: {
     type: String,
-    required: true, 
+    required: true,
   },
   approval_status: {
     type: String,
     enum: Object.values(ApprovalStatus),
     default: ApprovalStatus.PENDING
+  },
+  city: {
+    type: String,
+    required: true
+  },
+  address: {
+    type: String,
+    required: true
   }
+
 })
 
 

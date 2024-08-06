@@ -1,4 +1,4 @@
- import { OTPEntity } from "../../../domain/entities/common";
+import { OTPEntity } from "../../../domain/entities/common";
 import { UserEntity } from "../../../domain/entities/user/IUserEntity";
 import { IResetPassword } from "../../../utils/interface";
 
@@ -10,7 +10,9 @@ interface IRepositories {
   findOtp: (email: string) => Promise<OTPEntity | null>;
   findUserById: (_id: string) => Promise<UserEntity | null>;
   changeUserStatus: (email: string, verified: boolean) => Promise<boolean>;
-  resetPassword: (JwtPayload: IResetPassword) => Promise<boolean>
+  resetPassword: (JwtPayload: IResetPassword) => Promise<boolean>;
+  getCities: () => Promise<string[] | []>
+
 }
 
 export {

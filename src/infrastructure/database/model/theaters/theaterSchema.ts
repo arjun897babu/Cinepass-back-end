@@ -1,4 +1,4 @@
-import mongoose, { model, Schema, ObjectId } from "mongoose";
+import mongoose, { model, Schema, ObjectId, Document } from "mongoose";
 import { ITheaters } from "../../../../domain/entities/theaters";
 
 const theaterSchema = new Schema<ITheaters>({
@@ -18,14 +18,17 @@ const theaterSchema = new Schema<ITheaters>({
     unique: true,
     trim: true
   },
-  location: {
+  address: {
     type: String,
-    default:null
+    default: null
   },
   images: {
     type: [String],
-  
+  },
+  city: {
+    type: String,
+    required: true
   }
 })
 
-export const Theaters = model<ITheaters>('Theaters', theaterSchema)
+export const Theaters = model<ITheaters >('Theaters', theaterSchema)

@@ -1,12 +1,16 @@
 import { ITheaterDependencies } from "../../../application/interface/theaters/ITheaterDependencies";
+import { addMovieShow } from "./addMovieShow";
+import { addTheaterScreen } from "./addTheaterScreenController";
 import { theaterForgotPassword } from "./forgotPasswordController";
 import { getTheater } from "./getTheaterDetailController";
+import { getAllTheaterScreen } from "./getTheaterScreenController";
 import { resendOTPTheaters } from "./resendOTPController";
 import { theaterLogin } from "./theaterLoginController";
 import { theaterLogout } from "./theaterLogout";
 import { theaterVerify } from "./theaterOTPVerifiyController";
 import { resetPasswordTheaters } from "./theaterResetPassword";
 import { theaterSignup } from "./theaterSignupController";
+import { updateTheaterInfo } from "./updateTheaterController";
 
 
 const theaterController = (dependencies: ITheaterDependencies) => {
@@ -19,7 +23,11 @@ const theaterController = (dependencies: ITheaterDependencies) => {
     forgotPassword: theaterForgotPassword(dependencies),
     resetPassword: resetPasswordTheaters(dependencies),
     resendOTPTheaters: resendOTPTheaters(dependencies),
-    getTheaterDetails: getTheater(dependencies)
+    getTheaterDetails: getTheater(dependencies),
+    updateTheaterInfo: updateTheaterInfo(dependencies),
+    addScreen: addTheaterScreen(dependencies),
+    getAllTheaterScreen: getAllTheaterScreen(dependencies),
+    addMovieShow:addMovieShow(dependencies)
   }
 }
 

@@ -6,7 +6,7 @@ import { userRoutes } from './user/userRoutes'
 import { errorHandler } from './middleware/errorHandler'
 import { config } from '../../config/envConfig'
 import { theaterRoutes } from './theaters/theaterRoutes'
-import { theaterDependencies, adminDependencies, dependencies } from '../../config/dependencies'
+import { theaterDependencies, adminDependencies, dependencies,commonDependencies } from '../../config/dependencies'
 import { Admin } from '../database/model/admin/admin'
 import { hashPassword } from '../../utils/bcrypt'
 import { adminRoutes } from './admin/adminRoutes'
@@ -25,9 +25,9 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser());
 
 
-app.use('/users', userRoutes(dependencies));
-app.use('/theaters', theaterRoutes(theaterDependencies));
-app.use('/admin', adminRoutes(adminDependencies));
+app.use('/users', userRoutes(dependencies,commonDependencies));
+app.use('/theaters', theaterRoutes(theaterDependencies,commonDependencies));
+app.use('/admin', adminRoutes(adminDependencies,commonDependencies));
 
 app.use(errorHandler);
 

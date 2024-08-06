@@ -10,19 +10,19 @@ const manageEntity = (dependencies: IAdminDependencies) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
 
-      const { _id, role } = req.params;
-
-      if (!_id) {
-        throw new CustomError('Invalid request', 400, '_id');
+      const { entityId, role } = req.params;
+     
+      if (!entityId) {
+        throw new CustomError('Invalid request', 400, 'entityId');
       }
 
       if (!role || (role !== Role.users && role !== Role.theaters)) {
         throw new CustomError('Invalid request', 400, 'role');
       }
 
-      mongodbIdValidator(_id);
+      mongodbIdValidator(entityId);
 
-      const response = await manageEntityUsecase(dependencies).execute({ _id, role })
+      const response = await manageEntityUsecase(dependencies).execute({ entityId, role })
       return res.status(200).json({
         status: response.status,
         message: response.message,

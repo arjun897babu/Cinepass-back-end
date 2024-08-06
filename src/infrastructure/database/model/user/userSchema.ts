@@ -32,7 +32,7 @@ const userSchema = new Schema<UserEntity>({
     type: String,
     default: null
   },
-  location: {
+  city: {
     type: String,
     default: null
   },

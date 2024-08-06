@@ -24,14 +24,14 @@ const googleSignUp = (dependencies: IDependencies) => {
       }
       const { name, email, picture, sub: googleId } = payload
       if (!name || !picture || !email) {
-        throw new CustomError('Name is missing', 400, '');
+        throw new CustomError('Bad request', 400, '');
       }
 
       const response = await googleAuthUsecase(dependencies).execute({ name, email, password: null, profile_picture: picture, googleId })
       return res.cookie(Cookie.userJWT, response.accessToken, {
         httpOnly: true,
         sameSite: 'lax',
-        maxAge: 24*60 * 60 * 1000
+        maxAge: 24 * 60 * 60 * 1000
       })
         .status(200).json({
           status: response.status,

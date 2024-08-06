@@ -4,13 +4,18 @@ enum Role {
   theaters = 'theaters'
 };
 
-enum AuthSource{
+enum AuthSource {
   SELF = 'self',
   GOOGLE = 'google'
 }
 
+enum MovieType {
+  THEATER='Theater',
+  STREAM='Stream'
+}
 
 export {
   Role,
-  AuthSource
+  AuthSource,
+  MovieType
 }

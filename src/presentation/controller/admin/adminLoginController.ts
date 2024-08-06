@@ -13,21 +13,16 @@ const adminLogin = (dependencies: IAdminDependencies) => {
       if (!email && !password) {
         throw new CustomError('All fields are required', 401, '')
       }
-      const emailValidation = validateEmail(email);
-      const passwordValidation = validatePassword(password);
-      if (!emailValidation.isValid) {
-        throw new CustomError(emailValidation.message, 401, 'email');
-      }
-      if (!passwordValidation) {
-        throw new CustomError(emailValidation.message, 401, 'password')
-      }
 
+      validateEmail(email);
+      validatePassword(password);
+      
       const response = await adminLoginUseCase(dependencies).execute({ email, password })
 
       return res.cookie(Cookie.adminJWT, response.accessToken, {
         httpOnly: true,
         sameSite: "lax",
-        maxAge: 24*60 * 60 * 1000,
+        maxAge: 24 * 60 * 60 * 1000,
       })
         .status(200).json({
           message: response.message,

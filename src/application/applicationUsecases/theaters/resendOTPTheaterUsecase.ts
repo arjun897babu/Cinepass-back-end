@@ -18,7 +18,7 @@ const resendOTPTheaterUsecase = (dependencies:ITheaterDependencies)=>{
         const OTP = generateOTP();
 
         await createTheatersOTP(email, OTP)
-        // sendMail(email, 'Reset Password', OTPTemplate(OTP))
+        sendMail(email, 'Reset Password', OTPTemplate(OTP))
         return {
           status: ResponseStatus.SUCCESS,
           message: 'OTP has been sent to your email successfully',

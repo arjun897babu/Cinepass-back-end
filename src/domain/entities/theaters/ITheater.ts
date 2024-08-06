@@ -5,7 +5,8 @@ interface ITheaters {
   ownerId:ObjectId;
   theater_Name: string,
   theater_license: string,
-  location?:string,
+  address:string,
+  city:string
   images?: string[]
 }
 

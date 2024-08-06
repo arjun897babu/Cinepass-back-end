@@ -60,7 +60,7 @@ const loginUseCase = (dependencies: IDependencies) => {
 
         const accessToken = generateToken({ _id: userId, role: Role.users }, config.secrets.access_token, '1h')
         // const refreshToken = generateToken({_id:userId,role:Role.users}, config.secrets.refresh_token, '7d')
-        const { _id, password, ...rest } = existingUser
+        const { googleId, password, ...rest } = existingUser
 
         return {
           status: 'Success',

@@ -16,7 +16,7 @@ const manageEntityUsecase = (dependencies: IAdminDependencies) => {
           message: 'updated Successfully',
           status: ResponseStatus.SUCCESS,
           data: {
-            _id: updated._id,
+            _id: updated.entityId,
           }
         }
       } catch (error) {

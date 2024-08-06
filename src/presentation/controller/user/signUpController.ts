@@ -12,22 +12,16 @@ const signup = (dependencies: IDependencies) => {
       const { name, email, mobile_number, password } = req.body
 
       //validating name
-      const nameValidation = validateName(name);
-      if (!nameValidation.isValid) {
-        throw new CustomError(nameValidation.message, 400, 'name')
-      }
+      validateName(name);
+      
 
       //validating email
-      const emailValidation = validateEmail(email);
-      if (!emailValidation.isValid) {
-        throw new CustomError(emailValidation.message, 400, 'email')
-      }
+       validateEmail(email);
+       
 
       //validating mobile_number
-      const mobileNumberValidation = validateMobileNumber(mobile_number);
-      if (!mobileNumberValidation.isValid) {
-        throw new CustomError(mobileNumberValidation.message, 400, 'mobile_number')
-      }
+     validateMobileNumber(mobile_number);
+       
 
       const response = await signupUseCase(dependencies).execute({ name, email, mobile_number, password })
 

@@ -11,10 +11,8 @@ const forgotPassword = (dependencies: IDependencies) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email } = req.body;
-      const emailValidation = validateEmail(email);
-      if (!emailValidation.isValid) {
-        throw new CustomError('Invalid Email', 400, 'email')
-      }
+    validateEmail(email);
+      
       const response = await forgotPasswordUsecase(dependencies).execute(email);
 
 

@@ -32,7 +32,7 @@ interface IUpdateApproval {
 }
 interface IManageEntity {
   role: Role.users | Role.theaters;
-  _id: string;
+  entityId: string;
 }
 
 export {

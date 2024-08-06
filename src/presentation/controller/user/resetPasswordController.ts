@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { IDependencies } from "../../../application/interface/user/IDependencies";
 import { CustomError } from "../../../utils/CustomError";
+import { validatePassword } from "../../../utils/validator";
 
 const resetPassword = (dependencies: IDependencies) => {
   const { useCases: { resetPasswordUsecase } } = dependencies;
@@ -12,16 +13,14 @@ const resetPassword = (dependencies: IDependencies) => {
       if (!token) {
         throw new CustomError('Something went wrong', 400, '_id')
       }
-      if (!password || password === '') {
-        throw new CustomError('please enter a password', 400, 'password')
-      }
+      validatePassword(password)
 
       const response = await resetPasswordUsecase(dependencies).execute({ _id: token, password })
       return res.status(200).json(
         {
           status: response.status,
           message: response.message,
-          redirectURL:response.redirectURL
+          redirectURL: response.redirectURL
         }
       )
 

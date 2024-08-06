@@ -16,6 +16,8 @@ const verifyUser = async (req: Request, res: Response, next: NextFunction) => {
 
     const decoded = verifyToken(userJWT, config.secrets.access_token);
     if (decoded._id && decoded.role === Role.users) {
+      req.params._id = decoded._id
+      req.params.roles = decoded.role
       mongodbIdValidator(decoded._id)
       next()
     } else {
@@ -36,7 +38,7 @@ const verifyResetPasswordRequest = async (req: Request, res: Response, next: Nex
       throw new CustomError('Something went wrong', 401, 'token')
     }
     const decoded = verifyToken(token, config.secrets.short_lived_access_token);
-    
+
     if (decoded._id && decoded.role === Role.users) {
       mongodbIdValidator(decoded._id);
       req.params.token = decoded._id

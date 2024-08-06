@@ -9,7 +9,7 @@ interface UserEntity {
   verified?: boolean;
   status?: boolean;
   profile_picture?:string,
-  location?:string,
+  city?:string,
   isGoogleAuth?: boolean,
   googleId?:string
 }

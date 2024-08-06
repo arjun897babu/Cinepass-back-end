@@ -1,5 +1,6 @@
 import { IDependencies } from "../../../application/interface/user/IDependencies";
 import { forgotPassword } from "./forgotPasswordController";
+import { getAllCities } from "./getAllCities";
 import { googleSignUp } from "./GoogleSignUpController";
 import { login } from "./loginController";
 import { logout } from "./logoutController";
@@ -18,7 +19,8 @@ const userController = (dependencies: IDependencies) => {
     forgotPassword: forgotPassword(dependencies),
     resetPassword: resetPassword(dependencies),
     resendOTP: resendOTP(dependencies),
-    googleSignUp:googleSignUp(dependencies),
+    googleSignUp: googleSignUp(dependencies),
+    getCities: getAllCities(dependencies),
   }
 }
 

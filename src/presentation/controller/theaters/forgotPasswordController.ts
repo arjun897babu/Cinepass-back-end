@@ -8,11 +8,8 @@ const theaterForgotPassword = (dependencies: ITheaterDependencies) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email } = req.body
-      console.log(email)
-      const emailValidation = validateEmail(email);
-      if (!emailValidation.isValid) {
-        throw new CustomError('Invalid email', 400, 'email')
-      }
+      
+      validateEmail(email);
 
       const response = await theaterForgotPasswordUsecase(dependencies).execute(email);
 

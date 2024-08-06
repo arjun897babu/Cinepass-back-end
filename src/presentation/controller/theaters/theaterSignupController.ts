@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from "express"
 import { ITheaterDependencies } from "../../../application/interface/theaters/ITheaterDependencies"
-import { validateAdhaar, validateEmail, validateMobileNumber, validateName, validatePassword, validateTheaterLicense, validateTheaterName } from "../../../utils/validator"
+import { validateAdhaar, validateEmail, validateAddress, validateCity, validateMobileNumber, validateName, validatePassword, validateTheaterLicense, validateTheaterName } from "../../../utils/validator"
 import { CustomError } from "../../../utils/CustomError"
-import { log } from "console"
 
 const theaterSignup = (dependencies: ITheaterDependencies) => {
   const { theaterUseCase: { theaterSignupUseCase } } = dependencies
@@ -10,43 +9,33 @@ const theaterSignup = (dependencies: ITheaterDependencies) => {
     try {
       const payload = req.body;
       //name validation
-      const nameValidation = validateName(payload.name)
-      if (!nameValidation.isValid) {
-        throw new CustomError(nameValidation.message, 400, 'name')
-      }
+      validateName(payload.name)
+
       //email validation
-      const emailValidation = validateEmail(payload.email)
-      if (!emailValidation.isValid) {
-        throw new CustomError(emailValidation.message, 400, 'email')
-      }
+      validateEmail(payload.email)
+
       //mobile number validation
-      const mobileNumberValidaton = validateMobileNumber(payload.mobile_number)
-      if (!mobileNumberValidaton.isValid) {
-        throw new CustomError(mobileNumberValidaton.message, 400, 'mobile_number')
-      }
+      validateMobileNumber(payload.mobile_number)
+
       //password validation
-      const passwordValidation = validatePassword(payload.password);
-      if (!passwordValidation.isValid) {
-        throw new CustomError(passwordValidation.message, 400, 'password')
-      }
+      validatePassword(payload.password);
+
       //adhaar validation
-      const adhaarNumberValidation = validateAdhaar(payload.adhaar_number);
-      if (!adhaarNumberValidation.isValid) {
-        throw new CustomError(adhaarNumberValidation.message, 400, 'adhaar_number')
-      }
-       //theater name
-       const theaterName = validateTheaterName(payload.theater_name);
-       if (!theaterName.isValid) {
-        console.log('theater name error');
-        
-         throw new CustomError(theaterName.message, 400, 'Invalid theater name')
-       }
- 
+      validateAdhaar(payload.adhaar_number);
+
+      //theater name
+      validateTheaterName(payload.theater_name);
+
+
       //theater license validaton
-      const theaterLicenseValidation = validateTheaterLicense(payload.theater_license);
-      if (!theaterLicenseValidation.isValid) {
-        throw new CustomError(theaterLicenseValidation.message, 400, 'theater_license')
-      }
+      validateTheaterLicense(payload.theater_license);
+
+      //theater Location validation
+      validateAddress(payload.address);
+
+      //theater license validaton
+      validateTheaterLicense(payload.city);
+
 
       const response = await theaterSignupUseCase(dependencies).execute(payload);
 
