@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { IAdminDependencies } from "../../../application/interface/admin/IAdminDependencies";
 import { MovieType } from "../../../utils/enum";
-import { CustomError } from "../../../utils/CustomError";
 import { validateMovieType } from "../../../utils/validator";
 
 const addMovie = (dependencies: IAdminDependencies) => {
@@ -14,7 +13,7 @@ const addMovie = (dependencies: IAdminDependencies) => {
       validateMovieType(movieType)
 
       const payload = req.body;
-       
+ 
       const response = await addMovieUsecase(dependencies).execute(payload, movieType as MovieType)
 
       res.status(200).json({
@@ -25,6 +24,7 @@ const addMovie = (dependencies: IAdminDependencies) => {
       })
 
     } catch (error) {
+      console.log(error)
       next(error)
     }
   }

@@ -12,11 +12,7 @@ const updateTheater = async (_id: string, payload: ITheaterUpdateInfoPayload): P
           theater_license: payload.theater_license,
           theater_Name: payload.theater_name,
           city: payload.city,
-        },
-        $push: {
-          images: {
-            $each: payload.images
-          }
+          images: payload.images
         }
       },
       { new: true }

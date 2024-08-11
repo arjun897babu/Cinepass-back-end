@@ -1,7 +1,7 @@
 import { IResponse } from "../../../domain/domainUsecases"
 import { ResponseStatus } from "../../../domain/entities/common"
 import { UserEntity } from "../../../domain/entities/user/IUserEntity"
-import { OTPTemplate, sendMail } from "../../../infrastructure/email/nodeMailer"
+import { OTPTemplate, sendMail } from "../../../infrastructure/nodeMailer"
 import { hashPassword } from "../../../utils/bcrypt"
 import { CustomError } from "../../../utils/CustomError"
 import { AuthSource } from "../../../utils/enum"

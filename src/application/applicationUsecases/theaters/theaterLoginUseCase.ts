@@ -1,7 +1,7 @@
 import { config } from "../../../config/envConfig"
 import { ILogin, LoginResponse } from "../../../domain/domainUsecases"
 import { ApprovalStatus, ResponseStatus } from "../../../domain/entities/common"
-import { OTPTemplate, sendMail } from "../../../infrastructure/email/nodeMailer"
+import { OTPTemplate, sendMail } from "../../../infrastructure/nodeMailer"
 import { comparePassword } from "../../../utils/bcrypt"
 import { CustomError } from "../../../utils/CustomError"
 import { Role } from "../../../utils/enum"

@@ -3,9 +3,7 @@ import { MovieShow } from "../../model/theaters";
 
 const createMovieShows = async (_id: string, payload: Omit<IMovieShow, 'theaterId'>): Promise<IMovieShow> => {
   try {
-    console.log (' in repository  ')
-    console.log (payload)
-
+   const isExists = await MovieShow.exists({})
     const newShow = await MovieShow.create({ theaterId: _id, ...payload });
     return newShow;
   } catch (error) {

@@ -6,9 +6,7 @@ import { userRoutes } from './user/userRoutes'
 import { errorHandler } from './middleware/errorHandler'
 import { config } from '../../config/envConfig'
 import { theaterRoutes } from './theaters/theaterRoutes'
-import { theaterDependencies, adminDependencies, dependencies,commonDependencies } from '../../config/dependencies'
-import { Admin } from '../database/model/admin/admin'
-import { hashPassword } from '../../utils/bcrypt'
+import { theaterDependencies, adminDependencies, dependencies, commonDependencies } from '../../config/dependencies'
 import { adminRoutes } from './admin/adminRoutes'
 
 const app = express();
@@ -20,14 +18,15 @@ app.use(cors({
   credentials: true
 }));
 
+
 app.use(express.json())
+// app.use(express.json({limit:'50mb'}))
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser());
 
-
-app.use('/users', userRoutes(dependencies,commonDependencies));
-app.use('/theaters', theaterRoutes(theaterDependencies,commonDependencies));
-app.use('/admin', adminRoutes(adminDependencies,commonDependencies));
+app.use('/users', userRoutes(dependencies, commonDependencies));
+app.use('/theaters', theaterRoutes(theaterDependencies, commonDependencies));
+app.use('/admin', adminRoutes(adminDependencies, commonDependencies));
 
 app.use(errorHandler);
 

@@ -1,6 +1,6 @@
 import { IMovie } from "../../../domain/entities/admin/ITheaterMovie";
 import { ResponseStatus } from "../../../domain/entities/common";
-import { MovieType } from "../../../utils/enum";
+import { MovieType, Role } from "../../../utils/enum";
 import { IAdminDependencies } from "../../interface/admin/IAdminDependencies";
 
 const addMovieUsecase = (dependencies: IAdminDependencies) => {
@@ -10,7 +10,8 @@ const addMovieUsecase = (dependencies: IAdminDependencies) => {
     execute: async (payload: IMovie, movieType: MovieType) => {
       try {
 
-        const newMovie = await addMovie(payload, movieType);
+        
+        const newMovie = await addMovie(payload , movieType);
 
         return {
           status: ResponseStatus.SUCCESS,

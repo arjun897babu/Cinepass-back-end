@@ -2,7 +2,7 @@
 import { IResponse } from "../../../domain/domainUsecases";
 import { ResponseStatus } from "../../../domain/entities/common";
 import { ITheaterOwnerEntity } from "../../../domain/entities/theaters/ITheaterOwners";
-import { OTPTemplate, sendMail } from "../../../infrastructure/email/nodeMailer";
+import { OTPTemplate, sendMail } from "../../../infrastructure/nodeMailer";
 import { hashPassword } from "../../../utils/bcrypt";
 import { CustomError } from "../../../utils/CustomError";
 import { generateOTP } from "../../../utils/OTPGenarator";

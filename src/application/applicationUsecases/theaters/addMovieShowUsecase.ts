@@ -7,7 +7,6 @@ const addMovieShowUsecase = (dependencies: ITheaterDependencies) => {
   return {
     execute: async (_id: string, payload: Omit<IMovieShow, 'theaterId'>) => {
       try {
-        
         const show = await createMovieShows(_id, payload);
         return {
           status: ResponseStatus.SUCCESS,
