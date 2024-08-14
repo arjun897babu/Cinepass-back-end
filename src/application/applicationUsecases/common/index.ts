@@ -1,4 +1,3 @@
-export * from './getTheaterScreenUsecase'
 export * from './getTheaterUsecase'
 export * from './getMoviesUsecase'
 export * from './getShowsUsecase'

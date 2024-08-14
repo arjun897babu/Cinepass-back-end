@@ -17,7 +17,16 @@ const movieShowSchema = new Schema<IMovieShow>({
     type: Types.ObjectId,
     required: true,
     ref: 'TheaterScreen'
-  }, showTime: {
+  },
+  format: {
+    type: String,
+    required: true
+  },
+  language: {
+    type: String,
+    required: true
+  },
+  showTime: {
     type: String,
     required: true
   },
@@ -27,6 +36,7 @@ const movieShowSchema = new Schema<IMovieShow>({
   }
 }, {
   timestamps: true
-});
+}); 
 
 export const MovieShow = model<IMovieShow>('MovieShow', movieShowSchema);
+ 

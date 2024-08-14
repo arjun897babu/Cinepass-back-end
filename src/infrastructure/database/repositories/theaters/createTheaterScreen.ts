@@ -6,6 +6,7 @@ const createTheaterScreen = async (_id: string, payload: ITheaterScreen): Promis
 
   try {
     const isExists = await TheaterScreen.exists({
+      _id,
       screen_name: {
         $regex: payload.screen_name
           .split('')

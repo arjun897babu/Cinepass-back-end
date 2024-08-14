@@ -45,6 +45,7 @@ interface GetShowsParams {
   role: Role;
   _id: string | undefined;
   city: string | undefined;
+  movieId?: string
 }
 
 interface IGetMovieShowResponse {

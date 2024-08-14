@@ -7,7 +7,21 @@ const getRunningMovies = (dependencies: ICommonDependencies) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { roles, _id, city } = req.params
-      const response = await getRunningMoviesUsecase(dependencies).execute({ role: roles as Role, _id, city })
+      let { movieId } = req.query
+
+      movieId = typeof movieId === 'string' ?
+        movieId
+        : undefined
+        
+      const response = await getRunningMoviesUsecase(dependencies)
+        .execute(
+          {
+            role: roles as Role,
+            _id,
+            city,
+            movieId
+          }
+        )
 
       return res.status(200).json({
         status: response.status,
