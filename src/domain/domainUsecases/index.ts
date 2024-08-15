@@ -1,4 +1,4 @@
-import { Role } from "../../utils/enum";
+import { MovieType, Role } from "../../utils/enum";
 
 interface IResponse {
   status: string;
@@ -7,6 +7,10 @@ interface IResponse {
   data?: {
     [key: string]: string | number | boolean | object | any[];
   }
+};
+interface IResponse2 {
+  status: string;
+  message: string;
 };
 
 interface ILogin {
@@ -42,5 +46,8 @@ export {
   LoginResponse,
   IOTPVerifcation,
   IUpdateApproval,
-  IManageEntity
+  IManageEntity,
+  IResponse2,
+
+
 };

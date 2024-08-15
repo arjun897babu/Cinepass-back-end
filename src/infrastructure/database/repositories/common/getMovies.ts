@@ -12,7 +12,7 @@ const getMovies = async (movieType: MovieType): Promise<IMovie[] | []> => {
     const db = model[movieType];
     const response = await db.aggregate([
       {
-        $match: {}
+        $match: { listed: true }
       },
       {
         $sort: { _id: -1 }

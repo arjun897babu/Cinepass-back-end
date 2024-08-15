@@ -18,7 +18,7 @@ const sendMail = async (email: string, action: string, template: string) => {
       subject: action,
       html: template,
     });
-
+    console.log(info.envelope)
   } catch (error) {
     throw error
   }

@@ -9,9 +9,9 @@ const updateTheaterApprovalByAdminUseCase = (dependencies: IAdminDependencies) =
   return {
     execute: async (payload: IUpdateApproval): Promise<IResponse> => {
       try {
-
+        console.log(payload)
         const updatedTheater = await updateTheaterApprovalByAdmin(payload);
-
+        console.log(updatedTheater)
         //For handling the case where no theater found
         if (!updatedTheater) {
           throw new CustomError('Theater details not found', 404, 'Not found')

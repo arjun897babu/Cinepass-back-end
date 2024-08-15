@@ -1,6 +1,6 @@
 import { IMovie } from "../domain/entities/admin/ITheaterMovie";
 import { ITheaterOwnerEntity, ITheaterScreen } from "../domain/entities/theaters";
-import { Role } from "./enum"
+import { MovieType, Role } from "./enum"
 
 interface ICityUpdate {
   _id: string,
@@ -56,6 +56,12 @@ interface IGetMovieShowResponse {
   screen: Pick<ITheaterScreen, '_id' | 'amenity' | 'screen_name'>
 }
 
+interface IManageMovie {
+  movieType: MovieType;
+  movieId: string
+  listed?:boolean
+}
+
 export {
   IResetPassword,
   TokenPayload,
@@ -63,7 +69,8 @@ export {
   ITheaterDetailResponse,
   ITheaterUpdateInfoPayload,
   GetShowsParams,
-  IGetMovieShowResponse
+  IGetMovieShowResponse,
+  IManageMovie
 
 }
 

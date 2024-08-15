@@ -34,7 +34,9 @@ const getSingleRunningMovie = async (movieId: string, city: string) => {
               $match: {
                 $and: [
                   { 'theater.city': { $regex: city, $options: 'i' } },
-                  { 'movie.slug': { $regex: `^${movieId}$`, $options: 'i' } }
+                  { 'theater.status': true },
+                  { 'movie.slug': { $regex: `^${movieId}$`, $options: 'i' } },
+                  { 'movie.listed': true },
                 ]
               }
             },
@@ -58,7 +60,12 @@ const getSingleRunningMovie = async (movieId: string, city: string) => {
               $unwind: '$theater'
             },
             {
-              $match: { 'theater.city': { $regex: city, $options: 'i' } }
+              $match: {
+                $and: [
+                  { 'theater.city': { $regex: city, $options: 'i' } },
+                  { 'theater.status': true }
+                ]
+              }
             },
             {
               $lookup: {
@@ -97,7 +104,7 @@ const getSingleRunningMovie = async (movieId: string, city: string) => {
                 'theater.theater_name': 1,
                 'theater.city': 1,
                 'theater._id': 1,
-                'theater.address':1,
+                'theater.address': 1,
                 shows: 1
               }
             }

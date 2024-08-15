@@ -6,6 +6,7 @@ import { updateTheaterApprovalByAdmin } from "./updateTheaterApprovalController"
 import { manageEntity } from "./manageUserController"
 import { updateTheaterCity } from "./updateTheaterCityController"
 import { addMovie } from "./addMovieController"
+import { deleteMovie } from "./deleteMovie"
 
 const adminController = (dependencies: IAdminDependencies) => {
   return {
@@ -14,8 +15,9 @@ const adminController = (dependencies: IAdminDependencies) => {
     getEntityData: getEntityData(dependencies),
     updateTheaterOwnerApproval: updateTheaterApprovalByAdmin(dependencies),
     manageEntity: manageEntity(dependencies),
-    updateTheaterCity:updateTheaterCity(dependencies),
-    addMovie:addMovie(dependencies),
+    updateTheaterCity: updateTheaterCity(dependencies),
+    addMovie: addMovie(dependencies),
+    deleteMovie: deleteMovie(dependencies)
   }
 }
 
