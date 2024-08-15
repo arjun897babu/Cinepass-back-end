@@ -45,7 +45,7 @@ const theaterLoginUseCase = (dependencies: ITheaterDependencies) => {
         }
         //For blocked accounts
         if (!existingTheaterOwner.status) {
-          throw new CustomError('Your account is blocked', 403, '')
+          throw new CustomError('Your account is blocked', 403, 'blocked')
         }
         //Checking password credentials
         const isPassword = await comparePassword(data.password, existingTheaterOwner.password);

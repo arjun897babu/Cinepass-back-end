@@ -1,6 +1,6 @@
 import { config } from "../../../config/envConfig";
 import { IResponse } from "../../../domain/domainUsecases";
-import { ResponseStatus } from "../../../domain/entities/common";
+import { ApprovalStatus, ResponseStatus } from "../../../domain/entities/common";
 import { resetPasswordTemplate, sendMail } from "../../../infrastructure/nodeMailer";
 import { CustomError } from "../../../utils/CustomError";
 import { Role } from "../../../utils/enum";
@@ -21,6 +21,20 @@ const theaterForgotPasswordUsecase = (dependencies: ITheaterDependencies) => {
         if (!_id) {
           throw new CustomError('Email not exists', 404, 'email')
         }
+
+        //For pending accounts 
+        if (existingTheaterOwner.approval_status === ApprovalStatus.PENDING) {
+          throw new CustomError('Waiting For admin approval', 401, 'approval')
+        }
+        //for rejected accounts
+        if (existingTheaterOwner.approval_status === ApprovalStatus.REJECTED) {
+          throw new CustomError('Your Account has been rejected', 403, 'approval')
+        }
+        //For blocked accounts
+        if (!existingTheaterOwner.status) {
+          throw new CustomError('Your account is blocked', 403, 'blocked')
+        }
+      
 
         const token = generateToken({ _id, role: Role.theaters }, config.secrets.short_lived_access_token, '5m')
         const link = `${config.http.origin}/${Role.theaters}/reset-password/${token}`;

@@ -4,7 +4,7 @@ import { comparePassword, hashPassword } from "../../../utils/bcrypt";
 import { CustomError } from "../../../utils/CustomError";
 import { IResetPassword } from "../../../utils/interface";
 import { ITheaterDependencies } from "../../interface/theaters/ITheaterDependencies";
- 
+
 
 const theaterResetPasswordUsecase = (dependencies: ITheaterDependencies) => {
   const { theaterRepositories: { findTheaterOwnerById, resetPasswordTheaters } } = dependencies;
@@ -15,8 +15,14 @@ const theaterResetPasswordUsecase = (dependencies: ITheaterDependencies) => {
       try {
         const existingTheaterOwner = await findTheaterOwnerById(payload._id);
         if (!existingTheaterOwner) {
-          throw new CustomError('User not found', 404, 'user')
+          throw new CustomError('Account not found', 404, 'theaters')
         }
+        
+        //For blocked accounts
+        if (!existingTheaterOwner.status) {
+          throw new CustomError('Your account is blocked', 403, 'blocked')
+        }; 
+
         const isPassword = await comparePassword(payload.password, existingTheaterOwner.password);
         if (isPassword) {
           throw new CustomError('Please Enter a  new Password', 404, 'password')
