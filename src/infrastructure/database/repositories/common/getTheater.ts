@@ -1,46 +1,26 @@
 import { Types } from "mongoose";
-import { Theaters } from "../../model/theaters";
 import { ITheaterDetailResponse } from "../../../../utils/interface";
+import { ITheaterOwnerEntity } from "../../../../domain/entities/theaters";
+import { TheaterOwner } from "../../model/theaters";
 
-const getTheaterDetails = async (ownerId: string): Promise<ITheaterDetailResponse| undefined> => {
+const getTheaterDetails = async (ownerId: string): Promise<ITheaterOwnerEntity | undefined> => {
   try {
 
-    const [theaterDetails] = await Theaters.aggregate([
+    const [theaterDetails] = await TheaterOwner.aggregate([
       {
         $match: {
           _id: new Types.ObjectId(ownerId)
         }
       },
-      {
-        $lookup: {
-          from: 'theaterowners',
-          localField: 'ownerId',
-          foreignField: '_id',
-          as: 'owner'
-        }
-      },
-      {
-        $unwind: '$owner'
-      },
+
       {
         $project: {
-          _id: 1,
-          theater_Name: 1,
-          theater_license: 1,
-          address: 1,
-          images: 1,
-          city: 1,
-          owner: {
-            _id: 1,
-            name: 1,
-            email: 1,
-            mobile_number: 1
-          }
+          password: 0
         }
       }
     ]);
 
-    return   theaterDetails  
+    return theaterDetails
   } catch (error) {
     throw error;
   }

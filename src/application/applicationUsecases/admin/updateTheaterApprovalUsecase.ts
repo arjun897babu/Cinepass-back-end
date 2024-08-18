@@ -5,13 +5,13 @@ import { CustomError } from "../../../utils/CustomError";
 import { IAdminDependencies } from "../../interface/admin/IAdminDependencies";
 
 const updateTheaterApprovalByAdminUseCase = (dependencies: IAdminDependencies) => {
-  const { adminRepositories: { updateTheaterApprovalByAdmin, createTheater } } = dependencies
+  const { adminRepositories: { updateTheaterApprovalByAdmin } } = dependencies
   return {
     execute: async (payload: IUpdateApproval): Promise<IResponse> => {
       try {
-        console.log(payload)
+ 
         const updatedTheater = await updateTheaterApprovalByAdmin(payload);
-        console.log(updatedTheater)
+     
         //For handling the case where no theater found
         if (!updatedTheater) {
           throw new CustomError('Theater details not found', 404, 'Not found')
@@ -30,20 +30,7 @@ const updateTheaterApprovalByAdminUseCase = (dependencies: IAdminDependencies) =
             break;
           default:
             responseMessage = 'Account permission pending'
-        };
-
-        if (updatedTheater.approval_status === ApprovalStatus.APPROVED) {
-          await createTheater(
-            {
-              ownerId: updatedTheater._id as ObjectId,
-              theater_Name: updatedTheater.theater_name,
-              theater_license: updatedTheater.theater_license,
-              address: updatedTheater.address,
-              city: updatedTheater.city
-            }
-          )
-        }
-
+        }; 
         return {
           status: ResponseStatus.SUCCESS,
           message: responseMessage,

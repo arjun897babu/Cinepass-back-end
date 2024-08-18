@@ -4,26 +4,24 @@ import { TheaterOwnerProfile, TheaterProfile } from "../../../../utils/interface
 import { isTheaterOwnerProfile } from "../../../../utils/typeGaurd";
 import { TheaterOwner } from "../../model/theaters";
 
-const updateTheater = async (_id: string, payload: TheaterProfile): Promise<ITheaterOwnerEntity | null> => {
+const updateTheaterOwner = async (_id: string, payload: TheaterOwnerProfile): Promise<ITheaterOwnerEntity | null> => {
   try {
 
 
-    const isExist = await TheaterOwner.exists({ theater_license: payload.theater_license, _id: { $ne: _id } });
-    console.log(isExist)
-    if (isExist) {
-      throw new CustomError('already registered with this license', 400, 'theater_license')
-    }
+    const isExist = await TheaterOwner.exists({ email: payload.email, _id: { $ne: _id } });
 
+    if (isExist) {
+      throw new CustomError('email already exists', 400, 'email')
+    }
 
     const updatedTheater = await TheaterOwner.findOneAndUpdate(
       { _id },
       {
         $set: {
-          address: payload.address,
-          theater_license: payload.theater_license,
-          theater_name: payload.theater_name,
-          city: payload.city,
-          images: payload.images
+          name: payload.name,
+          email: payload.email,
+          mobile_number: payload.mobile_number,
+          adhaar_number: payload.adhaar_number,
         }
       },
       { new: true, }
@@ -38,5 +36,5 @@ const updateTheater = async (_id: string, payload: TheaterProfile): Promise<IThe
 };
 
 export {
-  updateTheater
+  updateTheaterOwner
 };

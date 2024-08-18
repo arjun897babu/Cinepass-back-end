@@ -10,7 +10,7 @@ const createTheaterOwner = async (data: ITheaterOwnerEntity): Promise<ITheaterOw
   } catch (error) {
     throw error
   }
-}
+}   
  
 
 export {

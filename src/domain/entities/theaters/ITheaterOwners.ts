@@ -1,9 +1,10 @@
-import { ObjectId } from "mongoose"
+ 
+import { Document } from "mongoose";
 import { ApprovalStatus } from "../common";
 
 
-interface ITheaterOwnerEntity {
-  _id?: ObjectId;
+interface ITheaterOwnerEntity extends Document {
+   
   name: string;
   email: string;
   mobile_number: number;
@@ -15,7 +16,8 @@ interface ITheaterOwnerEntity {
   theater_license: string;
   approval_status?: ApprovalStatus;
   address: string
-  city:string
+  city:string,
+  images?:string[]
 }
 
 

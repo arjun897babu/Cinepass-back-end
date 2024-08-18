@@ -1,8 +1,8 @@
 import { IResponse } from "..";
-import { ITheaterUpdateInfoPayload } from "../../../utils/interface";
+import { TheaterOwnerProfile, TheaterProfile } from "../../../utils/interface";
 
 interface IUpdateTheaterInfo {
-  execute: (_id: string,payload:ITheaterUpdateInfoPayload) => Promise<IResponse>
+  execute: (_id: string, payload:(TheaterOwnerProfile | TheaterProfile)) => Promise<IResponse>
 }
 
 export {

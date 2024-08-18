@@ -6,12 +6,13 @@ import { MovieShow } from "../../model/theaters";
 const getRunningMovies = async ({ role, _id, city }: GetShowsParams) => {
 
   try {
+    console.log(role, _id, city)
 
     const matchQuery = role === Role.theaters
       ? { 'theaterId': new Types.ObjectId(_id), 'theater.status': true }
-      : { 'theater.city': { $regex: city, $options: 'i' } };
+      : { 'theater.status': true, 'theater.city': { $regex: city, $options: 'i' } };
 
-    const [{movies}] = await MovieShow.aggregate([
+    const [movies] = await MovieShow.aggregate([
       {
         $lookup: {
           from: 'theaterowners',
@@ -48,11 +49,11 @@ const getRunningMovies = async ({ role, _id, city }: GetShowsParams) => {
       }
     ]);
 
-    return movies
+    return movies ? movies.movies : []
   } catch (error) {
     throw error
   }
 }
 export {
-  getRunningMovies 
+  getRunningMovies
 }

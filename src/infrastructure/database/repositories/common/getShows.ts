@@ -6,7 +6,7 @@ import { MovieShow } from "../../model/theaters";
 const getShows = async ({ role, _id, city }: GetShowsParams): Promise<IGetMovieShowResponse[] | []> => {
  
   try {
-
+console.log(role, _id, city )
     const matchQuery = role === Role.theaters
       ? { 'theaterId': new Types.ObjectId(_id), 'theater.status': true }
       : { 'theater.city': { $regex: city, $options: 'i' } };
@@ -56,14 +56,19 @@ const getShows = async ({ role, _id, city }: GetShowsParams): Promise<IGetMovieS
           'screen.amenity': 1,
           'screen.chargePerSeat': 1,
           movie: 1,
-          '_id': 1,
-          'showTime': 1,
+          format: 1,
+          language: 1,
+          showTime: 1,
+          endTime: 1,
           'theater.theater_name': 1,
           'theater.address': 1,
-          'theater.city': 1,
+          'theater.city': 1, 
+          'theater._id': 1,
         }
       }
     ])
+
+    console.log(shows)
 
     return shows
   } catch (error) {

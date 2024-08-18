@@ -13,7 +13,6 @@ interface IAdminRepositories {
   getEntityData: (role: Role.users | Role.theaters) => Promise<ITheaterOwnerEntity[] | UserEntity[] | []>
   updateTheaterApprovalByAdmin: (payload: IUpdateApproval) => Promise<ITheaterOwnerEntity | null>
   updateBlockStatus: (payload: IManageEntity) => Promise<IManageEntity | null>
-  createTheater: (data: ITheaters) => Promise<boolean>;
   updateTheaterCity: (data: ICityUpdate) => Promise<ICityUpdate|null>
   addMovie:(payload:IMovie,movieType:MovieType)=>Promise<IMovie>
   deleteMovie:(payload:IManageMovie)=>Promise<IManageMovie|null>

@@ -33,6 +33,9 @@ const movieShowSchema = new Schema<IMovieShow>({
   endTime: {
     type: String,
     required: true
+  },
+  opening_date:{
+    type:Date
   }
 }, {
   timestamps: true

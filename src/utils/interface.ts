@@ -33,13 +33,11 @@ interface ITheaterDetailResponse {
   owner: ITheaterOwnerForTheater;
 }
 
-interface ITheaterUpdateInfoPayload {
-  theater_name: string,
-  theater_license: string,
-  city: string,
-  address: string,
-  images: string[]
-}
+ type TheaterOwnerProfile = Pick<ITheaterOwnerEntity, 'name' | 'email' | 'mobile_number' | 'adhaar_number'>;
+
+ type TheaterProfile = Pick<ITheaterOwnerEntity, 'theater_name' | 'theater_license' |   'address' | 'city' | 'images'>;
+
+
 
 interface GetShowsParams {
   role: Role;
@@ -67,7 +65,8 @@ export {
   TokenPayload,
   ICityUpdate,
   ITheaterDetailResponse,
-  ITheaterUpdateInfoPayload,
+  TheaterOwnerProfile,
+  TheaterProfile,
   GetShowsParams,
   IGetMovieShowResponse,
   IManageMovie

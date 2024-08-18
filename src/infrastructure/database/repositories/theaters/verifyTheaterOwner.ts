@@ -1,5 +1,5 @@
 import { IUpdateVerification } from "../../../../domain/domainUsecases"
-import { ITheaterOwnerEntity, ITheaters } from "../../../../domain/entities/theaters"
+import { ITheaterOwnerEntity  } from "../../../../domain/entities/theaters"
 import { TheaterOwner } from "../../model/theaters"
 
 const verifyTheaterOwner = async (data: IUpdateVerification): Promise<boolean> => {

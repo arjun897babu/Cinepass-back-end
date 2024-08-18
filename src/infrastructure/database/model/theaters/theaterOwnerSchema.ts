@@ -19,6 +19,7 @@ const theaterOwnerSchema = new Schema<ITheaterOwnerEntity>({
   },
   password: {
     type: String,
+    required:true
   },
   verified: {
     type: Boolean,
@@ -52,8 +53,11 @@ const theaterOwnerSchema = new Schema<ITheaterOwnerEntity>({
   address: {
     type: String,
     required: true
-  }
-
+  },
+  images:[{
+    type:String
+  }]
+    
 })
 
 

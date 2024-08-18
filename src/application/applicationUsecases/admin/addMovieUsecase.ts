@@ -9,7 +9,6 @@ const addMovieUsecase = (dependencies: IAdminDependencies) => {
   return {
     execute: async (payload: IMovie, movieType: MovieType) => {
       try {
-
         
         const newMovie = await addMovie(payload , movieType);
 
