@@ -28,7 +28,7 @@ const verifyToken = (token: string, secret: string): JwtPayload => {
     if (err instanceof TokenExpiredError) {
       throw new CustomError('Token expired', 401, 'token')
     }
-    throw new CustomError('Unauthorized', 500, 'token')
+    throw new CustomError('Unauthorized', 401, 'token')
   }
 };
 

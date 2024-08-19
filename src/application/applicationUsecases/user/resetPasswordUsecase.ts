@@ -16,7 +16,10 @@ const resetPasswordUsecase = (dependencies: IDependencies) => {
         if (!existingUser) {
           throw new CustomError('User not found', 404, 'user')
         }
-        const isPassword = await comparePassword(payload.password, existingUser.password as string);
+
+       
+
+        const isPassword = await comparePassword(payload.password, existingUser.password  as string);
         if (isPassword) {
           throw new CustomError('Please Enter a  new Password', 404, 'password')
         }
@@ -27,7 +30,7 @@ const resetPasswordUsecase = (dependencies: IDependencies) => {
         return {
           status: ResponseStatus.SUCCESS,
           message: 'Password updated successfully',
-          redirectURL:'/login'
+          redirectURL: '/login'
         }
       } catch (error) {
         throw error

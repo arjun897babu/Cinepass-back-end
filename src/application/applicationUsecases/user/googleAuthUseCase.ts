@@ -10,6 +10,7 @@ import { Role } from "../../../utils/enum"
 
 const handleUserResponse = (user: UserEntity): LoginResponse => {
   const userId = user._id?.toString();
+  console.log(user)
   if (!userId) {
     throw new CustomError('Email not found', 404, 'email');
   }
@@ -17,23 +18,26 @@ const handleUserResponse = (user: UserEntity): LoginResponse => {
   const { password,googleId, ...rest } = user;
   const accessToken = generateToken({ _id: userId, role: Role.users }, config.secrets.access_token, '1h')
 
-  return {
+  return {   
     message: 'Logged successfully',
     status: ResponseStatus.SUCCESS,
     data: { ...rest },
     redirectURL: '/',
     accessToken
   };
-}
+} 
 
 const googleAuthUsecase = (dependencies: IDependencies) => {
   const { repositories: { login, signUp } } = dependencies
   return {
     execute: async (data: UserEntity): Promise<LoginResponse> => {
-      try {
+      try {  
 
         const existingUser = await login(data.email);
+        if(!existingUser?.status){
 
+          throw new CustomError('Account is blocked', 403, 'blocked');
+        }
         if (!existingUser) {
           const newUser = await signUp({ ...data, isGoogleAuth: true, verified: true, profile_picture: data.profile_picture });
 

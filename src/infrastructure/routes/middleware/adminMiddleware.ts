@@ -10,7 +10,8 @@ const verifyAdmin = (req: Request, res: Response, next: NextFunction) => {
     // console.log('admin middle ware is called')
     const adminJWT = req.cookies[Cookie.adminJWT];
     if (!adminJWT) {
-      throw new CustomError('Access Denied', 403, 'token')
+
+      throw new CustomError('unAuthorized', 401, 'token')
     }
 
     const decoded = verifyToken(adminJWT, config.secrets.access_token)
@@ -21,7 +22,12 @@ const verifyAdmin = (req: Request, res: Response, next: NextFunction) => {
       req.params.roles = decoded.role
       next()
     } else {
-      throw new CustomError('Access Denied', 401, 'tokenError')
+      res.clearCookie(Cookie.userJWT, {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/'
+      })
+      throw new CustomError('Access Denied', 401, 'token')
     }
 
   } catch (error) {

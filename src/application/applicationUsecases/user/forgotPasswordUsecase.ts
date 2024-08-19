@@ -13,23 +13,26 @@ const forgotPasswordUsecase = (dependencies: IDependencies) => {
     execute: async (email: string): Promise<IResponse> => {
 
       const existingUser = await findByEmail(email);
+ 
       if (!existingUser) {
         throw new CustomError('Email not exist', 404, 'email')
+      }
+      if (existingUser.googleId) {
+        throw new CustomError('use google auth', 400, 'user')
       }
       const _id = existingUser._id?.toString()
 
       if (!_id) {
         throw new CustomError('Email not exist', 404, 'email')
       }
-
-      const token = generateToken({_id,role:Role.users}, config.secrets.short_lived_access_token, '5m');
+      const token = generateToken({ _id, role: Role.users }, config.secrets.short_lived_access_token, '5m');
       const link = `${config.http.origin}/${Role.users}/reset-password/${token}`
       sendMail(email, 'Reset Password', resetPasswordTemplate(link))
 
       return {
         status: ResponseStatus.SUCCESS,
         message: 'Password Reset Link has been sent to Your Email',
-        redirectURL: '#',
+        redirectURL: '#', 
         data: { email }
       }
 

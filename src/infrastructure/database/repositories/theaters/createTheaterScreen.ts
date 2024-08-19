@@ -6,16 +6,13 @@ const createTheaterScreen = async (_id: string, payload: ITheaterScreen): Promis
 
   try {
     const isExists = await TheaterScreen.exists({
-      _id,
+      _id: { $ne: _id },
       screen_name: {
-        $regex: payload.screen_name
-          .split('')
-          .join('\\s*'),
+        $regex: `^${payload.screen_name}$`,
         $options: 'i'
       }
-    })
-
-    if(isExists){
+    });
+    if (isExists) {
       throw new CustomError('Screen already exists', 409, 'screen_name')
     }
 

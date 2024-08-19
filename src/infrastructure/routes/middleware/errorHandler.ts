@@ -21,7 +21,7 @@ const errorHandler = (err: Error, req: Request, res: Response, next: NextFunctio
 
     const statusCode = err.statusCode;
     const message = err.message
-    console.log(err.message)
+    console.log(err.message,statusCode)
     return res.status(statusCode).json({
       status: "Error",
       message,

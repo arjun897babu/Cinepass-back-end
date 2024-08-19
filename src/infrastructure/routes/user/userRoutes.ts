@@ -1,7 +1,7 @@
 import express, { Router, Request, Response, NextFunction } from "express";
 import { IDependencies } from "../../../application/interface/user/IDependencies";
 import { userController } from "../../../presentation/controller/user";
-import { verifyResetPasswordRequest, verifyUser } from "../middleware/userMiddleware";
+import { isUserBlocked, verifyResetPasswordRequest, verifyUser } from "../middleware/userMiddleware";
 import { commonController } from "../../../presentation/controller/common";
 import { ICommonDependencies } from "../../../application/interface/common/ICommonDependencies";
 
@@ -22,7 +22,7 @@ const userRoutes = (dependencies: IDependencies, commonDependencies: ICommonDepe
 
   router.route('/theater/:theaterId').get(getTheater)
   router.route('/get-shows/:city').get(getShows)
-  router.route('/get-movies/:city').get(getRunningMovies)
+  router.route('/get-movies/:city').get(isUserBlocked,getRunningMovies)
 
   return router
 }
