@@ -11,9 +11,25 @@ const getCities = async (): Promise<string[] | []> => {
         }
 
       },
+      {
+        $unwind: "$cities"
+      },
+      {
+        $sort: {
+          cities: 1
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          cities: {
+            $push: "$cities"
+          }
+        }
+      },
       { $project: { _id: 0, cities: 1 } }
     ]);
-    
+
     return cities
   } catch (error) {
     throw error

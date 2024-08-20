@@ -12,7 +12,7 @@ const verifyUser = async (req: Request, res: Response, next: NextFunction) => {
 
     const userJWT = req.cookies[Cookie.userJWT];
     if (!userJWT) {
-      throw new CustomError('Access Denied', 401, 'token')
+      throw new CustomError('unAuthorized', 401, 'token')
     }
 
     const decoded = verifyToken(userJWT, config.secrets.access_token);
