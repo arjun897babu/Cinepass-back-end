@@ -19,13 +19,11 @@ const verifyAdmin = (req: Request, res: Response, next: NextFunction) => {
     if (decoded._id && decoded.role === Role.admin) {
       mongodbIdValidator(decoded._id);
       req.params._id = decoded._id
-      req.params.roles = decoded.role
+      req.params.roles = decoded.role 
       next()
     } else {
       res.clearCookie(Cookie.userJWT, {
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/'
+        httpOnly: true, 
       })
       throw new CustomError('Access Denied', 401, 'token')
     }

@@ -15,7 +15,7 @@ const getMovies = async (movieType: MovieType): Promise<IMovie[] | []> => {
         $match: { listed: true }
       },
       {
-        $sort: { _id: -1 }
+        $sort: {  release_date : -1 }
       }
     ])
 

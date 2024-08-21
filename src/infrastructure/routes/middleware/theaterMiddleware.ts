@@ -22,8 +22,7 @@ const verifyTheaterOwner = async (req: Request, res: Response, next: NextFunctio
       if (!theaterOwner?.status) {
         res.clearCookie(Cookie.theaterJWT, {
           httpOnly: true,
-          sameSite: 'lax',
-          path: '/'
+           
         })
         throw new CustomError('Accout is blocked', 403, 'blocked')
       }
@@ -33,16 +32,13 @@ const verifyTheaterOwner = async (req: Request, res: Response, next: NextFunctio
     } else {
       res.clearCookie(Cookie.theaterJWT, {
         httpOnly: true,
-        sameSite: 'lax',
-        path: '/'
+        
       })
       throw new CustomError('unauthorized', 401, 'token')
     }
   } catch (error) {
     res.clearCookie(Cookie.theaterJWT, {
-      httpOnly: true,
-      sameSite: 'lax',
-      path: '/'
+      httpOnly: true, 
     })
     next(error)
   }

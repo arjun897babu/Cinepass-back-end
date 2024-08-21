@@ -28,8 +28,7 @@ const verifyUser = async (req: Request, res: Response, next: NextFunction) => {
     } else {
       res.clearCookie(Cookie.userJWT, {
         httpOnly: true,
-        sameSite: 'lax',
-        path: '/'
+        
       })
       throw new CustomError('Access Denied', 401, 'token')
     }
@@ -76,16 +75,16 @@ const isUserBlocked = async (req: Request, res: Response, next: NextFunction) =>
         if (!user?.status) {
           res.clearCookie(Cookie.userJWT, {
             httpOnly: true,
-            sameSite: 'lax',
-            path: '/'
+           
+            
           })
           throw new CustomError('Accout is blocked', 403, 'blocked')
         }
       } else {
         res.clearCookie(Cookie.userJWT, {
           httpOnly: true,
-          sameSite: 'lax',
-          path: '/'
+         
+          
         })
         throw new CustomError('unAutorized', 401, 'token')
       }
@@ -98,8 +97,8 @@ const isUserBlocked = async (req: Request, res: Response, next: NextFunction) =>
       if (error.statusCode === 401) {
         res.clearCookie(Cookie.userJWT, {
           httpOnly: true,
-          sameSite: 'lax',
-          path: '/'
+         
+          
         })
       }
     }

@@ -17,6 +17,7 @@ const manageEntity = (dependencies: IAdminDependencies) => {
       }
 
       if (!role || (role !== Role.users && role !== Role.theaters)) {
+        console.log('jjjjjjjjjjj')
         throw new CustomError('Invalid request', 400, 'role');
       }
 

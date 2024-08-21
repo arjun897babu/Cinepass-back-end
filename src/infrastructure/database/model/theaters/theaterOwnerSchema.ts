@@ -1,6 +1,7 @@
 import { model, Schema } from "mongoose";
 import { ApprovalStatus } from "../../../../domain/entities/common";
 import { ITheaterOwnerEntity } from "../../../../domain/entities/theaters";
+import { createTheaterSlug } from "../../../../utils/slugify";
 
 const theaterOwnerSchema = new Schema<ITheaterOwnerEntity>({
 
@@ -19,7 +20,7 @@ const theaterOwnerSchema = new Schema<ITheaterOwnerEntity>({
   },
   password: {
     type: String,
-    required:true
+    required: true
   },
   verified: {
     type: Boolean,
@@ -54,10 +55,21 @@ const theaterOwnerSchema = new Schema<ITheaterOwnerEntity>({
     type: String,
     required: true
   },
-  images:[{
-    type:String
-  }]
-    
+  images: [{
+    type: String
+  }],
+
+  slug: {
+    type: String
+  }
+  
+})
+
+theaterOwnerSchema.pre('save', function (next) {
+  if (!this.slug) {
+    this.slug = createTheaterSlug(this.theater_name, this.city)
+  }
+  next();
 })
 
 

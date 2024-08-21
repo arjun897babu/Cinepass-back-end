@@ -12,7 +12,6 @@ const theaterScreenSchema = new Schema<ITheaterScreen>({
     type: String,
     required: true,
     trim: true,
-    unique: true
   },
   seating_capacity: {
     type: Number,

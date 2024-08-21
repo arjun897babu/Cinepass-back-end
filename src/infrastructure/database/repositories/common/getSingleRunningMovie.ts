@@ -60,10 +60,23 @@ const getSingleRunningMovie = async (movieId: string, city: string) => {
               $unwind: '$theater'
             },
             {
+              $lookup: {
+                from: 'theatermovies',
+                localField: 'movieId',
+                foreignField: '_id',
+                as: 'movie'
+              }
+            },
+            {
+              $unwind: '$movie'
+            },
+            {
               $match: {
                 $and: [
                   { 'theater.city': { $regex: city, $options: 'i' } },
-                  { 'theater.status': true }
+                  { 'theater.status': true },
+                  { 'movie.listed': true },
+                  { 'movie.slug': { $regex: `^${movieId}$`, $options: 'i' } },
                 ]
               }
             },
@@ -107,7 +120,7 @@ const getSingleRunningMovie = async (movieId: string, city: string) => {
                 'theater.address': 1,
                 shows: 1
               }
-            }
+            }   
           ]
         }
       },

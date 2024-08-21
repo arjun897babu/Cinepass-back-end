@@ -8,10 +8,27 @@ import { ICommonDependencies } from "../../../application/interface/common/IComm
 
 const userRoutes = (dependencies: IDependencies, commonDependencies: ICommonDependencies) => {
   const router = Router()
-  const { signup, login, verifyOTP, logout, forgotPassword, resetPassword, resendOTP, googleSignUp, getCities } = userController(dependencies)
-  const { getTheater, getShows,getRunningMovies } = commonController(commonDependencies)
+  const {
+    signup,
+    login,
+    verifyOTP,
+    logout,
+    forgotPassword,
+    resetPassword,
+    resendOTP,
+    googleSignUp,
+    getCities
+  } = userController(dependencies)
+
+  const {
+    getTheater,
+    getShows,
+    getRunningMovies
+  } = commonController(commonDependencies)
+
+  /*......................................... AUTH........................................... */
+
   router.route('/login').post(login);
-  router.route('/get-cities').get(getCities);
   router.route('/signup').post(signup);
   router.route('/google-signup').post(googleSignUp);
   router.route('/otp-verification').post(verifyOTP);
@@ -19,14 +36,16 @@ const userRoutes = (dependencies: IDependencies, commonDependencies: ICommonDepe
   router.route('/reset-password/:token').put(verifyResetPasswordRequest, resetPassword)
   router.route('/resend-otp').post(resendOTP);
   router.route('/logout').post(logout);
+  /*......................................... AUTH........................................... */
 
   router.route('/theater/:theaterId').get(getTheater)
-  router.route('/get-shows/:city').get(getShows)
-  router.route('/get-movies/:city').get(isUserBlocked,getRunningMovies)
+  router.route('/cities').get(getCities);
+  router.route('/shows/:city').get(getShows)
+  router.route('/movies/:city').get(isUserBlocked, getRunningMovies)
 
-  return router
+  return router 
 }
 
+ 
 
-
-export { userRoutes }
+export { userRoutes } 

@@ -6,9 +6,7 @@ const logout = () => {
 
     try {
       res.clearCookie(Cookie.userJWT, {
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/'
+        httpOnly: true, 
       })
         .status(200)
         .json({ status: 'Success', message: 'user logout' })

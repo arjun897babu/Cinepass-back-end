@@ -20,8 +20,7 @@ const adminLogin = (dependencies: IAdminDependencies) => {
       const response = await adminLoginUseCase(dependencies).execute({ email, password })
 
       return res.cookie(Cookie.adminJWT, response.accessToken, {
-        httpOnly: true,
-        sameSite: "lax",
+        httpOnly: true, 
         maxAge: 24 * 60 * 60 * 1000,
       })
         .status(200).json({

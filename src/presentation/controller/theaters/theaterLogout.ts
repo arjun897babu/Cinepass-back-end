@@ -5,9 +5,7 @@ const theaterLogout = () => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       return res.clearCookie(Cookie.theaterJWT, {
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/'
+        httpOnly: true, 
       })
         .status(200).json({
           status: 'Success',

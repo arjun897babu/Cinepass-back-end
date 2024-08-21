@@ -33,7 +33,7 @@ const login = (dependencies: IDependencies) => {
      
       return res.cookie(Cookie.userJWT, response.accessToken, {
         httpOnly: true,
-        sameSite: 'lax',
+      
         maxAge: 24*60 * 60 * 1000
       })
         .status(200).json({

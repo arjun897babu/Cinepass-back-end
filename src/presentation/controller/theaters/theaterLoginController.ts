@@ -29,8 +29,7 @@ const theaterLogin = (dependencies: ITheaterDependencies) => {
 
       return res.cookie(Cookie.theaterJWT, response.accessToken, {
 
-        httpOnly: true,
-        sameSite: "lax",
+        httpOnly: true, 
         maxAge: 24*60 * 60 * 1000
 
       })

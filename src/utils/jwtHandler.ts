@@ -10,10 +10,6 @@ enum Cookie {
   theaterJWT = 'theaterJWT',
 }
 
-
-
-
-
 const generateToken = (payload: TokenPayload, secret: string, expiresIn: string): string => {
 
   return sign({ ...payload }, secret, { expiresIn: expiresIn });
@@ -22,7 +18,6 @@ const generateToken = (payload: TokenPayload, secret: string, expiresIn: string)
 
 const verifyToken = (token: string, secret: string): JwtPayload => {
   try {
-
     return verify(token, secret) as JwtPayload;
   } catch (err) {
     if (err instanceof TokenExpiredError) {

@@ -5,13 +5,14 @@ import { TheaterScreen } from "../../model/theaters";
 const createTheaterScreen = async (_id: string, payload: ITheaterScreen): Promise<ITheaterScreen> => {
 
   try {
+    console.log(_id)
     const isExists = await TheaterScreen.exists({
-      _id: { $ne: _id },
-      screen_name: {
-        $regex: `^${payload.screen_name}$`,
-        $options: 'i'
-      }
+      $and: [
+        { theaterId: _id },
+        { screen_name: new RegExp(`^${payload.screen_name}$`, 'i') }
+      ]
     });
+    console.log(isExists)
     if (isExists) {
       throw new CustomError('Screen already exists', 409, 'screen_name')
     }

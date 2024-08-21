@@ -1,6 +1,6 @@
 import slugify from "slugify";
 
-const createSlug = (movieName: string, id: string): string => {
+const createMovieSlug = (movieName: string, id: string): string => {
 
   const slugifiedMovieName = slugify(movieName, {
     lower: true,
@@ -18,4 +18,15 @@ const createSlug = (movieName: string, id: string): string => {
   return `${slugifiedMovieName}-movie-${slugifiedId}`;
 }
 
-export { createSlug };
+const createTheaterSlug = (theaterName: string, city: string): string => {
+
+  const slugifiedTheaterName = slugify(theaterName, {
+    lower: true,
+    locale: 'en',
+    trim: true
+  });
+
+  return `${slugifiedTheaterName}-c-${city}`;
+}
+
+export { createMovieSlug ,createTheaterSlug};

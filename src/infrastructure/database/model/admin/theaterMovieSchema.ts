@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
 import { IMovie } from "../../../../domain/entities/admin/ITheaterMovie";
 import slugify from "slugify";
-import { createSlug } from "../../../../utils/slugify";
+import { createMovieSlug } from "../../../../utils/slugify";
 
 
 const theaterMovieSchema = new Schema<IMovie>({
@@ -55,7 +55,7 @@ const theaterMovieSchema = new Schema<IMovie>({
 theaterMovieSchema.pre('save', function (next) {
 
   if (!this.slug) {
-    this.slug = createSlug(this.movie_name, this._id.toString())
+    this.slug = createMovieSlug(this.movie_name, this._id.toString())
   }
   next();
 });

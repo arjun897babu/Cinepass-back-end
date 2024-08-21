@@ -6,9 +6,7 @@ const adminLogout = () => {
     try {
 
       res.clearCookie(Cookie.adminJWT, {
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/'
+        httpOnly: true, 
       })
         .status(200)
         .json({ status: 'Success', message: 'Logged out successfully' })

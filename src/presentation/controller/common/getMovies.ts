@@ -7,7 +7,7 @@ import { MovieType } from "../../../utils/enum";
 const getMovies = (dependencies: ICommonDependencies) => {
   const { commonUsecases: { getMoviesUsecase } } = dependencies
   return async (req: Request, res: Response, next: NextFunction) => {
-    
+    console.log('reaching here') 
     const { role, id, movieType } = req.params
 
     validateMovieType(movieType)

@@ -18,6 +18,7 @@ interface ITheaterOwnerEntity extends Document {
   address: string
   city:string,
   images?:string[]
+  slug?:string
 }
 
 

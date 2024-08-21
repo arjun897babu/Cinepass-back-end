@@ -1,20 +1,25 @@
+import e from "express";
 import { ResponseStatus } from "../../../domain/entities/common";
 import { CustomError } from "../../../utils/CustomError";
 import { ICommonDependencies } from "../../interface/common/ICommonDependencies";
 
 const getTheaterUsecase = (dependencies: ICommonDependencies) => {
-  const { commonRepositories: { getTheaterDetails } } = dependencies
+  const { commonRepositories: { getTheaterDetails, getTheaterByCity } } = dependencies
   return {
-    execute: async (_id: string) => {
+    execute: async (_id: string, city?: string) => {
       try {
-        const theaters = await getTheaterDetails(_id);
-        if(!theaters){
-          throw new CustomError('not found',404,'theater')
+
+        let theaters
+        if (city) {
+          theaters = await getTheaterByCity(city)
+        } else {
+          theaters = await getTheaterDetails(_id);
         }
+        
         return {
           status: ResponseStatus.SUCCESS,
           message: 'data fetched successfully',
-          data: { theaters: theaters }
+          data: { theater: theaters }
         }
       } catch (error) {
         throw error

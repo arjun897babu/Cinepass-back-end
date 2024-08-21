@@ -144,7 +144,7 @@ const mongodbIdValidator = (_id: string): void => {
 };
 
 const validateMovieType = (movieType: string) => {
-  
+
   if (!Object.values(MovieType).includes(movieType as MovieType)) {
     throw new CustomError('Bad Request', 400, 'Invalid movieType');
   }

@@ -9,7 +9,7 @@ import {
   ITheaterScreenUsecase,
   IGetAllTheaterScreen,
   IAddMovieShows,
-  IGetTheaterDetails
+
 } from '../../../domain/domainUsecases/theaters'
 
 interface ITheaterUseCase {
@@ -19,7 +19,6 @@ interface ITheaterUseCase {
   theaterForgotPasswordUsecase: (dependencies: any) => ITheaterForgotPassword;
   theaterResetPasswordUsecase: (dependencies: any) => ITheaterResetPassword;
   resendOTPTheaterUsecase: (dependencies: any) => IResendOTPTheaterUsecase;
-  getTheaterDetailsUseCase: (dependencies: any) => IGetTheaterDetails;
   updateTheaterInfoUsecase: (dependencies: any) => IUpdateTheaterInfo;
   createTheaterScreenUsecase: (dependencies: any) => ITheaterScreenUsecase;
   getAllTheaterScreenUseCase: (dependencies: any) => IGetAllTheaterScreen;

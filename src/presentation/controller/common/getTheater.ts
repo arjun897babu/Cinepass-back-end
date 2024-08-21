@@ -5,8 +5,9 @@ const getTheater = (dependencies: ICommonDependencies) => {
   const { commonUsecases: { getTheaterUsecase } } = dependencies;
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { theaterId } = req.params
-      const response = await getTheaterUsecase(dependencies).execute(theaterId);
+      const { _id } = req.params
+      console.log(req.params)
+      const response = await getTheaterUsecase(dependencies).execute(_id);
       return res.status(200).json({
         status: response.status,
         message: response.message,
