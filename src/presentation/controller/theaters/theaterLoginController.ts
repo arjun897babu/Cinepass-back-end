@@ -12,32 +12,33 @@ const theaterLogin = (dependencies: ITheaterDependencies) => {
 
     try {
       const payload = req.body
-       validateEmail(payload.email);
-      
+      validateEmail(payload.email);
+
       const response = await theaterLoginUseCase(dependencies).execute(payload);
 
       if (response.status === 'Error') {
-
-        return res.status(403).json({
-
+        return res.status(401).json({
           status: response.status,
           message: response.message,
-          redirectURL: response.redirectURL,
-          data: response.data
-        });
+          error: {
+            error: 'otp',
+            message: response.message,
+            tempMail: response.data
+          }
+        })
       }
 
       return res.cookie(Cookie.theaterJWT, response.accessToken, {
 
-        httpOnly: true, 
-        maxAge: 24*60 * 60 * 1000
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000
 
       })
         .status(200).json({
           status: response.status,
           message: response.message,
           data: response.data,
-          redirectURL:response.redirectURL
+          redirectURL: response.redirectURL
         });
 
     } catch (error) {

@@ -10,7 +10,7 @@ const updateTheaterApprovalByAdmin = (dependencies: IAdminDependencies) => {
     try {
       const { theaterOwnerId } = req.params
       const { approval_status } = req.body
-    
+    console.log(req.params,req.body,'not reachign here')
       if (!theaterOwnerId || !approval_status) {
         throw new CustomError('Invalid request', 400, 'Bad request')
       }

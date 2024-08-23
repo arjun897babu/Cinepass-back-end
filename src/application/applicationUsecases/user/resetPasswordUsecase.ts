@@ -14,14 +14,17 @@ const resetPasswordUsecase = (dependencies: IDependencies) => {
       try {
         const existingUser = await findUserById(payload._id);
         if (!existingUser) {
-          throw new CustomError('User not found', 404, 'user')
+          throw new CustomError('User not found', 404, 'email')
         }
 
-       
+         //For blocked accounts
+         if (!existingUser.status) {
+          throw new CustomError('Your account is blocked', 403, 'blocked')
+        }; 
 
         const isPassword = await comparePassword(payload.password, existingUser.password  as string);
         if (isPassword) {
-          throw new CustomError('Please Enter a  new Password', 404, 'password')
+          throw new CustomError('Please Enter a  new Password', 400, 'password')
         }
 
         const hashedPassword = await hashPassword(payload.password);

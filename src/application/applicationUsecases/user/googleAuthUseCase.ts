@@ -15,27 +15,33 @@ const handleUserResponse = (user: UserEntity): LoginResponse => {
     throw new CustomError('Email not found', 404, 'email');
   }
 
-  const { password,googleId, ...rest } = user;
+  const { password, googleId, ...rest } = user;
   const accessToken = generateToken({ _id: userId, role: Role.users }, config.secrets.access_token, '1h')
 
-  return {   
+  return {
     message: 'Logged successfully',
     status: ResponseStatus.SUCCESS,
-    data: { ...rest },
+    data: { user: rest },
     redirectURL: '/',
     accessToken
   };
-} 
+}
 
 const googleAuthUsecase = (dependencies: IDependencies) => {
   const { repositories: { login, signUp } } = dependencies
   return {
     execute: async (data: UserEntity): Promise<LoginResponse> => {
-      try {  
+      try {
 
         const existingUser = await login(data.email);
-        if(!existingUser?.status){
 
+        // console.log(existingUser)
+        // if (existingUser && !existingUser?.googleId) {
+        //   throw new CustomError('Email already exists', 409, 'googleAuth');
+        // }
+
+        if (existingUser && !existingUser?.status) {
+          console.log('blocked')
           throw new CustomError('Account is blocked', 403, 'blocked');
         }
         if (!existingUser) {

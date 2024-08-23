@@ -1,7 +1,8 @@
-import { Model } from "mongoose";
+import { Model, MongooseError } from "mongoose";
 import { MovieType } from "../../../../utils/enum";
 import { TheaterMovie } from "../../model/admin/theaterMovieSchema";
 import { IManageMovie } from "../../../../utils/interface";
+import { CustomError } from "../../../../utils/CustomError";
 
 const model: Record<string, Model<any>> = {
   [MovieType.THEATER]: TheaterMovie,
@@ -18,6 +19,7 @@ const deleteMovie = async (payload: IManageMovie): Promise<IManageMovie | null> 
     return deletedMovie
 
   } catch (error) {
+    
     throw error
   }
 }

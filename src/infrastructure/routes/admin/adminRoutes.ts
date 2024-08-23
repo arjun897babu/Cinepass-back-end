@@ -31,8 +31,8 @@ const adminRoutes = (dependency: IAdminDependencies, commonDependencies: ICommon
   /*......................................... Entity Manage........................................... */
 
   adminRouter.route('/:role').get(verifyAdmin, getEntityData)
-  adminRouter.route('/:role/:entityId').patch(verifyAdmin, manageEntity);
   adminRouter.route('/approval/:theaterOwnerId').patch(verifyAdmin, updateTheaterOwnerApproval)
+  adminRouter.route('/:role/:entityId').patch(verifyAdmin, manageEntity);
   // adminRouter.route('/update-city/:_id').patch(verifyAdmin, updateTheaterCity);
 
   /*......................................... Entity Manage........................................... */

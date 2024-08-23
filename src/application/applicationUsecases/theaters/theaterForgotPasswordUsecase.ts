@@ -28,7 +28,7 @@ const theaterForgotPasswordUsecase = (dependencies: ITheaterDependencies) => {
         }
         //for rejected accounts
         if (existingTheaterOwner.approval_status === ApprovalStatus.REJECTED) {
-          throw new CustomError('Your Account has been rejected', 403, 'approval')
+          throw new CustomError('Your Account has been rejected', 401, 'approval')
         }
         //For blocked accounts
         if (!existingTheaterOwner.status) {

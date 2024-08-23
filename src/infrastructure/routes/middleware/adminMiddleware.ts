@@ -7,10 +7,10 @@ import { mongodbIdValidator } from "../../../utils/validator";
 
 const verifyAdmin = (req: Request, res: Response, next: NextFunction) => {
   try {
-    // console.log('admin middle ware is called')
+    console.log('admin middle ware is called')
     const adminJWT = req.cookies[Cookie.adminJWT];
     if (!adminJWT) {
-
+      console.log(`adminJWT: ${false}`)
       throw new CustomError('unAuthorized', 401, 'token')
     }
 
@@ -19,11 +19,11 @@ const verifyAdmin = (req: Request, res: Response, next: NextFunction) => {
     if (decoded._id && decoded.role === Role.admin) {
       mongodbIdValidator(decoded._id);
       req.params._id = decoded._id
-      req.params.roles = decoded.role 
+      req.params.roles = decoded.role
       next()
     } else {
       res.clearCookie(Cookie.userJWT, {
-        httpOnly: true, 
+        httpOnly: true,
       })
       throw new CustomError('Access Denied', 401, 'token')
     }

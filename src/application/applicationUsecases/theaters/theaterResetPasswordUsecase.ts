@@ -15,7 +15,7 @@ const theaterResetPasswordUsecase = (dependencies: ITheaterDependencies) => {
       try {
         const existingTheaterOwner = await findTheaterOwnerById(payload._id);
         if (!existingTheaterOwner) {
-          throw new CustomError('Account not found', 404, 'theaters')
+          throw new CustomError('Account not found', 404, 'email')
         }
         
         //For blocked accounts
@@ -25,7 +25,7 @@ const theaterResetPasswordUsecase = (dependencies: ITheaterDependencies) => {
 
         const isPassword = await comparePassword(payload.password, existingTheaterOwner.password);
         if (isPassword) {
-          throw new CustomError('Please Enter a  new Password', 404, 'password')
+          throw new CustomError('Please Enter a  new Password', 400, 'password')
         }
 
         const hashedPassword = await hashPassword(payload.password);

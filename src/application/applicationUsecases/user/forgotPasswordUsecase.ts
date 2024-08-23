@@ -17,8 +17,11 @@ const forgotPasswordUsecase = (dependencies: IDependencies) => {
       if (!existingUser) {
         throw new CustomError('Email not exist', 404, 'email')
       }
-      if (existingUser.googleId) {
-        throw new CustomError('use google auth', 400, 'user')
+      else if (existingUser.googleId) {
+        throw new CustomError('use google auth', 400, 'google')
+      }
+      else if(!existingUser.status){
+        throw new CustomError('Account is blocked', 403, 'blocked')
       }
       const _id = existingUser._id?.toString()
 

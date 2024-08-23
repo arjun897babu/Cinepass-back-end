@@ -14,7 +14,10 @@ const verifyOTPUseCase = (dependencies: IDependencies) => {
         if (!existingUser) {
           throw new CustomError('User not found', 404, 'email');
         }
-        
+        else if (!existingUser.status) {
+          throw new CustomError('Account is blocked', 403, 'blocked')
+        }
+
         const OTPDetails = await findOtp(email);
 
         if (!OTPDetails) {
@@ -25,11 +28,8 @@ const verifyOTPUseCase = (dependencies: IDependencies) => {
           throw new CustomError('Invalid OTP', 400, 'otp');
         };
 
-        const updated = changeUserStatus(email, false);
+        await changeUserStatus(email, false);
 
-        if (!updated) {
-          throw new CustomError('User not found', 404, 'email');
-        }
 
         return {
           status: ResponseStatus.SUCCESS,
