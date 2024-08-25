@@ -7,7 +7,11 @@ const getAllTheaterScreen = (dependencies: ITheaterDependencies) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { _id } = req.params
-      const response = await getAllTheaterScreenUseCase(dependencies).execute(_id)
+      const { amenity } = req.query;
+      const parsedAmenity = (amenity === '' || amenity === 'undefined') ? undefined : amenity as string;
+
+      const response = await getAllTheaterScreenUseCase(dependencies).execute(_id, parsedAmenity);
+      
       return res.status(200).json({
         status: response.status,
         message: response.message,

@@ -4,11 +4,12 @@ interface IMovieShow extends Document {
   theaterId: ObjectId;
   movieId: ObjectId;
   screenId: ObjectId
+  opening_date?: Date
   format: string,
   language: string
   showTime: string,
   endTime: string,
-  opening_date?: Date
+  listed: boolean
 }
 export {
   IMovieShow

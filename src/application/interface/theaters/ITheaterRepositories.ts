@@ -15,8 +15,11 @@ interface ITheaterRepositories {
   updateTheater: (_id: string, payload: TheaterProfile) => Promise<ITheaterOwnerEntity | null>;
   updateTheaterOwner: (_id: string, payload: TheaterOwnerProfile) => Promise<ITheaterOwnerEntity | null>;
   createTheaterScreen: (_id: string, payload: ITheaterScreen) => Promise<ITheaterScreen>;
-  getAllTheaterScreen: (_id: string) => Promise<ITheaterScreen[] | []>;
+  getAllTheaterScreen: (_id: string, amenity?: string) => Promise<ITheaterScreen[] | []>;
   createMovieShows: (_id: string, payload: Omit<IMovieShow, 'theaterId'>) => Promise<IMovieShow>
+  updateMovieShow: (showId: string, payload: IMovieShow) => Promise<boolean>;
+  deleteMovieshow: (showId: string) => Promise<boolean>
+  deleteTheaterScreen: (screenId: string) => Promise<boolean>
 }
 
 export {

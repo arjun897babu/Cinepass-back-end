@@ -33,6 +33,10 @@ const theaterScreenSchema = new Schema<ITheaterScreen>({
     type: String,
     required: true
   },
+  listed: {
+    type: Boolean,
+    default: true
+  },
   layout: {
     type: [
       [

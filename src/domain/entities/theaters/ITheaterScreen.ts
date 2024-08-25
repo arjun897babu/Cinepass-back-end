@@ -14,6 +14,7 @@ interface ITheaterScreen {
   column: number,
   amenity:string,
   chargePerSeat: number
+  listed:boolean
   layout: Array<Array<ISeat>>;
 }
 

@@ -10,7 +10,7 @@ const addMovieShow = (dependencies: ITheaterDependencies) => {
 
       const { _id } = req.params
       const  payload  = req.body
-      console.log('in controller')
+      console.log('in add movie show controller')
       console.log(req.body)
       const response = await addMovieShowUsecase(dependencies).execute(_id, payload )
       return res.status(200).json({

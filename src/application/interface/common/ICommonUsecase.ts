@@ -8,6 +8,7 @@ interface ICommonUsecase {
   getMoviesUsecase: (dependencies: any) => IGetMovies;
   getShowsUsecase: (dependencies: any) => IGetShows;
   getRunningMoviesUsecase: (dependencies: any) => IGetRunningMovieUsecase;
+  
 }
 
 export {

@@ -1,8 +1,8 @@
 import { IResponse } from "..";
-import { MovieType } from "../../../utils/enum";
+import { MovieType, Role } from "../../../utils/enum";
 
 interface IGetMovies {
-  execute: (movieType: MovieType) => Promise<IResponse>
+  execute: (movieType: MovieType, role: Role) => Promise<IResponse>
 }
 
 export {

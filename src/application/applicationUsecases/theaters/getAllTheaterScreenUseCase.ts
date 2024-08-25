@@ -5,10 +5,10 @@ const getAllTheaterScreenUseCase = (dependencies: ITheaterDependencies) => {
   const { theaterRepositories: { getAllTheaterScreen } } = dependencies
 
   return {
-    execute: async (_id: string) => {
+    execute: async (_id: string, amenity?: string) => {
       try {
 
-        const screens = await getAllTheaterScreen(_id)
+        const screens = await getAllTheaterScreen(_id,amenity)
 
         return {
           status: ResponseStatus.SUCCESS,

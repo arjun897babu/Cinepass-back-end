@@ -4,11 +4,12 @@ import { theaterController } from "../../../presentation/controller/theaters";
 import { verifyTheaterOwner, verifyTheaterResetPasswordRequest } from "../middleware/theaterMiddleware";
 import { ICommonDependencies } from "../../../application/interface/common/ICommonDependencies";
 import { commonController } from "../../../presentation/controller/common";
+import { updateShow } from "../../../presentation/controller/theaters/updateShowController";
 
 const theaterRoutes = (dependencies: ITheaterDependencies, commonDependencies: ICommonDependencies) => {
   const theaterRouter = Router();
 
-  const { signup, otpVerification, login, logout, forgotPassword, resetPassword, resendOTPTheaters, updateTheaterInfo, addScreen, getAllTheaterScreen, addMovieShow } = theaterController(dependencies);
+  const { signup, otpVerification, login, logout, forgotPassword, resetPassword, resendOTPTheaters, updateTheaterInfo, addScreen, getAllTheaterScreen, addMovieShow, updateMovieShow, deleteMovieShow, deleteScreen } = theaterController(dependencies);
 
   const { getMovies, getShows, getRunningMovies, getTheater } = commonController(commonDependencies);
 
@@ -32,14 +33,22 @@ const theaterRoutes = (dependencies: ITheaterDependencies, commonDependencies: I
   theaterRouter.route('/screen')
     .post(verifyTheaterOwner, addScreen)//adding screen to the theater
     .get(verifyTheaterOwner, getAllTheaterScreen)//get all screen in a single theater
+  theaterRouter.route('/screen/:screenId')
+    .put(verifyTheaterOwner) //for updating a theater screen
+    .patch(verifyTheaterOwner,deleteScreen)//for unlisting a screen
 
   theaterRouter.route('/movie/:movieType').get(verifyTheaterOwner, getMovies)//for get all the movies available for shows
 
   theaterRouter
     .route('/shows')
     .get(verifyTheaterOwner, getShows)
-    .post(verifyTheaterOwner, addMovieShow);//adding shows to theater screen
-    
+    .post(verifyTheaterOwner, addMovieShow)//adding shows to theater screen
+
+  theaterRouter
+    .route('/shows/:showId')
+    .put(verifyTheaterOwner, updateMovieShow)//adding shows to theater screen
+    .patch(verifyTheaterOwner, deleteMovieShow);//delete a movie shows  
+
   theaterRouter.route('/movies').get(verifyTheaterOwner, getRunningMovies)
 
   return theaterRouter

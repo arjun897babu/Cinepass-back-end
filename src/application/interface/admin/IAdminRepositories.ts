@@ -2,7 +2,7 @@ import { promises } from "dns";
 import { IManageEntity, IUpdateApproval } from "../../../domain/domainUsecases";
 import { IUpdateTheaterCity } from "../../../domain/domainUsecases/admin/IUpdateTheaterCity";
 import { AdminEntity } from "../../../domain/entities/admin/IAdmin";
-import { ITheaterOwnerEntity, ITheaters } from "../../../domain/entities/theaters";
+import { ITheaterOwnerEntity,   } from "../../../domain/entities/theaters";
 import { UserEntity } from "../../../domain/entities/user/IUserEntity";
 import { MovieType, Role } from "../../../utils/enum";
 import { ICityUpdate, IManageMovie } from "../../../utils/interface";

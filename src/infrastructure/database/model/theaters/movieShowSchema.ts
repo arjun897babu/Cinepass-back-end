@@ -34,12 +34,15 @@ const movieShowSchema = new Schema<IMovieShow>({
     type: String,
     required: true
   },
-  opening_date:{
-    type:Date 
+  opening_date: {
+    type: Date
+  },
+  listed: {
+    type: Boolean,
+    default: true
   }
 }, {
   timestamps: true
-}); 
+});
 
 export const MovieShow = model<IMovieShow>('MovieShow', movieShowSchema);
- 

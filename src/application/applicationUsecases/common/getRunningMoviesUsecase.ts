@@ -13,10 +13,10 @@ const getRunningMoviesUsecase = (dependencies: ICommonDependencies) => {
         
         if (movieId && city) {
           movies = await getSingleRunningMovie(movieId, city)
-          console.log(movies)
+  
         } else {
           movies = await getRunningMovies({ role, _id, city })
-          console.log(movies)
+           
         }
  
         return {

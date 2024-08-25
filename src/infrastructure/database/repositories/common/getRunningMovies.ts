@@ -6,9 +6,9 @@ import { MovieShow } from "../../model/theaters";
 const getRunningMovies = async ({ role, _id, city }: GetShowsParams) => {
 
   try {
-   
+
     const matchQuery = role === Role.theaters
-      ? { 'theaterId': new Types.ObjectId(_id), 'theater.status': true }
+      ? { 'theaterId': new Types.ObjectId(_id), 'theater.status': true  }
       : { 'theater.status': true, 'theater.city': { $regex: city, $options: 'i' } };
 
     const [movies] = await MovieShow.aggregate([

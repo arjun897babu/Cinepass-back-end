@@ -1,14 +1,14 @@
 import { ResponseStatus } from "../../../domain/entities/common";
-import { MovieType } from "../../../utils/enum";
+import { MovieType, Role } from "../../../utils/enum";
 import { ICommonDependencies } from "../../interface/common/ICommonDependencies";
 
 const getMoviesUsecase = (dependencies: ICommonDependencies) => {
   const { commonRepositories: { getMovies } } = dependencies
 
   return {
-    execute: async (movieType: MovieType) => {
+    execute: async (movieType: MovieType, role: Role) => {
       try {
-        const movies = await getMovies(movieType);
+        const movies = await getMovies(movieType, role);
 
         return {
           status: ResponseStatus.SUCCESS,
