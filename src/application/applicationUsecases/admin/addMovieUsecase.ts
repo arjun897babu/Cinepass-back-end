@@ -9,7 +9,7 @@ const addMovieUsecase = (dependencies: IAdminDependencies) => {
   return {
     execute: async (payload: IMovie, movieType: MovieType) => {
       try {
-        
+        console.log('payload in adminaddmovie usecase',payload)
         const newMovie = await addMovie(payload , movieType);
 
         return {

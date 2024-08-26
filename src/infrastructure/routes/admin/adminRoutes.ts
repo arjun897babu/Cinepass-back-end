@@ -16,9 +16,10 @@ const adminRoutes = (dependency: IAdminDependencies, commonDependencies: ICommon
     manageEntity,
     updateTheaterCity,
     addMovie,
-    deleteMovie
+    deleteMovie,
+    updateMovie
   } = adminController(dependency)
-  
+
   const { getMovies } = commonController(commonDependencies)
 
   /*......................................... AUTH........................................... */
@@ -48,7 +49,7 @@ const adminRoutes = (dependency: IAdminDependencies, commonDependencies: ICommon
   adminRouter
     .route('/movie/:movieType/:movieId')
     .patch(verifyAdmin, deleteMovie)//unlisting movie 
-    .put(verifyAdmin)//updating  a existing movies
+    .put(verifyAdmin, updateMovie)//updating  a existing movies
 
   /*......................................... Movies........................................... */
 
