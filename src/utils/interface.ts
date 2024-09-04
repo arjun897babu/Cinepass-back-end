@@ -28,14 +28,14 @@ interface ITheaterDetailResponse {
   theater_Name: string;
   theater_license: string;
   address: string;
-  images: string[];
+  image: string;
   city: string;
   owner: ITheaterOwnerForTheater;
 }
 
 type TheaterOwnerProfile = Pick<ITheaterOwnerEntity, 'name' | 'email' | 'mobile_number' | 'adhaar_number'>;
 
-type TheaterProfile = Pick<ITheaterOwnerEntity, 'theater_name' | 'theater_license' | 'address' | 'city' | 'images'>;
+type TheaterProfile = Pick<ITheaterOwnerEntity, 'theater_name' | 'theater_license' | 'address' | 'city' | 'image'>;
 
 
 

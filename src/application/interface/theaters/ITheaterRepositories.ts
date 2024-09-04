@@ -12,8 +12,8 @@ interface ITheaterRepositories {
   createTheatersOTP: (email: string, otp: string) => Promise<void>
   findTheaterOwnerById: (_id: string) => Promise<ITheaterOwnerEntity | null>;
   resetPasswordTheaters: (payload: IResetPassword) => Promise<boolean>
-  updateTheater: (_id: string, payload: TheaterProfile) => Promise<ITheaterOwnerEntity | null>;
-  updateTheaterOwner: (_id: string, payload: TheaterOwnerProfile) => Promise<ITheaterOwnerEntity | null>;
+  updateTheater: (_id: string, payload: Partial<TheaterProfile>) => Promise<ITheaterOwnerEntity | null>;
+  // updateTheaterOwner: (_id: string, payload: TheaterOwnerProfile) => Promise<ITheaterOwnerEntity | null>;
   createTheaterScreen: (_id: string, payload: ITheaterScreen) => Promise<ITheaterScreen>;
   getAllTheaterScreen: (_id: string, amenity?: string) => Promise<ITheaterScreen[] | []>;
   createMovieShows: (_id: string, payload: Omit<IMovieShow, 'theaterId'>) => Promise<IMovieShow>

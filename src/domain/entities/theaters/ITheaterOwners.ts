@@ -17,7 +17,7 @@ interface ITheaterOwnerEntity extends Document {
   approval_status?: ApprovalStatus;
   address: string
   city:string,
-  images?:string[]
+  image?:string
   slug?:string
 }
 

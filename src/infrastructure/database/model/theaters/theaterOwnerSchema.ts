@@ -55,14 +55,14 @@ const theaterOwnerSchema = new Schema<ITheaterOwnerEntity>({
     type: String,
     required: true
   },
-  images: [{
-    type: String
-  }],
-
+  image: {
+    type: String,
+    default: null
+  }, 
   slug: {
     type: String
   }
-  
+
 })
 
 theaterOwnerSchema.pre('save', function (next) {
