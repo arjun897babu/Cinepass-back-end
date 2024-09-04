@@ -16,7 +16,7 @@ const addMovie = async (payload: IMovie, movieType: MovieType): Promise<IMovie> 
   try {
 
     const db = model[movieType];
-    console.log(payload)
+
     const existingMovie = await db.exists(
       {
         movie_name: {

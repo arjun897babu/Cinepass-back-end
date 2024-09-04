@@ -12,6 +12,8 @@ interface IRepositories {
   changeUserStatus: (email: string, verified: boolean) => Promise<boolean>;
   resetPassword: (JwtPayload: IResetPassword) => Promise<boolean>;
   getCities: () => Promise<string[] | []>
+  getUserProfile: (_id: string) => Promise<UserEntity>
+  updateUserProfile: (_id: string, payload: Partial<UserEntity>) => Promise<Partial<UserEntity>>
 
 }
 

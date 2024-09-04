@@ -9,7 +9,7 @@ import { updateShow } from "../../../presentation/controller/theaters/updateShow
 const theaterRoutes = (dependencies: ITheaterDependencies, commonDependencies: ICommonDependencies) => {
   const theaterRouter = Router();
 
-  const { signup, otpVerification, login, logout, forgotPassword, resetPassword, resendOTPTheaters, updateTheaterInfo, addScreen, getAllTheaterScreen, addMovieShow, updateMovieShow, deleteMovieShow, deleteScreen } = theaterController(dependencies);
+  const { signup, otpVerification, login, logout, forgotPassword, resetPassword, resendOTPTheaters, updateTheaterInfo, addScreen, getAllTheaterScreen, addMovieShow, updateMovieShow, deleteMovieShow, deleteScreen,updateTheaterScreen } = theaterController(dependencies);
 
   const { getMovies, getShows, getRunningMovies, getTheater } = commonController(commonDependencies);
 
@@ -34,7 +34,7 @@ const theaterRoutes = (dependencies: ITheaterDependencies, commonDependencies: I
     .post(verifyTheaterOwner, addScreen)//adding screen to the theater
     .get(verifyTheaterOwner, getAllTheaterScreen)//get all screen in a single theater
   theaterRouter.route('/screen/:screenId')
-    .put(verifyTheaterOwner) //for updating a theater screen
+    .put(verifyTheaterOwner,updateTheaterScreen) //for updating a theater screen
     .patch(verifyTheaterOwner,deleteScreen)//for unlisting a screen
 
   theaterRouter.route('/movie/:movieType').get(verifyTheaterOwner, getMovies)//for get all the movies available for shows

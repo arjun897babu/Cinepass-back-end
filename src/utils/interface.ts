@@ -1,5 +1,5 @@
 import { IMovie } from "../domain/entities/admin/ITheaterMovie";
-import { ITheaterOwnerEntity, ITheaterScreen } from "../domain/entities/theaters";
+import { IMovieShow, ITheaterOwnerEntity, ITheaterScreen } from "../domain/entities/theaters";
 import { MovieType, Role } from "./enum"
 
 interface ICityUpdate {
@@ -33,9 +33,9 @@ interface ITheaterDetailResponse {
   owner: ITheaterOwnerForTheater;
 }
 
- type TheaterOwnerProfile = Pick<ITheaterOwnerEntity, 'name' | 'email' | 'mobile_number' | 'adhaar_number'>;
+type TheaterOwnerProfile = Pick<ITheaterOwnerEntity, 'name' | 'email' | 'mobile_number' | 'adhaar_number'>;
 
- type TheaterProfile = Pick<ITheaterOwnerEntity, 'theater_name' | 'theater_license' |   'address' | 'city' | 'images'>;
+type TheaterProfile = Pick<ITheaterOwnerEntity, 'theater_name' | 'theater_license' | 'address' | 'city' | 'images'>;
 
 
 
@@ -44,6 +44,8 @@ interface GetShowsParams {
   _id: string | undefined;
   city: string | undefined;
   movieId?: string
+  theaterId?: string
+  showId?: string
 }
 
 interface IGetMovieShowResponse {
@@ -57,10 +59,38 @@ interface IGetMovieShowResponse {
 interface IManageMovie {
   movieType: MovieType;
   movieId: string
-  listed?:boolean
+  listed?: boolean
+}
+
+
+interface IGetSingleShow {
+  movie: {
+    movie_name: Pick<IMovie, 'movie_name'>
+  };
+  theater: {
+    theater_name: Pick<ITheaterOwnerEntity, 'theater_name'>
+  };
+  screen: {
+    name: Pick<ITheaterScreen, 'screen_name'>;
+    layout: Pick<ITheaterScreen, 'layout'>;
+  };
+  show: Partial<IMovieShow>
+}
+
+interface IGetShowByTheater {
+
+  _id: string;
+  movie: Partial<IMovie>;
+  shows: Array<{
+    showDetails: Partial<IMovieShow>;
+    screenDetails: Partial<ITheaterScreen>;
+  }>;
+
 }
 
 export {
+  IGetShowByTheater,
+  IGetSingleShow,
   IResetPassword,
   TokenPayload,
   ICityUpdate,
@@ -72,4 +102,6 @@ export {
   IManageMovie
 
 }
+
+
 

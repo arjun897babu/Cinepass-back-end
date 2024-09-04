@@ -45,9 +45,9 @@ const theaterScreenSchema = new Schema<ITheaterScreen>({
             type: String,
             required: true
           },
-          booked: {
+          available: {
             type: Boolean,
-            default: false
+            default: true
           }
         }
       ]

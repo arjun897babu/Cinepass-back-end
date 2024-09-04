@@ -3,7 +3,7 @@ import { ResponseStatus } from "../../../domain/entities/common";
 import { CustomError } from "../../../utils/CustomError";
 import { GetShowsParams } from "../../../utils/interface";
 import { ICommonDependencies } from "../../interface/common/ICommonDependencies";
-
+//use case for getting avaialble movies in theater based on city
 const getRunningMoviesUsecase = (dependencies: ICommonDependencies) => {
   const { commonRepositories: { getRunningMovies, getSingleRunningMovie } } = dependencies;
   return {
@@ -13,10 +13,8 @@ const getRunningMoviesUsecase = (dependencies: ICommonDependencies) => {
         
         if (movieId && city) {
           movies = await getSingleRunningMovie(movieId, city)
-  
         } else {
           movies = await getRunningMovies({ role, _id, city })
-           
         }
  
         return {

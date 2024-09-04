@@ -14,6 +14,7 @@ import { resetPasswordTheaters } from "./theaterResetPassword";
 import { theaterSignup } from "./theaterSignupController";
 import { updateShow } from "./updateShowController";
 import { updateTheaterInfo } from "./updateTheaterController";
+import { updateTheaterScreen } from "./updateTheaterScreenController";
 
 
 const theaterController = (dependencies: ITheaterDependencies) => {
@@ -33,7 +34,8 @@ const theaterController = (dependencies: ITheaterDependencies) => {
     addMovieShow: addMovieShow(dependencies),
     updateMovieShow: updateShow(dependencies),
     deleteMovieShow: deleteMovieShow(dependencies),
-    deleteScreen: deleteScreen(dependencies)
+    deleteScreen: deleteScreen(dependencies),
+    updateTheaterScreen: updateTheaterScreen(dependencies)
 
   }
 }

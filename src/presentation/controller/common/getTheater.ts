@@ -5,14 +5,13 @@ const getTheater = (dependencies: ICommonDependencies) => {
   const { commonUsecases: { getTheaterUsecase } } = dependencies;
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { _id } = req.params
-      console.log(req.params)
-      const response = await getTheaterUsecase(dependencies).execute(_id);
+      const { _id, city } = req.params
+      console.log('in get theater in common controler_id:', req.params)
+      const response = await getTheaterUsecase(dependencies).execute(_id, city);
       return res.status(200).json({
         status: response.status,
         message: response.message,
         data: response.data,
-        redirectURL: response.redirectURL
       })
     } catch (error) {
       next(error)

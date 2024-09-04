@@ -17,13 +17,16 @@ const userRoutes = (dependencies: IDependencies, commonDependencies: ICommonDepe
     resetPassword,
     resendOTP,
     googleSignUp,
-    getCities
+    getCities,
+    getUserProfile,
+    updateUserProfile
   } = userController(dependencies)
 
   const {
     getTheater,
     getShows,
-    getRunningMovies
+    getRunningMovies,
+    getMovies,
   } = commonController(commonDependencies)
 
   /*......................................... AUTH........................................... */
@@ -33,19 +36,25 @@ const userRoutes = (dependencies: IDependencies, commonDependencies: ICommonDepe
   router.route('/google-signup').post(googleSignUp);
   router.route('/otp-verification').post(verifyOTP);
   router.route('/forgot-password').post(forgotPassword);
-  router.route('/reset-password/:token').patch(verifyResetPasswordRequest, resetPassword)
+  router.route('/reset-password/:token?').patch(verifyResetPasswordRequest,verifyUser, resetPassword)
   router.route('/resend-otp').post(resendOTP);
   router.route('/logout').post(logout);
   /*......................................... AUTH........................................... */
 
-  router.route('/theater/:theaterId').get(getTheater)
+
+  router
+    .route('/profile')
+    .get(verifyUser, getUserProfile)
+    .put(verifyUser, updateUserProfile)
+
+  router.route('/theater/:city').get(getTheater)
   router.route('/cities').get(getCities);
   router.route('/shows/:city').get(getShows)
   router.route('/movies/:city').get(isUserBlocked, getRunningMovies)
 
-  return router 
+  return router
 }
 
- 
+
 
 export { userRoutes } 

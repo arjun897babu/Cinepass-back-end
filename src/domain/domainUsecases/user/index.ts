@@ -6,4 +6,6 @@ export * from './IVerifyOTP'
 export * from './IGoogleAuth'
 export * from './IResetPassword'
 export * from './IGetCities'
+export * from './IGetUserProfile'
+export * from './IUpdateUserProfile'
 

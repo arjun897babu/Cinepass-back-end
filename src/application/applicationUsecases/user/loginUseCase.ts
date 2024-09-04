@@ -2,6 +2,7 @@
 import { config } from "../../../config/envConfig";
 
 import { LoginResponse } from "../../../domain/domainUsecases/user";
+import { ResponseStatus } from "../../../domain/entities/common";
 import { OTPTemplate, sendMail } from "../../../infrastructure/nodeMailer";
 import { comparePassword } from "../../../utils/bcrypt";
 import { CustomError } from "../../../utils/CustomError";
@@ -23,9 +24,6 @@ const loginUseCase = (dependencies: IDependencies) => {
           throw new CustomError('Email not found', 404, 'email')
         }
 
-        if (existingUser.isGoogleAuth) {
-          throw new CustomError('Please use Google login', 401, 'googleAuth');
-        }
 
         if (!existingUser.verified) {
           const OTP = generateOTP();
@@ -46,28 +44,36 @@ const loginUseCase = (dependencies: IDependencies) => {
         if (!existingUser.status) {
           throw new CustomError('Your account is blocked', 403, 'blocked')
         }
+        const { googleId, password, ...rest } = existingUser;
 
-        const comparedPassword = await comparePassword(userPassword, existingUser.password as string);
+        if (rest.isGoogleAuth) {
+          const accessToken = generateToken({ _id: rest._id!.toString(), role: Role.users }, config.secrets.access_token, '1h');
+          return {
+            status: ResponseStatus.SUCCESS,
+            message: 'User Logged successfully',
+            accessToken,
+            redirectURL: '/',
+            data: { user: rest },
+          };
+        }
+
+        const comparedPassword = await comparePassword(userPassword, password as string);
 
         if (!comparedPassword) {
-          throw new CustomError('Password mismatch', 401, 'password')
+          throw new CustomError('Password mismatch', 400, 'password')
         }
 
-        const userId = existingUser._id?.toString();
-        if (!userId) {
-          throw new CustomError('Email not found', 404, 'email');
-        }
 
-        const accessToken = generateToken({ _id: userId, role: Role.users }, config.secrets.access_token, '1h')
+        const accessToken = generateToken({ _id: rest._id!.toString(), role: Role.users }, config.secrets.access_token, '1h')
         // const refreshToken = generateToken({_id:userId,role:Role.users}, config.secrets.refresh_token, '7d')
-        const { googleId, password, ...rest } = existingUser
+
 
         return {
-          status: 'Success',
+          status: ResponseStatus.SUCCESS,
           message: 'User Logged successfully',
           accessToken,
           redirectURL: '/',
-          data: { ...rest }
+          data: { user: { ...rest } }
         }
 
 

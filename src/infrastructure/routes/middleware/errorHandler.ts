@@ -36,7 +36,11 @@ const errorHandler = (err: Error, req: Request, res: Response, next: NextFunctio
 
   return res.status(500).json({
     status: "Error",
-    message: `something went wrong`
+    message: `something went wrong`,
+    error: {
+      error: 'password',
+      message: 'something went wrong'
+    }
   })
 }
 

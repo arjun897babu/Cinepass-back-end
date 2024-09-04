@@ -14,7 +14,7 @@ const createTheaterScreenUsecase = (dependecies: ITheaterDependencies) => {
        
         return {
           status: ResponseStatus.SUCCESS,
-          message: '',
+          message: 'Screen added successfully',
           data: { screen: response }
         }
       } catch (error) {

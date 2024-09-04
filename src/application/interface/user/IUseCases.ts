@@ -7,19 +7,24 @@ import {
   IForgotPassword,
   IResendOTP,
   IResetPasswordUsecase,
-  IGetCities
+  IGetCities,
+  IGetUserProfile,
+  IUpdateUserProfile
 } from "../../../domain/domainUsecases/user"
+import { IDependencies } from "./IDependencies";
 
 
 interface IUseCases {
-  signupUseCase: (dependencies: any) => ISignUp;
-  loginUseCase: (dependencies: any) => ILogin;
-  verifyOTPUseCase: (dependencies: any) => IVerifyOTP
-  forgotPasswordUsecase: (dependencies: any) => IForgotPassword;
-  resetPasswordUsecase: (dependencies: any) => IResetPasswordUsecase;
-  resendOTPUseCase: (dependencies: any) => IResendOTP
-  googleAuthUsecase: (dependencies: any) => IGoogleAuth
-  getAllCitiesUsecase:(dependencies:any)=>IGetCities
+  signupUseCase: (dependencies: IDependencies) => ISignUp;
+  loginUseCase: (dependencies: IDependencies) => ILogin;
+  verifyOTPUseCase: (dependencies: IDependencies) => IVerifyOTP
+  forgotPasswordUsecase: (dependencies: IDependencies) => IForgotPassword;
+  resetPasswordUsecase: (dependencies: IDependencies) => IResetPasswordUsecase;
+  resendOTPUseCase: (dependencies: IDependencies) => IResendOTP
+  googleAuthUsecase: (dependencies: IDependencies) => IGoogleAuth
+  getAllCitiesUsecase: (dependencies: IDependencies) => IGetCities
+  getUserProfileUsecase: (dependencies: IDependencies) => IGetUserProfile
+  updateUserProfileUsecase: (dependencies: IDependencies)=>IUpdateUserProfile
 }
 
 export {

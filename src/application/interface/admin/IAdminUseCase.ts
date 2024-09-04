@@ -9,14 +9,14 @@ import { IUpdateTheaterCity } from "../../../domain/domainUsecases/admin/IUpdate
  import { IAdminDependencies } from "./IAdminDependencies";
 
 interface IAdminUsecase {
-  adminLoginUseCase: (dependency: any) => IAdminLogin;
-  getEntityDataForAdminUsecase: (dependencies: any) => IGetEntityDataForAdmin
-  updateTheaterApprovalByAdminUseCase: (dependencies: any) => IUpdateTheaterApproval
-  manageEntityUsecase: (dependencies: any) => IManageEntityStatus
-  updateTheaterCityUsecase: (dependencies: any) => IUpdateTheaterCity
-  addMovieUsecase: (dependencies: any) => IAdminAddMovie
+  adminLoginUseCase: (dependency: IAdminDependencies) => IAdminLogin;
+  getEntityDataForAdminUsecase: (dependencies: IAdminDependencies) => IGetEntityDataForAdmin
+  updateTheaterApprovalByAdminUseCase: (dependencies: IAdminDependencies) => IUpdateTheaterApproval
+  manageEntityUsecase: (dependencies: IAdminDependencies) => IManageEntityStatus
+  updateTheaterCityUsecase: (dependencies: IAdminDependencies) => IUpdateTheaterCity
+  addMovieUsecase: (dependencies: IAdminDependencies) => IAdminAddMovie
   updateMovieUsecase: (dependencies: IAdminDependencies) => IUpdateMovie
-  manangeMovieUsecase: (dependencies: any) => IManageMovieList
+  manangeMovieUsecase: (dependencies: IAdminDependencies) => IManageMovieList
 }
 
 export {

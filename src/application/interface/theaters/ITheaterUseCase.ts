@@ -12,24 +12,26 @@ import {
   IUpdateMovieShow,
   IDeleteMovieShow,
   IDeleteTheaterScreen,
+  IUpdateTheaterScreen,
 
 } from '../../../domain/domainUsecases/theaters'
 import { ITheaterDependencies } from './ITheaterDependencies';
 
 interface ITheaterUseCase {
-  theaterSignupUseCase: (dependencies: any) => ITheaterSignupEntity;
-  theaterLoginUseCase: (dependencies: any) => ITheaterLoginEntity;
-  verifyTheaterOTPUsecase: (dependencies: any) => ITheaterOTPVerify;
-  theaterForgotPasswordUsecase: (dependencies: any) => ITheaterForgotPassword;
-  theaterResetPasswordUsecase: (dependencies: any) => ITheaterResetPassword;
-  resendOTPTheaterUsecase: (dependencies: any) => IResendOTPTheaterUsecase;
-  updateTheaterInfoUsecase: (dependencies: any) => IUpdateTheaterInfo;
-  createTheaterScreenUsecase: (dependencies: any) => ITheaterScreenUsecase;
-  getAllTheaterScreenUseCase: (dependencies: any) => IGetAllTheaterScreen;
-  addMovieShowUsecase: (dependencies: any) => IAddMovieShows;
+  theaterSignupUseCase: (dependencies: ITheaterDependencies) => ITheaterSignupEntity;
+  theaterLoginUseCase: (dependencies: ITheaterDependencies) => ITheaterLoginEntity;
+  verifyTheaterOTPUsecase: (dependencies: ITheaterDependencies) => ITheaterOTPVerify;
+  theaterForgotPasswordUsecase: (dependencies: ITheaterDependencies) => ITheaterForgotPassword;
+  theaterResetPasswordUsecase: (dependencies: ITheaterDependencies) => ITheaterResetPassword;
+  resendOTPTheaterUsecase: (dependencies: ITheaterDependencies) => IResendOTPTheaterUsecase;
+  updateTheaterInfoUsecase: (dependencies: ITheaterDependencies) => IUpdateTheaterInfo;
+  createTheaterScreenUsecase: (dependencies: ITheaterDependencies) => ITheaterScreenUsecase;
+  getAllTheaterScreenUseCase: (dependencies: ITheaterDependencies) => IGetAllTheaterScreen;
+  addMovieShowUsecase: (dependencies: ITheaterDependencies) => IAddMovieShows;
   updateMovieShowUsecase: (dependencies: ITheaterDependencies) => IUpdateMovieShow
   deleteMovieShowUsecase: (dependencies: ITheaterDependencies) => IDeleteMovieShow
-  deleteTheaterScreenUsecase: (dependencies: ITheaterDependencies) =>  IDeleteTheaterScreen
+  deleteTheaterScreenUsecase: (dependencies: ITheaterDependencies) => IDeleteTheaterScreen
+  updateTheaterScreenUsecase: (dependencies: ITheaterDependencies) => IUpdateTheaterScreen
 
 }
 

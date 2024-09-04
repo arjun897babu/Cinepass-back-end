@@ -20,6 +20,7 @@ interface ITheaterRepositories {
   updateMovieShow: (showId: string, payload: IMovieShow) => Promise<boolean>;
   deleteMovieshow: (showId: string) => Promise<boolean>
   deleteTheaterScreen: (screenId: string) => Promise<boolean>
+  updateTheaterScreen: (screenId: string, payload: ITheaterScreen) => Promise<ITheaterScreen | null>
 }
 
 export {

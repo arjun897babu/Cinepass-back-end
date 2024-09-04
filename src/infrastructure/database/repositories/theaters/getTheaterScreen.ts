@@ -9,9 +9,10 @@ const getAllTheaterScreen = async (_id: string, amenity?: string): Promise<IThea
     let matchQuery = amenity ? {
       $and: [
         { theaterId: new Types.ObjectId(_id) },
-        { amenity }
+        { amenity },
+        { listed: true }
       ]
-    } : { theaterId: new Types.ObjectId(_id) }
+    } : { theaterId: new Types.ObjectId(_id), listed: true }
 
     console.log(matchQuery)
     const allScreen = await TheaterScreen.aggregate([

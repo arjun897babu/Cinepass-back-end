@@ -8,10 +8,8 @@ import { Users } from "../../database/model/user/userSchema";
 
 const verifyUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // console.log('user middle ware called');
-
     const userJWT = req.cookies[Cookie.userJWT];
-    if (!userJWT) {
+    if (!userJWT) { 
       throw new CustomError('unAuthorized', 401, 'token')
     }
 
@@ -21,9 +19,9 @@ const verifyUser = async (req: Request, res: Response, next: NextFunction) => {
       if (!user?.status) {
         throw new CustomError('Accout is blocked', 403, 'blocked')
       }
-      req.params._id = decoded._id
-      req.params.roles = decoded.role
       mongodbIdValidator(decoded._id)
+      req.params._id = decoded._id
+      req.params.roles = decoded.role 
       next()
     } else {
       res.clearCookie(Cookie.userJWT, {
@@ -43,9 +41,13 @@ const verifyResetPasswordRequest = async (req: Request, res: Response, next: Nex
   try {
     // console.log('reaching verify Reset-Password Request middleware')
     const { token } = req.params;
+
     if (!token) {
-      throw new CustomError('Something went wrong', 401, 'token')
+     
+      return next()
+      // throw new CustomError('Something went wrong', 401, 'token')
     }
+  
     const decoded = verifyToken(token, config.secrets.short_lived_access_token);
 
     if (decoded._id && decoded.role === Role.users) {
@@ -83,8 +85,6 @@ const isUserBlocked = async (req: Request, res: Response, next: NextFunction) =>
       } else {
         res.clearCookie(Cookie.userJWT, {
           httpOnly: true,
-         
-          
         })
         throw new CustomError('unAutorized', 401, 'token')
       }

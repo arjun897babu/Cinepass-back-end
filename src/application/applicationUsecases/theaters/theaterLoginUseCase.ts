@@ -50,7 +50,7 @@ const theaterLoginUseCase = (dependencies: ITheaterDependencies) => {
         //Checking password credentials
         const isPassword = await comparePassword(data.password, existingTheaterOwner.password);
         if (!isPassword) {
-          throw new CustomError('Invalid password', 401, 'password')
+          throw new CustomError('Invalid password', 400, 'password')
         }
 
         const theaterId = existingTheaterOwner._id?.toString()

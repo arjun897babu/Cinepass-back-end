@@ -2,7 +2,7 @@ import { ObjectId } from "mongoose";
 
 interface ISeat {
   name: string,
-  booked: boolean,
+  available: boolean,
 }
 
 interface ITheaterScreen {

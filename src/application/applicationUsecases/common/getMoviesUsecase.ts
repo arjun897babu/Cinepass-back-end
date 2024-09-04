@@ -2,6 +2,7 @@ import { ResponseStatus } from "../../../domain/entities/common";
 import { MovieType, Role } from "../../../utils/enum";
 import { ICommonDependencies } from "../../interface/common/ICommonDependencies";
 
+//use case for fetch all movies (theater movies and streaming movies) 
 const getMoviesUsecase = (dependencies: ICommonDependencies) => {
   const { commonRepositories: { getMovies } } = dependencies
 

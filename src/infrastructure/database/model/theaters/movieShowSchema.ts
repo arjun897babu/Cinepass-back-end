@@ -40,7 +40,21 @@ const movieShowSchema = new Schema<IMovieShow>({
   listed: {
     type: Boolean,
     default: true
-  }
+  },
+  reserved: [
+    {
+      booking_date: {
+        type: Date,
+        required: true
+      },
+      reserved_seats: [
+        {
+          type: String,
+          required: true
+        }
+      ]
+    }
+  ]
 }, {
   timestamps: true
 });

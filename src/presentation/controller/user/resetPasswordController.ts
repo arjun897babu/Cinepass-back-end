@@ -7,15 +7,10 @@ const resetPassword = (dependencies: IDependencies) => {
   const { useCases: { resetPasswordUsecase } } = dependencies;
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { password } = req.body;
-      console.log(password)
-      const { token } = req.params;// this token contain the _id of the user 
-      if (!token) {
-        throw new CustomError('Something went wrong', 400, '_id')
-      }
-      validatePassword(password)
 
-      const response = await resetPasswordUsecase(dependencies).execute({ _id: token, password })
+      const { password } = req.body;
+      const { token, _id } = req.params  
+      const response = await resetPasswordUsecase(dependencies).execute({ _id: token ?? _id, password })
       return res.status(200).json(
         {
           status: response.status,

@@ -20,10 +20,10 @@ const getMovies = async (movieType: MovieType, role: Role): Promise<IMovie[] | [
     const response = await db.aggregate([
       {
         $match: matchQuery
-      },
+      }, 
       {
         $sort: { release_date: -1 }
-      }
+      } 
     ])
     return response
   } catch (error) {

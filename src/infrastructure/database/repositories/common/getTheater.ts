@@ -6,7 +6,7 @@ import { ApprovalStatus } from "../../../../domain/entities/common";
 
 const getTheaterDetails = async (ownerId: string): Promise<ITheaterOwnerEntity > => {
   try {
-   
+    console.log('getTheater for theater owner respository : ',ownerId)
 
     const [theaterDetails] = await TheaterOwner.aggregate([
       {

@@ -4,9 +4,9 @@ import { TheaterOwner } from "../../model/theaters";
 import { ApprovalStatus } from "../../../../domain/entities/common";
 import { CustomError } from "../../../../utils/CustomError";
 
-const getTheaterByCity = async (city: string): Promise<Pick<ITheaterOwnerEntity, 'theater_name' | 'city' | '_id' | 'slug'>[]> => {
+const getTheaterByCity = async (city: string): Promise<Partial<ITheaterOwnerEntity>[]> => {
   try {
-
+    console.log('getTheater by city for user repository: ',city)
 
     const theaterDetails = await TheaterOwner.aggregate([
       {
@@ -19,14 +19,13 @@ const getTheaterByCity = async (city: string): Promise<Pick<ITheaterOwnerEntity,
           ]
         }
       },
-
       {
         $project: {
-          password: 0,
           theater_name: 1,
           city: 1,
           _id: 1,
-          slug: 1
+          slug: 1,
+          address:1
         }
       }
     ]);
