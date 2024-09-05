@@ -11,7 +11,8 @@ const getSingleShow = async (_id: string): Promise<IGetSingleShow> => {
       {
         $match: {
           _id: new Types.ObjectId(_id),
-          listed: true
+          listed: true,
+          opening_date:{$lte:new Date()}
         }
       },
       {
@@ -49,10 +50,7 @@ const getSingleShow = async (_id: string): Promise<IGetSingleShow> => {
           theater: {
             theater_name: '$theater.theater_name'
           },
-          screen: {
-            name: '$screen.name',
-            layout: '$screen.layout'
-          },
+          screen:'$screen',
           show: {
             reserved: '$reserved',
             format: '$format',

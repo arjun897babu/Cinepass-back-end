@@ -9,7 +9,7 @@ const getRunningMovies = async ({ role, _id, city }: GetShowsParams) => {
 
     const matchQuery = role === Role.theaters
       ? { 'theaterId': new Types.ObjectId(_id), 'theater.status': true  }
-      : { 'theater.status': true, 'theater.city': { $regex: city, $options: 'i' } };
+      : { 'theater.status': true, 'theater.city': { $regex: city, $options: 'i' }, opening_date:{$lte:new Date()} };
 
     const [movies] = await MovieShow.aggregate([
       {
@@ -20,9 +20,7 @@ const getRunningMovies = async ({ role, _id, city }: GetShowsParams) => {
           as: 'theater'
         }
       },
-      {
-        $match: matchQuery
-      },
+     
       {
         $lookup: {
           from: 'theatermovies',
@@ -33,6 +31,9 @@ const getRunningMovies = async ({ role, _id, city }: GetShowsParams) => {
       },
       {
         $unwind: '$movie'
+      },
+      {
+        $match: matchQuery
       },
       {
         $group: {

@@ -64,16 +64,9 @@ interface IManageMovie {
 
 
 interface IGetSingleShow {
-  movie: {
-    movie_name: Pick<IMovie, 'movie_name'>
-  };
-  theater: {
-    theater_name: Pick<ITheaterOwnerEntity, 'theater_name'>
-  };
-  screen: {
-    name: Pick<ITheaterScreen, 'screen_name'>;
-    layout: Pick<ITheaterScreen, 'layout'>;
-  };
+  movie: Pick<IMovie, 'movie_name'>
+  theater: Pick<ITheaterOwnerEntity, 'theater_name'>
+  screen: ITheaterScreen;
   show: Partial<IMovieShow>
 }
 
@@ -88,7 +81,7 @@ interface IGetShowByTheater {
 
 }
 
- 
+
 
 export {
   IGetShowByTheater,
