@@ -1,9 +1,22 @@
+import { MovieFilter } from "../../../../utils/interface";
 import { MovieShow } from "../../model/theaters"
 
-const getSingleRunningMovie = async (movieId: string, city: string) => {
+const getSingleRunningMovie = async (
+  movieId: string,
+  city: string,
+  {
+    bookingDate = new Date(),
+    format = '',
+    genre = '',
+    language = '',
+    search = ''
+  }: Partial<MovieFilter>
+) => {
+
   try {
 
-    console.log(movieId)
+    const today = new Date()
+
     const movies = await MovieShow.aggregate([
       {
         $facet: {
@@ -77,6 +90,8 @@ const getSingleRunningMovie = async (movieId: string, city: string) => {
                   { 'theater.status': true },
                   { 'movie.listed': true },
                   { 'movie.slug': { $regex: `^${movieId}$`, $options: 'i' } },
+                  {openingDate:{ $lte: today }}
+
                 ]
               }
             },
@@ -90,6 +105,45 @@ const getSingleRunningMovie = async (movieId: string, city: string) => {
             },
             {
               $unwind: '$screenDetails'
+            },
+
+            {
+              $addFields: {
+                isWithinBookingPeriod: {
+                  $cond: {
+                    if: { $lte: [bookingDate, '$movie.release_date'] },
+                    then: {
+                      $lte: [
+                        bookingDate, 
+                        { 
+                          $dateAdd: { 
+                            startDate: '$movie.release_date', 
+                            unit: 'day', 
+                            amount: '$advanceBookingPeriod' 
+                          } 
+                        }
+                      ]
+                    },
+                    else: {
+                      $lte: [
+                        bookingDate, 
+                        { 
+                          $dateAdd: { 
+                            startDate: today, 
+                            unit: 'day', 
+                            amount: '$advanceBookingPeriod' 
+                          } 
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            {
+              $match: {
+                isWithinBookingPeriod: true
+              }
             },
             {
               $group: {
@@ -105,10 +159,15 @@ const getSingleRunningMovie = async (movieId: string, city: string) => {
                       endTime: '$endTime',
                       format: '$format',
                       language: '$language',
-                      showId: '$_id'
+                      showId: '$_id',
+                      slug: '$slug',
+                      allowCancelation: '$allowCancelation',
+                      cancelationDeadline: '$cancelationDeadline',
+                      advanceBookingPeriod: '$advanceBookingPeriod',
                     }
                   }
-                }
+                },
+                
               }
             },
             {
@@ -120,7 +179,7 @@ const getSingleRunningMovie = async (movieId: string, city: string) => {
                 'theater.address': 1,
                 shows: 1
               }
-            }   
+            }
           ]
         }
       },
@@ -131,6 +190,7 @@ const getSingleRunningMovie = async (movieId: string, city: string) => {
         }
       }
     ]);
+    console.log('get single running movie repository', movies)
 
     return movies;
   } catch (error) {

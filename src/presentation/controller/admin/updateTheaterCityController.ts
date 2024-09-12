@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { CustomError } from "../../../utils/CustomError";
 import { mongodbIdValidator, validateCity } from "../../../utils/validator";
 import { IAdminDependencies } from "../../../application/interface/admin/IAdminDependencies";
-import { ResponseStatus } from "../../../domain/entities/common";
+import { HttpStatusCode, ResponseStatus } from "../../../utils/enum";;
 
 const updateTheaterCity = (dependencies: IAdminDependencies) => {
   const { adminUsecase: { updateTheaterCityUsecase } } = dependencies
@@ -16,7 +16,7 @@ const updateTheaterCity = (dependencies: IAdminDependencies) => {
       validateCity(city);
       
       const response = await updateTheaterCityUsecase(dependencies).execute({ _id, city });
-      return res.status(200).json({
+      return res.status(HttpStatusCode.OK).json({
         status: response.status,
         message: response.message,
         data: response.data,

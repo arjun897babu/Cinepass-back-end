@@ -1,7 +1,6 @@
 import { IMovie } from "../../../domain/entities/admin/ITheaterMovie";
-import { ResponseStatus } from "../../../domain/entities/common";
-import { CustomError } from "../../../utils/CustomError";
-import { MovieType } from "../../../utils/enum";
+ import { CustomError } from "../../../utils/CustomError";
+import { MovieType, ResponseStatus } from "../../../utils/enum";
 import { IAdminDependencies } from "../../interface/admin/IAdminDependencies";
 
 const updateMovieUsecase = (dependencies: IAdminDependencies) => {
@@ -17,7 +16,7 @@ const updateMovieUsecase = (dependencies: IAdminDependencies) => {
 
         return {
           status:ResponseStatus.SUCCESS,
-          message:'Movie updated Succcessfully',
+          message:'Movie updated Successfully',
           data:{movie}
         }
       } catch (error) {

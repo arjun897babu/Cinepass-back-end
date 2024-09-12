@@ -4,6 +4,7 @@ import { validateEmail } from "../../../utils/validator";
 import { platform } from "os";
 import { CustomError } from "../../../utils/CustomError";
 import { Cookie } from "../../../utils/jwtHandler";
+import { HttpStatusCode } from "../../../utils/enum";
 
 const theaterLogin = (dependencies: ITheaterDependencies) => {
   const { theaterUseCase: { theaterLoginUseCase } } = dependencies
@@ -34,7 +35,7 @@ const theaterLogin = (dependencies: ITheaterDependencies) => {
         maxAge: 24 * 60 * 60 * 1000
 
       })
-        .status(200).json({
+        .status(HttpStatusCode.OK).json({
           status: response.status,
           message: response.message,
           data: response.data,

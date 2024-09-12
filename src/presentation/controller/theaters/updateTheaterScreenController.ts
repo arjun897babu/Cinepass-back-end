@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ITheaterDependencies } from "../../../application/interface/theaters/ITheaterDependencies";
+import { HttpStatusCode } from "../../../utils/enum";
 
 const updateTheaterScreen = (dependencies: ITheaterDependencies) => {
   const { theaterUseCase: { updateTheaterScreenUsecase } } = dependencies
@@ -13,7 +14,7 @@ const updateTheaterScreen = (dependencies: ITheaterDependencies) => {
       const response = await updateTheaterScreenUsecase(dependencies).execute(screenId, payload);
  
 
-      return res.status(200).json({
+      return res.status(HttpStatusCode.OK).json({
         status: response.status,
         message: response.message,
         data: response.data,

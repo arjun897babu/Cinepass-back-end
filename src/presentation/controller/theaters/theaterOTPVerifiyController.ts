@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { ITheaterDependencies } from "../../../application/interface/theaters/ITheaterDependencies"
 import { validateEmail } from "../../../utils/validator";
 import { CustomError } from "../../../utils/CustomError";
+import { HttpStatusCode } from "../../../utils/enum";
 
 
 const theaterVerify = (dependencies: ITheaterDependencies) => {
@@ -14,7 +15,7 @@ const theaterVerify = (dependencies: ITheaterDependencies) => {
      
       const response = await verifyTheaterOTPUsecase(dependencies).execute(payload);
 
-      return res.status(200).json({
+      return res.status(HttpStatusCode.OK).json({
         status: response?.status,
         message: response?.message,
         redirectURL: response?.redirectURL

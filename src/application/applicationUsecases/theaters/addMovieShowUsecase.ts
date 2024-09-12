@@ -1,5 +1,5 @@
-import { ResponseStatus } from "../../../domain/entities/common";
-import { IMovieShow } from "../../../domain/entities/theaters";
+ import { IMovieShow } from "../../../domain/entities/theaters";
+import { ResponseStatus } from "../../../utils/enum";
 import { ITheaterDependencies } from "../../interface/theaters/ITheaterDependencies";
 
 const addMovieShowUsecase = (dependencies: ITheaterDependencies) => {

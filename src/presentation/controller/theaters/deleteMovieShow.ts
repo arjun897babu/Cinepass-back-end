@@ -1,5 +1,6 @@
 import { NextFunction, Request, response, Response } from "express";
 import { ITheaterDependencies } from "../../../application/interface/theaters/ITheaterDependencies";
+import { HttpStatusCode } from "../../../utils/enum";
 
 const deleteMovieShow = (dependecies: ITheaterDependencies) => {
   const { theaterUseCase: { deleteMovieShowUsecase } } = dependecies
@@ -10,7 +11,7 @@ const deleteMovieShow = (dependecies: ITheaterDependencies) => {
 
       const response = await deleteMovieShowUsecase(dependecies).execute(showId)
 
-      return res.status(200).json({
+      return res.status(HttpStatusCode.OK).json({
         status: response.status,
         message: response.message,
         data: response.data

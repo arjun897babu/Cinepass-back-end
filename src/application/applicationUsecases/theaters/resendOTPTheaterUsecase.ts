@@ -1,7 +1,7 @@
 import { IResponse } from "../../../domain/domainUsecases"
-import { ResponseStatus } from "../../../domain/entities/common"
-import { OTPTemplate, sendMail } from "../../../infrastructure/nodeMailer"
+ import { OTPTemplate, sendMail } from "../../../infrastructure/nodeMailer"
 import { CustomError } from "../../../utils/CustomError"
+import { ResponseStatus } from "../../../utils/enum"
 import { generateOTP } from "../../../utils/OTPGenarator"
 import { ITheaterDependencies } from "../../interface/theaters/ITheaterDependencies"
 

@@ -11,7 +11,7 @@ const verifyTheaterOwner = async (req: Request, res: Response, next: NextFunctio
     // console.log('theater middleware is called');
     const theaterJWT = req.cookies[Cookie.theaterJWT]
     if (!theaterJWT) {
-      throw new CustomError('Unaothorized', 401, 'token');
+      throw new CustomError('Unauthorized', 401, 'token');
     } 
     
     const decoded = verifyToken(theaterJWT, config.secrets.access_token);
@@ -24,7 +24,7 @@ const verifyTheaterOwner = async (req: Request, res: Response, next: NextFunctio
           httpOnly: true,
            
         })
-        throw new CustomError('Accout is blocked', 403, 'blocked')
+        throw new CustomError('Account is blocked', 403, 'blocked')
       }
       req.params._id = decoded._id
       req.params.roles = decoded.role

@@ -1,5 +1,5 @@
 import { IResponse } from "../../../domain/domainUsecases";
-import { ResponseStatus } from "../../../domain/entities/common";
+import { ResponseStatus } from "../../../utils/enum";;
 import { comparePassword, hashPassword } from "../../../utils/bcrypt";
 import { CustomError } from "../../../utils/CustomError";
 import { IResetPassword } from "../../../utils/interface";

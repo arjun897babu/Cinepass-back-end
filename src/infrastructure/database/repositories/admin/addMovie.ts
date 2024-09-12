@@ -31,9 +31,11 @@ const addMovie = async (payload: IMovie, movieType: MovieType): Promise<IMovie> 
 
     const movie_poster = await uploadImage(payload.movie_poster, Role.admin)
     const cover_photo = await uploadImage(payload.cover_photo, Role.admin)
+    payload.movie_poster = movie_poster
+    payload.cover_photo= cover_photo
 
     const newMovie = movieType === MovieType.THEATER ?
-      await db.create({ ...payload, movie_poster, cover_photo })
+      await db.create(payload)
       : await db.create(payload)
 
     return newMovie

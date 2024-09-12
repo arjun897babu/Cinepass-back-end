@@ -1,22 +1,23 @@
-import { IMovie } from "../../../domain/entities/admin/ITheaterMovie";
-import { ResponseStatus } from "../../../domain/entities/common";
-import { CustomError } from "../../../utils/CustomError";
-import { GetShowsParams } from "../../../utils/interface";
+
+import { ResponseStatus } from "../../../utils/enum";
+import { GetShowsParams, MovieFilter } from "../../../utils/interface";
 import { ICommonDependencies } from "../../interface/common/ICommonDependencies";
-//use case for getting avaialble movies in theater based on city
+//use case for getting available movies in theater based on city
 const getRunningMoviesUsecase = (dependencies: ICommonDependencies) => {
   const { commonRepositories: { getRunningMovies, getSingleRunningMovie } } = dependencies;
   return {
-    execute: async ({ role, _id, city, movieId }: GetShowsParams) => {
-      try {
+    execute: async ({ role, _id, city, movieId, filter = {} }: GetShowsParams) => {
+
+      const { bookingDate,format,genre,language, search } = filter
+       try {
         let movies
-        
+
         if (movieId && city) {
-          movies = await getSingleRunningMovie(movieId, city)
+          movies = await getSingleRunningMovie(movieId, city, { bookingDate }) 
         } else {
-          movies = await getRunningMovies({ role, _id, city })
+          movies = await getRunningMovies({ role, _id, city,filter})  
         }
- 
+
         return {
           status: ResponseStatus.SUCCESS,
           message: 'Data fetched successfully',

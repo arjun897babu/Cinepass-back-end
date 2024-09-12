@@ -1,6 +1,5 @@
 import { IMovie } from "../../../domain/entities/admin/ITheaterMovie";
-import { ResponseStatus } from "../../../domain/entities/common";
-import { MovieType, Role } from "../../../utils/enum";
+ import { MovieType, ResponseStatus } from "../../../utils/enum";
 import { IAdminDependencies } from "../../interface/admin/IAdminDependencies";
 
 const addMovieUsecase = (dependencies: IAdminDependencies) => {

@@ -1,6 +1,6 @@
 import { config } from "../../../config/envConfig";
 import { IResponse } from "../../../domain/domainUsecases";
-import { ResponseStatus } from "../../../domain/entities/common";
+import { ResponseStatus } from "../../../utils/enum";;
 import { resetPasswordTemplate, sendMail } from "../../../infrastructure/nodeMailer";
 import { CustomError } from "../../../utils/CustomError";
 import { Role } from "../../../utils/enum";

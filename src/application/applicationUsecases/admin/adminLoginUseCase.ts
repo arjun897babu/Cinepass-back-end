@@ -1,12 +1,10 @@
-import { promises } from "dns"
-import { config } from "../../../config/envConfig"
-import { ILogin, IResponse, LoginResponse } from "../../../domain/domainUsecases"
-import { ResponseStatus } from "../../../domain/entities/common"
-import { comparePassword } from "../../../utils/bcrypt"
+ import { config } from "../../../config/envConfig"
+import { ILogin,   LoginResponse } from "../../../domain/domainUsecases"
+ import { comparePassword } from "../../../utils/bcrypt"
 import { CustomError } from "../../../utils/CustomError"
 import { generateToken } from "../../../utils/jwtHandler"
 import { IAdminDependencies } from "../../interface/admin/IAdminDependencies"
-import { Role } from "../../../utils/enum"
+import { Role ,ResponseStatus} from "../../../utils/enum"
 
 const adminLoginUseCase = (dependencies: IAdminDependencies) => {
   const { adminRepositories: { findAdmin } } = dependencies

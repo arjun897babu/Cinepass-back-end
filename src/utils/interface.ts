@@ -37,7 +37,14 @@ type TheaterOwnerProfile = Pick<ITheaterOwnerEntity, 'name' | 'email' | 'mobile_
 
 type TheaterProfile = Pick<ITheaterOwnerEntity, 'theater_name' | 'theater_license' | 'address' | 'city' | 'image'>;
 
-
+interface MovieFilter {
+  bookingDate: Date;
+  search: string;
+  format: string;
+  genre: string;
+  language: string;
+  nowShowing:boolean;
+}
 
 interface GetShowsParams {
   role: Role;
@@ -46,6 +53,7 @@ interface GetShowsParams {
   movieId?: string
   theaterId?: string
   showId?: string
+  filter?: Partial<MovieFilter>
 }
 
 interface IGetMovieShowResponse {
@@ -64,7 +72,7 @@ interface IManageMovie {
 
 
 interface IGetSingleShow {
-  movie: Pick<IMovie, 'movie_name'>
+  movie: Pick<IMovie, 'movie_name'|'movie_poster'>
   theater: Pick<ITheaterOwnerEntity, 'theater_name'>
   screen: ITheaterScreen;
   show: Partial<IMovieShow>
@@ -81,9 +89,13 @@ interface IGetShowByTheater {
 
 }
 
-
+interface MovieResponse {
+  maxPage: number,
+  movies: IMovie[] | []
+}
 
 export {
+  MovieResponse,
   IGetShowByTheater,
   IGetSingleShow,
   IResetPassword,
@@ -94,7 +106,8 @@ export {
   TheaterProfile,
   GetShowsParams,
   IGetMovieShowResponse,
-  IManageMovie
+  IManageMovie,
+  MovieFilter
 
 }
 

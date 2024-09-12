@@ -4,6 +4,7 @@ import { IDependencies } from "../../../application/interface/user/IDependencies
   ;
 import { validateEmail } from "../../../utils/validator";
 import { CustomError } from "../../../utils/CustomError";
+import { HttpStatusCode } from "../../../utils/enum";
 
 const forgotPassword = (dependencies: IDependencies) => {
   const { useCases: { forgotPasswordUsecase } } = dependencies
@@ -16,7 +17,7 @@ const forgotPassword = (dependencies: IDependencies) => {
       const response = await forgotPasswordUsecase(dependencies).execute(email);
 
 
-      res.status(200).json({
+      res.status(HttpStatusCode.OK).json({
         message:response.message,
         status:response.status,
         redirectURL:response.redirectURL,

@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
-import { ApprovalStatus } from "../../../../domain/entities/common";
-import { ITheaterOwnerEntity } from "../../../../domain/entities/theaters";
+ import { ITheaterOwnerEntity } from "../../../../domain/entities/theaters";
 import { createTheaterSlug } from "../../../../utils/slugify";
+import { ApprovalStatus } from "../../../../utils/enum";
 
 const theaterOwnerSchema = new Schema<ITheaterOwnerEntity>({
 

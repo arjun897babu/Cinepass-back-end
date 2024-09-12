@@ -1,4 +1,4 @@
-import { ResponseStatus } from "../../../domain/entities/common";
+ import { ResponseStatus } from "../../../utils/enum";
 import { ITheaterDependencies } from "../../interface/theaters/ITheaterDependencies";
 
 const getAllTheaterScreenUseCase = (dependencies: ITheaterDependencies) => {

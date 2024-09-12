@@ -1,6 +1,6 @@
 import { IManageEntity, IResponse } from "../../../domain/domainUsecases";
-import { ResponseStatus } from "../../../domain/entities/common";
-import { CustomError } from "../../../utils/CustomError";
+ import { CustomError } from "../../../utils/CustomError";
+import { ResponseStatus } from "../../../utils/enum";
 import { IAdminDependencies } from "../../interface/admin/IAdminDependencies";
 
 const manageEntityUsecase = (dependencies: IAdminDependencies) => {

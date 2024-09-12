@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ITheaterDependencies } from "../../../application/interface/theaters/ITheaterDependencies";
+import { HttpStatusCode } from "../../../utils/enum";
 
 const getAllTheaterScreen = (dependencies: ITheaterDependencies) => {
   const { theaterUseCase: { getAllTheaterScreenUseCase } } = dependencies;
@@ -12,7 +13,7 @@ const getAllTheaterScreen = (dependencies: ITheaterDependencies) => {
 
       const response = await getAllTheaterScreenUseCase(dependencies).execute(_id, parsedAmenity);
       
-      return res.status(200).json({
+      return res.status(HttpStatusCode.OK).json({
         status: response.status,
         message: response.message,
         data: response.data,

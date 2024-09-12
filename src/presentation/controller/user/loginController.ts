@@ -4,6 +4,7 @@ import { CustomError } from "../../../utils/CustomError";
 import { IDependencies } from "../../../application/interface/user/IDependencies";
 import { Cookie } from "../../../utils/jwtHandler";
 import { error } from "console";
+import { HttpStatusCode } from "../../../utils/enum";
 
 const login = (dependencies: IDependencies) => {
   const { useCases: { loginUseCase } } = dependencies;
@@ -39,7 +40,7 @@ const login = (dependencies: IDependencies) => {
 
         maxAge: 24 * 60 * 60 * 1000
       })
-        .status(200).json({
+        .status(HttpStatusCode.OK).json({
           status: response.status,
           message: response.message,
           data: response.data,

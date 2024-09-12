@@ -1,4 +1,4 @@
-import { ResponseStatus } from "../../../domain/entities/common";
+import { ResponseStatus } from "../../../utils/enum";;
 import { UserEntity } from "../../../domain/entities/user/IUserEntity";
 import { IDependencies } from "../../interface/user/IDependencies";
 

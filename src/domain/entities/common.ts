@@ -1,14 +1,5 @@
 
-enum ResponseStatus {
-  SUCCESS = 'Success',
-  ERROR = 'Error',
-}
 
-enum ApprovalStatus{
-  APPROVED = 'approved',
-  REJECTED = 'rejected',
-  PENDING = 'pending'
-}
 
 interface OTPEntity {
   email: string;
@@ -17,8 +8,6 @@ interface OTPEntity {
 }
 
 export {
-  OTPEntity,
-  ResponseStatus,
-  ApprovalStatus
+  OTPEntity
 }
 

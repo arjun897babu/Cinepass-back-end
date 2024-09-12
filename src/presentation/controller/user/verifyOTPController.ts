@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { IDependencies } from "../../../application/interface/user/IDependencies";
 import { validateEmail } from "../../../utils/validator";
-import { CustomError } from "../../../utils/CustomError";
+ import { HttpStatusCode } from "../../../utils/enum";
 
 const verifyOTP = (dependencies: IDependencies) => {
   const { useCases: { verifyOTPUseCase } } = dependencies;
@@ -15,7 +15,7 @@ const verifyOTP = (dependencies: IDependencies) => {
       
       const result = await verifyOTPUseCase(dependencies).execute(email, otp);
 
-      return res.status(200).json({
+      return res.status(HttpStatusCode.OK).json({
         status: result.status,
         message: result.message,
         redirectURL: result.redirectURL

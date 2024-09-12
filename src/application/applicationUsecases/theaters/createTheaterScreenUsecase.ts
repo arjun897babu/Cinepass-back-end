@@ -1,7 +1,6 @@
-import { ResponseStatus } from "../../../domain/entities/common";
-import { ITheaterScreen } from "../../../domain/entities/theaters";
-import { CustomError } from "../../../utils/CustomError";
-import { ITheaterDependencies } from "../../interface/theaters/ITheaterDependencies";
+ import { ITheaterScreen } from "../../../domain/entities/theaters";
+import { ResponseStatus } from "../../../utils/enum";
+ import { ITheaterDependencies } from "../../interface/theaters/ITheaterDependencies";
 
 const createTheaterScreenUsecase = (dependecies: ITheaterDependencies) => {
   const { theaterRepositories: { createTheaterScreen } } = dependecies;

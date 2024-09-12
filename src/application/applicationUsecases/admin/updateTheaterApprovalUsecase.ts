@@ -1,7 +1,6 @@
-import { ObjectId } from "mongoose";
-import { IResponse, IUpdateApproval } from "../../../domain/domainUsecases";
-import { ApprovalStatus, ResponseStatus } from "../../../domain/entities/common";
-import { CustomError } from "../../../utils/CustomError";
+ import { IResponse, IUpdateApproval } from "../../../domain/domainUsecases";
+ import { CustomError } from "../../../utils/CustomError";
+import { ApprovalStatus, ResponseStatus } from "../../../utils/enum";
 import { IAdminDependencies } from "../../interface/admin/IAdminDependencies";
 
 const updateTheaterApprovalByAdminUseCase = (dependencies: IAdminDependencies) => {

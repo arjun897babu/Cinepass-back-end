@@ -1,7 +1,7 @@
 
 
 import { MovieShow } from "../../model/theaters"
-import { ApprovalStatus } from "../../../../domain/entities/common"
+import { ApprovalStatus } from "../../../../utils/enum"
 import { IGetShowByTheater } from "../../../../utils/interface"
 import { CustomError } from "../../../../utils/CustomError"
 
@@ -59,7 +59,7 @@ const getShowByTheater = async (theaterId: string, city: string):Promise<IGetSho
                 format: '$format',
                 language: '$language',
                 showId: '$_id',
-                opening_date:'$opening_date'
+                openingDate:'$openingDate'
               },
               screenDetails:{
                 screen_name:'screens.screen_name',

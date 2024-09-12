@@ -1,5 +1,5 @@
-import { ResponseStatus } from "../../../domain/entities/common";
-import { CustomError } from "../../../utils/CustomError";
+ import { CustomError } from "../../../utils/CustomError";
+import { ResponseStatus } from "../../../utils/enum";
 import { ITheaterDependencies } from "../../interface/theaters/ITheaterDependencies";
 
 const deleteMovieShowUsecase = (dependecies: ITheaterDependencies) => {

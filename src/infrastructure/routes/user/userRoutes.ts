@@ -27,6 +27,7 @@ const userRoutes = (dependencies: IDependencies, commonDependencies: ICommonDepe
     getShows,
     getRunningMovies,
     getMovies,
+    ticketReservation
   } = commonController(commonDependencies)
 
   /*......................................... AUTH........................................... */
@@ -36,7 +37,7 @@ const userRoutes = (dependencies: IDependencies, commonDependencies: ICommonDepe
   router.route('/google-signup').post(googleSignUp);
   router.route('/otp-verification').post(verifyOTP);
   router.route('/forgot-password').post(forgotPassword);
-  router.route('/reset-password/:token?').patch(verifyResetPasswordRequest,verifyUser, resetPassword)
+  router.route('/reset-password/:token?').patch(verifyResetPasswordRequest, verifyUser, resetPassword)
   router.route('/resend-otp').post(resendOTP);
   router.route('/logout').post(logout);
   /*......................................... AUTH........................................... */
@@ -50,7 +51,12 @@ const userRoutes = (dependencies: IDependencies, commonDependencies: ICommonDepe
   router.route('/theater/:city').get(getTheater)
   router.route('/cities').get(getCities);
   router.route('/shows/:city').get(getShows)
-  router.route('/movies/:city').get(isUserBlocked, getRunningMovies)
+  router.route('/movies/:city').get(getRunningMovies)
+
+  router
+    .route('/booking')
+    .get()
+    .post(verifyUser, ticketReservation)
 
   return router
 }

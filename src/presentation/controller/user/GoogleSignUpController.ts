@@ -4,6 +4,7 @@ import { OAuth2Client } from "google-auth-library";
 import { config } from "../../../config/envConfig";
 import { CustomError } from "../../../utils/CustomError";
 import { Cookie } from "../../../utils/jwtHandler";
+import { HttpStatusCode } from "../../../utils/enum";
 
 const googleSignUp = (dependencies: IDependencies) => {
   const { useCases: { googleAuthUsecase } } = dependencies
@@ -33,7 +34,7 @@ const googleSignUp = (dependencies: IDependencies) => {
         sameSite: 'lax',
         maxAge: 24 * 60 * 60 * 1000
       })
-        .status(200).json({
+        .status(HttpStatusCode.OK).json({
           status: response.status,
           message: response.message,
           redirectURL: response.redirectURL,

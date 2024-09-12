@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { Cookie } from "../../../utils/jwtHandler";
+import { HttpStatusCode } from "../../../utils/enum";
 const logout = () => {
 
   return async (req: Request, res: Response, next: NextFunction) => {
@@ -8,7 +9,7 @@ const logout = () => {
       res.clearCookie(Cookie.userJWT, {
         httpOnly: true, 
       })
-        .status(200)
+        .status(HttpStatusCode.OK)
         .json({ status: 'Success', message: 'user logout' })
     } catch (error) {
       next(error)

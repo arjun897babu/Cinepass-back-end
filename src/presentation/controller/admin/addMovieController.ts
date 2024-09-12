@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { IAdminDependencies } from "../../../application/interface/admin/IAdminDependencies";
-import { MovieType } from "../../../utils/enum";
+import { HttpStatusCode, MovieType } from "../../../utils/enum";
 import { validateMovieType } from "../../../utils/validator";
 
 const addMovie = (dependencies: IAdminDependencies) => {
@@ -16,7 +16,7 @@ const addMovie = (dependencies: IAdminDependencies) => {
  
       const response = await addMovieUsecase(dependencies).execute(payload, movieType as MovieType)
 
-      res.status(200).json({
+      res.status(HttpStatusCode.OK).json({
         status: response.status,
         message: response.message,
         data: response.data,

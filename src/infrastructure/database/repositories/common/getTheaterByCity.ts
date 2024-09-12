@@ -1,12 +1,12 @@
 import { Types } from "mongoose";
 import { ITheaterOwnerEntity } from "../../../../domain/entities/theaters";
 import { TheaterOwner } from "../../model/theaters";
-import { ApprovalStatus } from "../../../../domain/entities/common";
+import { ApprovalStatus } from "../../../../utils/enum";
 import { CustomError } from "../../../../utils/CustomError";
 
 const getTheaterByCity = async (city: string): Promise<Partial<ITheaterOwnerEntity>[]> => {
   try {
-    console.log('getTheater by city for user repository: ',city)
+    
 
     const theaterDetails = await TheaterOwner.aggregate([
       {

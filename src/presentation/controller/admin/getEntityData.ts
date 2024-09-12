@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express"
 import { IAdminDependencies } from "../../../application/interface/admin/IAdminDependencies"
-import { Role } from "../../../utils/enum"
+import { HttpStatusCode, Role } from "../../../utils/enum"
 import { CustomError } from "../../../utils/CustomError"
 import { getPageNumber } from "../../../utils/FilterAndPagination"
 
@@ -10,15 +10,15 @@ const getEntityData = (dependencies: IAdminDependencies) => {
     try {
 
       const { role } = req.params
-      const pageNumber  =getPageNumber(req.query.pageNumber)
+      const pageNumber = getPageNumber(req.query.pageNumber)
 
-      if (role !== Role.users && role !== Role.theaters) { 
+      if (role !== Role.users && role !== Role.theaters) {
         throw new CustomError('InValid Request', 400, 'role')
       }
 
-      const response = await getEntityDataForAdminUsecase(dependencies).execute(role,pageNumber);
+      const response = await getEntityDataForAdminUsecase(dependencies).execute(role, pageNumber);
 
-      return res.status(200).json({
+      return res.status(HttpStatusCode.OK).json({
         status: response.status,
         message: response.message,
         data: response.data

@@ -4,8 +4,7 @@ import { TheaterScreen } from "../../model/theaters"
 
 const getAllTheaterScreen = async (_id: string, amenity?: string): Promise<ITheaterScreen[] | []> => {
   try {
-
-    console.log(amenity)
+ 
     let matchQuery = amenity ? {
       $and: [
         { theaterId: new Types.ObjectId(_id) },
@@ -14,13 +13,13 @@ const getAllTheaterScreen = async (_id: string, amenity?: string): Promise<IThea
       ]
     } : { theaterId: new Types.ObjectId(_id), listed: true }
 
-    console.log(matchQuery)
+ 
     const allScreen = await TheaterScreen.aggregate([
       {
         $match: matchQuery
       }
     ])
-    console.log(allScreen)
+    
     return allScreen
   } catch (error) {
     throw error

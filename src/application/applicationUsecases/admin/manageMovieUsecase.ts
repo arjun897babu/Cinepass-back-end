@@ -1,5 +1,5 @@
-import { ResponseStatus } from "../../../domain/entities/common";
-import { CustomError } from "../../../utils/CustomError";
+ import { CustomError } from "../../../utils/CustomError";
+import { ResponseStatus } from "../../../utils/enum";
 import { IManageMovie } from "../../../utils/interface";
 import { IAdminDependencies } from "../../interface/admin/IAdminDependencies";
 

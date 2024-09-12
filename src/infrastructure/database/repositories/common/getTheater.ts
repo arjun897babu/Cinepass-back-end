@@ -1,9 +1,8 @@
 import { Types } from "mongoose";
-import { ITheaterDetailResponse } from "../../../../utils/interface";
-import { ITheaterOwnerEntity } from "../../../../domain/entities/theaters";
+ import { ITheaterOwnerEntity } from "../../../../domain/entities/theaters";
 import { TheaterOwner } from "../../model/theaters";
-import { ApprovalStatus } from "../../../../domain/entities/common";
-
+import { ApprovalStatus } from "../../../../utils/enum";
+ 
 const getTheaterDetails = async (ownerId: string): Promise<ITheaterOwnerEntity > => {
   try {
     console.log('getTheater for theater owner respository : ',ownerId)

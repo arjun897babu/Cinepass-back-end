@@ -2,7 +2,7 @@
 import { config } from "../../../config/envConfig";
 
 import { LoginResponse } from "../../../domain/domainUsecases/user";
-import { ResponseStatus } from "../../../domain/entities/common";
+import { ResponseStatus } from "../../../utils/enum";;
 import { OTPTemplate, sendMail } from "../../../infrastructure/nodeMailer";
 import { comparePassword } from "../../../utils/bcrypt";
 import { CustomError } from "../../../utils/CustomError";

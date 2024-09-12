@@ -1,6 +1,6 @@
-import { ResponseStatus } from "../../../domain/entities/common";
-import { ITheaterOwnerEntity } from "../../../domain/entities/theaters";
+ import { ITheaterOwnerEntity } from "../../../domain/entities/theaters";
 import { CustomError } from "../../../utils/CustomError";
+import { ResponseStatus } from "../../../utils/enum";
   import { ITheaterDependencies } from "../../interface/theaters/ITheaterDependencies"
 
 const updateTheaterInfoUsecase = (dependencies: ITheaterDependencies) => {

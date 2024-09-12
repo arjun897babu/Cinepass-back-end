@@ -1,5 +1,5 @@
 import { IResponse } from "../../../domain/domainUsecases"
-import { ResponseStatus } from "../../../domain/entities/common"
+import { ResponseStatus } from "../../../utils/enum";
 import { UserEntity } from "../../../domain/entities/user/IUserEntity"
 import { OTPTemplate, sendMail } from "../../../infrastructure/nodeMailer"
 import { hashPassword } from "../../../utils/bcrypt"

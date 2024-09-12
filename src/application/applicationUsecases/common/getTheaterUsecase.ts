@@ -1,6 +1,5 @@
-import e from "express";
-import { ResponseStatus } from "../../../domain/entities/common";
-import { CustomError } from "../../../utils/CustomError";
+ 
+import { ResponseStatus } from "../../../utils/enum";
 import { ICommonDependencies } from "../../interface/common/ICommonDependencies";
 //theater details for theater owners and user return array of list
 const getTheaterUsecase = (dependencies: ICommonDependencies) => {

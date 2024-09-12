@@ -1,9 +1,8 @@
 import { config } from "../../../config/envConfig";
 import { IResponse } from "../../../domain/domainUsecases";
-import { ApprovalStatus, ResponseStatus } from "../../../domain/entities/common";
-import { resetPasswordTemplate, sendMail } from "../../../infrastructure/nodeMailer";
+ import { resetPasswordTemplate, sendMail } from "../../../infrastructure/nodeMailer";
 import { CustomError } from "../../../utils/CustomError";
-import { Role } from "../../../utils/enum";
+import { ApprovalStatus, ResponseStatus, Role } from "../../../utils/enum";
 import { generateToken } from "../../../utils/jwtHandler";
 import { ITheaterDependencies } from "../../interface/theaters/ITheaterDependencies";
 

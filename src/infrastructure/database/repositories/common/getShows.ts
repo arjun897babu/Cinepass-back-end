@@ -1,15 +1,14 @@
 import { Types } from "mongoose";
-import { Role } from "../../../../utils/enum";
 import { GetShowsParams, IGetMovieShowResponse } from "../../../../utils/interface";
 import { MovieShow } from "../../model/theaters";
+import { calculateSkip } from "../../../../utils/FilterAndPagination";
 
+//get shows repository for theater owners to fetch all shows specific to that theater owner
 const getShows = async ({ role, _id, city }: GetShowsParams): Promise<IGetMovieShowResponse[] | []> => {
- 
   try {
- 
-    const matchQuery = role === Role.theaters
-      ? { 'theaterId': new Types.ObjectId(_id), 'theater.status': true }
-      : { 'theater.city': { $regex: city, $options: 'i' } };
+    const limit = 3
+    // const skip = calculateSkip(pageNumber, limit)
+    console.log(`get shows repository for ${role} based on ${_id} and ${city}`);
 
     const shows = await MovieShow.aggregate([
       {
@@ -22,7 +21,11 @@ const getShows = async ({ role, _id, city }: GetShowsParams): Promise<IGetMovieS
       }
       ,
       {
-        $match: matchQuery
+        $match: {
+          'theaterId': new Types.ObjectId(_id),
+          'theater.status': true,
+          listed: true
+        }
       },
       {
         $lookup: {
@@ -60,15 +63,15 @@ const getShows = async ({ role, _id, city }: GetShowsParams): Promise<IGetMovieS
           language: 1,
           showTime: 1,
           endTime: 1,
-          opening_date:1,
+          openingDate: 1,
           'theater.theater_name': 1,
           'theater.address': 1,
-          'theater.city': 1, 
+          'theater.city': 1,
           'theater._id': 1,
         }
       }
     ])
- 
+
     return shows
   } catch (error) {
     throw error

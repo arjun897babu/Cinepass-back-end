@@ -1,5 +1,5 @@
 import { IResponse } from "../../../domain/domainUsecases";
-import { ResponseStatus } from "../../../domain/entities/common";
+import { ResponseStatus } from "../../../utils/enum";;
 import { CustomError } from "../../../utils/CustomError";
 import { IDependencies } from "../../interface/user/IDependencies"
 

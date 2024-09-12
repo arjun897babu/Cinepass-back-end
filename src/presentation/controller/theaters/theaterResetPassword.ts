@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { CustomError } from "../../../utils/CustomError";
 import { ITheaterDependencies } from "../../../application/interface/theaters/ITheaterDependencies";
 import { validatePassword } from "../../../utils/validator";
+import { HttpStatusCode } from "../../../utils/enum";
 
 const resetPasswordTheaters = (dependencies:ITheaterDependencies ) => {
   const { theaterUseCase: {theaterResetPasswordUsecase  } } = dependencies;
@@ -17,7 +18,7 @@ const resetPasswordTheaters = (dependencies:ITheaterDependencies ) => {
       validatePassword(password as string)
 
       const response = await theaterResetPasswordUsecase(dependencies).execute({ _id: token, password })
-      return res.status(200).json(
+      return res.status(HttpStatusCode.OK).json(
         {
           status: response.status,
           message: response.message,

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { IAdminDependencies } from "../../../application/interface/admin/IAdminDependencies";
 import { CustomError } from "../../../utils/CustomError";
 import { mongodbIdValidator } from "../../../utils/validator";
-import { Role } from "../../../utils/enum";
+import { HttpStatusCode, Role } from "../../../utils/enum";
 
 const manageEntity = (dependencies: IAdminDependencies) => {
   const { adminUsecase: { manageEntityUsecase } } = dependencies
@@ -24,7 +24,7 @@ const manageEntity = (dependencies: IAdminDependencies) => {
       mongodbIdValidator(entityId);
 
       const response = await manageEntityUsecase(dependencies).execute({ entityId, role })
-      return res.status(200).json({
+      return res.status(HttpStatusCode.OK).json({
         status: response.status,
         message: response.message,
         data: response.data

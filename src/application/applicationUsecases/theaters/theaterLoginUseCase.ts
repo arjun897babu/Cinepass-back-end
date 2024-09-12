@@ -1,13 +1,13 @@
 import { config } from "../../../config/envConfig"
 import { ILogin, LoginResponse } from "../../../domain/domainUsecases"
-import { ApprovalStatus, ResponseStatus } from "../../../domain/entities/common"
-import { OTPTemplate, sendMail } from "../../../infrastructure/nodeMailer"
+ import { OTPTemplate, sendMail } from "../../../infrastructure/nodeMailer"
 import { comparePassword } from "../../../utils/bcrypt"
 import { CustomError } from "../../../utils/CustomError"
-import { Role } from "../../../utils/enum"
-import { generateToken } from "../../../utils/jwtHandler"
+ import { generateToken } from "../../../utils/jwtHandler"
 import { generateOTP } from "../../../utils/OTPGenarator"
 import { ITheaterDependencies } from "../../interface/theaters/ITheaterDependencies"
+import { ApprovalStatus, ResponseStatus, Role } from "../../../utils/enum";
+
 
 
 const theaterLoginUseCase = (dependencies: ITheaterDependencies) => {
