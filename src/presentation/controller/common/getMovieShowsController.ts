@@ -45,4 +45,4 @@ const getAllMovieShows = (dependencies: ICommonDependencies) => {
 
 export {
   getAllMovieShows
-}
+} 
