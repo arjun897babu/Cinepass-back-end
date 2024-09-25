@@ -1,17 +1,17 @@
 import { Types } from "mongoose"
 import { MovieShow } from "../../model/theaters"
 import { CustomError } from "../../../../utils/CustomError"
-import { IGetSingleShow } from "../../../../utils/interface"
+import { IGetSingleShow, MovieFilter } from "../../../../utils/interface"
 
-const getSingleShow = async (showId: string): Promise<IGetSingleShow> => {
+const getSingleShow = async (showId: string, filter: Partial<MovieFilter>): Promise<IGetSingleShow> => {
+
   try {
- 
     const showDetails = await MovieShow.aggregate([
       {
         $match: {
-         slug:showId,//slug field in the database
+          slug: showId,//slug field in the database
           listed: true,
-          openingDate:{$lte:new Date()}
+          openingDate: { $lte: new Date() }
         }
       },
       {
@@ -20,7 +20,7 @@ const getSingleShow = async (showId: string): Promise<IGetSingleShow> => {
           localField: 'movieId',
           foreignField: '_id',
           as: 'movie',
-         
+
         },
       },
       { $unwind: '$movie' },
@@ -46,19 +46,28 @@ const getSingleShow = async (showId: string): Promise<IGetSingleShow> => {
         $project: {
           movie: {
             movie_name: '$movie.movie_name',
-            movie_poster:'$movie.movie_poster'
+            movie_poster: '$movie.movie_poster'
           },
           theater: {
-            theater_name: '$theater.theater_name'
+            theater_name: '$theater.theater_name',
+            city:'$theater.city'
           },
-          screen:'$screen',
+          screen: '$screen',
           show: {
-            reserved: '$reserved',
+            reserved: {
+              $filter: {
+                input: '$reserved',
+                as: 'item',
+                cond: {
+                  $eq: ['$$item.bookingDate', new Date(`${filter.bookingDate}`)]
+                }
+              }
+            },
             format: '$format',
             _id: '$_id',
             showTime: '$showTime',
             language: '$language',
-             slug:'slug'
+            slug: 'slug'
 
           }
 
@@ -68,6 +77,7 @@ const getSingleShow = async (showId: string): Promise<IGetSingleShow> => {
     if (!showDetails.length) {
       throw new CustomError('show not found', 404, 'show')
     }
+
     return showDetails[0]
   } catch (error) {
     throw error

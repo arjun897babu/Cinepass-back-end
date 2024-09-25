@@ -8,9 +8,13 @@ const paymentSchema = new Schema<IPayment>({
     type: Schema.Types.ObjectId,
     required: true
   },
+  rentalId: {
+    type: Schema.Types.ObjectId,
+    default: null
+  },
   showId: {
     type: Schema.Types.ObjectId,
-    required: true
+    default: null
   },
   userId: {
     type: Schema.Types.ObjectId,
@@ -18,7 +22,7 @@ const paymentSchema = new Schema<IPayment>({
   },
   screenId: {
     type: Schema.Types.ObjectId,
-    required: true
+    default: null
   },
   purchasedItem: {
     type: String,
@@ -31,7 +35,7 @@ const paymentSchema = new Schema<IPayment>({
     enum: Object.values(PaymentStatus),
     default: PaymentStatus.PENDING
   },
-  BookingDate: {
+  bookingDate: {
     type: Date,
     required: true
   },
@@ -39,7 +43,7 @@ const paymentSchema = new Schema<IPayment>({
   seats: [
     {
       type: String,
-      required: true
+      default: null
     }
   ],
 
@@ -68,52 +72,83 @@ const paymentSchema = new Schema<IPayment>({
       type: String,
       required: true
     },
-    cover_photo: {
+    movie_poster: {
       type: String,
       required: true
     },
+    release_date: {
+      type: Date,
+      required: true
+    }
   },
 
   showDetail: {
+
     format: {
       type: String,
-      required: true
+      default: null
+
     },
 
     language: {
       type: String,
-      required: true
+      default: null
+
     },
 
     showTime: {
-      type: Date,
-      required: true
+      type: String,
+      default: null
     },
-    
+    endTime:{
+      type:String,
+      default:null
+    }
   },
-
 
   theater: {
     theater_name: {
       type: String,
-      required: true
+      default: null
     },
     city: {
       type: String,
-      required: true
+      default: null
+
     },
   },
 
   screen: {
     chargePerSeat: {
       type: Number,
-      required: true
+      default: null
+
     },
     screen_name: {
       type: String,
-      required: true
+      default: null
+
     },
   },
+  rentalPlan: {
+    planName: {
+      type: String,
+      default: null
+    },
+    validity: {
+      type: Number,
+      default: null
+    },
+    price: {
+      type: Number,
+      default: null
+    },
+    listed: {
+      type: Boolean,
+      default: null
+    }
+
+  }
 },
   {
     timestamps: true,

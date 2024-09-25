@@ -1,3 +1,40 @@
+enum ResponseStatus {
+  SUCCESS = 'Success',
+  ERROR = 'Error',
+}
+
+export enum HttpStatusCode {
+  OK = 200,
+  CREATED = 201,
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  FORBIDDEN = 403,
+  NOT_FOUND = 404,
+  INTERNAL_SERVER_ERROR = 500,
+  CONFLICT=409
+}
+
+/**payment */
+
+enum PaymentStatus {
+  PENDING = 'pending',
+  PAID = 'paid',
+  FAILED = 'failed',
+  REFUNDED = 'refunded'
+}
+enum BookingStatus {
+  BOOKED = 'booked',
+  CANCELED = 'canceled'
+}
+enum PurchasedItem {
+  TICKET = 'ticket',
+  RENTAL = 'rental'
+}
+
+/**payment */
+
+/** Auth */
+
 enum Role {
   users = 'users',
   admin = 'admin',
@@ -9,53 +46,19 @@ enum AuthSource {
   GOOGLE = 'google'
 }
 
-enum PaymentStatus {
-  PENDING = 'pending',
-  PAID = 'paid',
-  FAILED = 'failed',
-  REFUNDED = 'refunded'
-}
-
-enum BookingStatus {
-  BOOKED = 'booked',
-  CANCELED = 'canceled'
-}
-enum PurchasedItem {
-  TICKET = 'ticket',
-  RENTAL = 'rental'
-}
-
-enum MovieType {
-  THEATER = 'Theater',
-  STREAM = 'Stream'
-}
-
-enum ResponseStatus {
-  SUCCESS = 'Success',
-  ERROR = 'Error',
-}
-
 enum ApprovalStatus {
   APPROVED = 'approved',
   REJECTED = 'rejected',
   PENDING = 'pending'
 }
 
-enum MovieFilterEnum {
-  SEARCH = 'search',
-  NOW_SHOWING = 'nowShowing',
-  GENRE = 'genre',
-  FORMAT = 'format',
-  LANGUAGE = 'language'
-}
-export enum HttpStatusCode {
-  OK = 200,
-  CREATED = 201,
-  BAD_REQUEST = 400,
-  UNAUTHORIZED = 401,
-  FORBIDDEN = 403,
-  NOT_FOUND = 404,
-  INTERNAL_SERVER_ERROR = 500,
+
+/** Auth */
+
+/**movie */
+enum MovieType {
+  THEATER = 'Theater',
+  STREAM = 'Stream'
 }
 
 enum Formats {
@@ -96,7 +99,25 @@ enum Genres {
   Documentary = 'documentary',
 }
 
+enum MovieFilterEnum {
+  SEARCH = 'search',
+  NOW_SHOWING = 'nowShowing',
+  GENRE = 'genre',
+  FORMAT = 'format',
+  LANGUAGE = 'language'
+}
+/**movie */
+
+// Define an enum for Stripe Payment Intent events
+ enum StripeWebhookEventType { 
+  PaymentIntentSucceeded = 'payment_intent.succeeded',
+  PaymentIntentFailed = 'payment_intent.payment_failed',
+  PaymentIntentProcessing = 'payment_intent.processing',
+}
+
+
 export {
+  StripeWebhookEventType,
   Role,
   AuthSource,
   MovieType,

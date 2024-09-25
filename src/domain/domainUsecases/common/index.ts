@@ -1,1 +1,7 @@
 export * from './IGetShows'
+export * from './IGetMovies'
+export * from './IGetRunningMovieUsecase'
+export * from './IGetTheaterUsecase'
+export * from './ITicketReservation'
+export * from './IWebhooks'
+export * from './IGetTicketData'

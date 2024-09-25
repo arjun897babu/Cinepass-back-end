@@ -6,3 +6,5 @@ export * from './getSingleRunningMovie'
 export * from './getTheaterByCity'
 export * from './getShowByTheater'
 export * from './getSingleShow'
+export * from './check-show-available'
+ 

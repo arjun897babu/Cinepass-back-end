@@ -44,11 +44,11 @@ const movieShowSchema = new Schema<IMovieShow>({
   },
   reserved: [
     {
-      booking_date: {
+      bookingDate: {
         type: Date,
         required: true
       },
-      reserved_seats: [
+      reservedSeats: [
         {
           type: String,
           required: true

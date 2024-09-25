@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { ICommonDependencies } from "../../../application/interface/common/ICommonDependencies";
 import { HttpStatusCode, Role } from "../../../utils/enum";
 import { CustomError } from "../../../utils/CustomError";
-import { getPageNumber } from "../../../utils/FilterAndPagination";
+import { getPageNumber, toValidJSDate } from "../../../utils/FilterAndPagination";
 //controller for get show details based on  role (theater owner[_id]  and user[city] )
 const getAllMovieShows = (dependencies: ICommonDependencies) => {
   const { commonUsecases: { getShowsUsecase } } = dependencies;
@@ -13,6 +13,7 @@ const getAllMovieShows = (dependencies: ICommonDependencies) => {
       const theaterId = req.query.theaterId
       const showId = req.query.showId
       const pageNumber = getPageNumber(req.query.pageNumber)
+      const bookingDate = toValidJSDate(req.query.bookingDate)
       if (typeof theaterId !== 'string' && theaterId !== undefined) {
         throw new CustomError('bad request', HttpStatusCode.BAD_REQUEST, 'bad request')
       }
@@ -25,7 +26,10 @@ const getAllMovieShows = (dependencies: ICommonDependencies) => {
           role: roles as Role,
           _id,
           city,
-          theaterId, showId
+          theaterId, showId,
+          filter: {
+            bookingDate
+          }
         },
 
       )

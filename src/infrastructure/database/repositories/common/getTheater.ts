@@ -5,7 +5,7 @@ import { ApprovalStatus } from "../../../../utils/enum";
  
 const getTheaterDetails = async (ownerId: string): Promise<ITheaterOwnerEntity > => {
   try {
-    console.log('getTheater for theater owner respository : ',ownerId)
+    console.log('getTheater for theater owner repository : ',ownerId)
 
     const [theaterDetails] = await TheaterOwner.aggregate([
       {

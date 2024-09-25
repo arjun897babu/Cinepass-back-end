@@ -27,7 +27,7 @@ const theaterRoutes = (dependencies: ITheaterDependencies, commonDependencies: I
     updateTheaterScreen
   } = theaterController(dependencies);
 
-  const { getMovies, getShows, getRunningMovies, getTheater } = commonController(commonDependencies);
+  const { getMovies, getShows, getRunningMovies, getTheater, getTickets } = commonController(commonDependencies);
 
   /*......................................... AUTH........................................... */
 
@@ -65,7 +65,13 @@ const theaterRoutes = (dependencies: ITheaterDependencies, commonDependencies: I
     .put(verifyTheaterOwner, updateMovieShow)//adding shows to theater screen
     .patch(verifyTheaterOwner, deleteMovieShow);//delete a movie shows  
 
-  theaterRouter.route('/movies').get(verifyTheaterOwner, getRunningMovies)
+  theaterRouter
+    .route('/movies')
+    .get(verifyTheaterOwner, getRunningMovies)
+
+  theaterRouter
+    .route('/tickets')
+    .get(verifyTheaterOwner, getTickets)
 
   return theaterRouter
 }

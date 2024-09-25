@@ -13,10 +13,14 @@ const getPageNumber = (query: IQueryParam): number => {
 const getMaxPage = (totalDocument: number, limit: number): number => Math.ceil(totalDocument / limit)
 
 const calculateSkip = (pageNumber: number, limit: number): number => (pageNumber - 1) * limit
-
+function isIsoDate(date:string) {
+  return  /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(date)
+}
 const toValidJSDate = (query: IQueryParam): Date => {
   if (typeof query !== 'string') return new Date()
 
+  if(isIsoDate(query)) return new Date(query)
+   
   if (query.split('-').length == 3) {
     const [day, month, year] = query.split('-');
     const date = new Date(`${year}-${month}-${day}`);

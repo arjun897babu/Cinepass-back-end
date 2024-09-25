@@ -1,4 +1,4 @@
-import express, { Router, Request, Response, NextFunction } from "express";
+import express, { Router } from "express";
 import { IDependencies } from "../../../application/interface/user/IDependencies";
 import { userController } from "../../../presentation/controller/user";
 import { isUserBlocked, verifyResetPasswordRequest, verifyUser } from "../middleware/userMiddleware";
@@ -27,7 +27,8 @@ const userRoutes = (dependencies: IDependencies, commonDependencies: ICommonDepe
     getShows,
     getRunningMovies,
     getMovies,
-    ticketReservation
+    ticketReservation,
+    getTickets
   } = commonController(commonDependencies)
 
   /*......................................... AUTH........................................... */
@@ -54,9 +55,12 @@ const userRoutes = (dependencies: IDependencies, commonDependencies: ICommonDepe
   router.route('/movies/:city').get(getRunningMovies)
 
   router
-    .route('/booking')
-    .get()
+    .route('/booking/:showId')
     .post(verifyUser, ticketReservation)
+
+  router
+    .route('/tickets')
+    .get(verifyUser, getTickets)
 
   return router
 }

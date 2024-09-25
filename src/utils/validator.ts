@@ -1,6 +1,6 @@
 import { isValidObjectId } from "mongoose";
 import { CustomError } from "./CustomError";
-import { ApprovalStatus, HttpStatusCode, MovieType } from "./enum";
+import { ApprovalStatus, HttpStatusCode, MovieType, Role } from "./enum";
 
 const nameRegex = /^[a-zA-Z]{3,20}(?: [a-zA-Z]+)*$/
 const emailRegex = /^(?=.{11,100}$)([a-zA-Z\d]+([.-_]?[a-zA-Z\d]+)*)\@([a-zA-Z]{4,9})+\.com$/
@@ -142,7 +142,11 @@ const mongodbIdValidator = (_id: string): void => {
     throw new CustomError('Invalid request', HttpStatusCode.BAD_REQUEST, '_id');
   }
 };
-
+const validateRole = (role: string) => {
+  if (!Object.values(Role).includes(role as Role)){
+    throw new CustomError('Bad Request', HttpStatusCode.BAD_REQUEST, 'Invalid role');
+  }
+}
 const validateMovieType = (movieType: string) => {
   if (!Object.values(MovieType).includes(movieType as MovieType)) {
     throw new CustomError('Bad Request', HttpStatusCode.BAD_REQUEST, 'Invalid movieType');
@@ -172,5 +176,6 @@ export {
   validateFormat,
   mongodbIdValidator,
   validateMovieType,
-  isCloudinaryUrl
+  isCloudinaryUrl,
+  validateRole
 };

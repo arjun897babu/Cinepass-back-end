@@ -33,6 +33,7 @@ export const config = {
   },
   stripe:{
     stripe_secret:envString('STRIPE_SECRET_KEY'),
-    stripe_publish:envString('STRIPE_PUBLISHABLE_KEY')
+    stripe_publish:envString('STRIPE_PUBLISHABLE_KEY'),
+    stripe_webhook_secret:envString('STRIPE_WEBHOOK_SECRET')
   }
 } 

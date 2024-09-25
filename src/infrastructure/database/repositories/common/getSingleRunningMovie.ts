@@ -114,25 +114,31 @@ const getSingleRunningMovie = async (
                     if: { $lte: [bookingDate, '$movie.release_date'] },
                     then: {
                       $lte: [
-                        bookingDate, 
-                        { 
-                          $dateAdd: { 
-                            startDate: '$movie.release_date', 
-                            unit: 'day', 
-                            amount: '$advanceBookingPeriod' 
-                          } 
+                        bookingDate,
+                        {
+                          $dateAdd: {
+                            startDate: '$movie.release_date',
+                            unit: 'day',
+                            amount:{$subtract:[ '$advanceBookingPeriod',1]}
+                          }
                         }
                       ]
                     },
                     else: {
                       $lte: [
-                        bookingDate, 
-                        { 
-                          $dateAdd: { 
-                            startDate: today, 
-                            unit: 'day', 
-                            amount: '$advanceBookingPeriod' 
-                          } 
+                        bookingDate,
+                        {
+                          $dateAdd: {
+                            startDate: {
+                              $cond: {
+                                if: { $gte: [today, '$movie.release_date'] },
+                                then: today,
+                                else: '$movie.release_date'
+                              }
+                            },
+                            unit: 'day',
+                            amount:{$subtract:[ '$advanceBookingPeriod',1]}
+                          }
                         }
                       ]
                     }
@@ -167,7 +173,7 @@ const getSingleRunningMovie = async (
                     }
                   }
                 },
-                
+
               }
             },
             {
@@ -177,7 +183,15 @@ const getSingleRunningMovie = async (
                 'theater.city': 1,
                 'theater._id': 1,
                 'theater.address': 1,
-                shows: 1
+                shows: {
+                  $sortArray: {
+                    input: '$shows',
+                    sortBy: { 'showDetails.showTime': 1 } 
+                  }
+                },
+                maxAllocatedDays: {
+                  $max: '$shows.showDetails.advanceBookingPeriod'
+                }
               }
             }
           ]
@@ -186,12 +200,16 @@ const getSingleRunningMovie = async (
       {
         $project: {
           movie: { $arrayElemAt: ['$movieDetails.movie', 0] },
-          theaters: '$theaterDetails'
+          theaters:{
+            $sortArray: {
+              input: '$theaterDetails',
+              sortBy: { 'theater.theater_name': 1 }  
+            }
         }
       }
+    }
     ]);
-    console.log('get single running movie repository', movies)
-
+ 
     return movies;
   } catch (error) {
     throw error;

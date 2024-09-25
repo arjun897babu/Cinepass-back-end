@@ -1,6 +1,10 @@
+import { IUserTicketDataResponse } from "../../../domain/domainUsecases/common";
 import { OTPEntity } from "../../../domain/entities/common";
+import { IPayment } from "../../../domain/entities/user/IPayment";
+import { ITickets } from "../../../domain/entities/user/ITickets";
 import { UserEntity } from "../../../domain/entities/user/IUserEntity";
-import { IResetPassword } from "../../../utils/interface";
+import { PaymentStatus } from "../../../utils/enum";
+import { IResetPassword, TicketFilter } from "../../../utils/interface";
 
 interface IRepositories {
   signUp: (data: UserEntity) => Promise<UserEntity | null>;
@@ -14,6 +18,10 @@ interface IRepositories {
   getCities: () => Promise<string[] | []>
   getUserProfile: (_id: string) => Promise<UserEntity>
   updateUserProfile: (_id: string, payload: Partial<UserEntity>) => Promise<Partial<UserEntity>>
+  createPayment: (data: Partial<IPayment>) => Promise<void>
+  updatePaymentStatus: (paymentIntentId: string, newStatus: PaymentStatus) => Promise<void>,
+  createTickets: (data: Pick<ITickets, 'userId' | 'showId' | 'bookingDate' | 'bookingStatus' | 'seats' | 'paymentId'>) => Promise<ITickets>;
+  getTicketData: (_id: string, pageNumber: number, filter?: TicketFilter) => Promise<IUserTicketDataResponse>
 
 }
 

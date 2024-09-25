@@ -1,7 +1,19 @@
+import { ObjectId } from "mongoose";
 import { IMovie } from "../domain/entities/admin/ITheaterMovie";
 import { IMovieShow, ITheaterOwnerEntity, ITheaterScreen } from "../domain/entities/theaters";
-import { MovieType, Role } from "./enum"
+import { BookingStatus, MovieType, PaymentStatus, PurchasedItem, Role } from "./enum"
+import { ITickets } from "../domain/entities/user/ITickets";
 
+
+interface IPaymentMetaData {
+  userId: string;
+  purchasedItem: PurchasedItem;
+  bookingDate: string;
+  showId?: string;
+  theaterId?: string;
+  rentalId?: string;
+  seats?: string;
+}
 interface ICityUpdate {
   _id: string,
   city: string
@@ -43,7 +55,7 @@ interface MovieFilter {
   format: string;
   genre: string;
   language: string;
-  nowShowing:boolean;
+  nowShowing: boolean;
 }
 
 interface GetShowsParams {
@@ -72,10 +84,10 @@ interface IManageMovie {
 
 
 interface IGetSingleShow {
-  movie: Pick<IMovie, 'movie_name'|'movie_poster'>
-  theater: Pick<ITheaterOwnerEntity, 'theater_name'>
+  movie: Pick<IMovie, 'movie_name' | 'movie_poster' | 'release_date'>
+  theater: Pick<ITheaterOwnerEntity, 'theater_name' | 'city'>
   screen: ITheaterScreen;
-  show: Partial<IMovieShow>
+  show: Pick<IMovieShow, 'showTime' | 'endTime' | 'format' | 'language' | '_id'>
 }
 
 interface IGetShowByTheater {
@@ -93,8 +105,33 @@ interface MovieResponse {
   maxPage: number,
   movies: IMovie[] | []
 }
+interface IRental {
+  planName: string,
+  validity: number,
+  price: number,
+  listed: boolean
+}
+
+interface ICheckShowAvailableResponse {
+  theaterDetails: Pick<ITheaterOwnerEntity, 'theater_name' | 'city' | '_id' | 'slug'>,
+  screenDetails: Pick<ITheaterScreen, 'chargePerSeat' | 'screen_name' | 'layout' | 'amenity' | '_id'>[],
+  showDetails: Pick<IMovieShow, 'movieId' | 'screenId' | 'reserved' | 'slug' | 'format' | 'language' | 'showTime'|'endTime'> & { showId: ObjectId },
+  movieDetails: Pick<IMovie, 'movie_name' | 'movie_poster' | 'release_date'>
+}
+
+type TicketDataParams = Pick<ITickets, 'userId' | 'showId' | 'bookingDate' | 'bookingStatus' | 'seats' | 'paymentId'|'theaterId'>
+
+interface TicketFilter {
+
+  status: BookingStatus
+}
 
 export {
+  TicketFilter,
+  TicketDataParams,
+  IPaymentMetaData,
+  IRental,
+  ICheckShowAvailableResponse,
   MovieResponse,
   IGetShowByTheater,
   IGetSingleShow,
