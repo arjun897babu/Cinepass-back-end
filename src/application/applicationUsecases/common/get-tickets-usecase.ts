@@ -1,3 +1,4 @@
+import { log } from "node:console";
 import { ITheaterTicketDataResponse, IUserTicketDataResponse } from "../../../domain/domainUsecases/common";
 import { CustomError } from "../../../utils/CustomError";
 import { HttpStatusCode, ResponseStatus, Role } from "../../../utils/enum";
@@ -21,7 +22,7 @@ const getTicketDataUsecase = (dependencies: ICommonDependencies) => {
 
         if (!data) {
           throw new CustomError('Tickets not booked yet', HttpStatusCode.NOT_FOUND, 'tickets')
-        } 
+        }  
 
         return {
           status: ResponseStatus.SUCCESS,

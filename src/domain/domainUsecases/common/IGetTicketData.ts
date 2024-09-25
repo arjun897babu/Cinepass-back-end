@@ -7,13 +7,13 @@ import { UserEntity } from "../../entities/user/IUserEntity";
 
 
 interface ITheaterTicketData extends IUserTicketData {
-  user: Pick<UserEntity, '_id' | 'name' | 'email' | 'mobile_number' | 'profile_picture'>
+  userinfo: Pick<UserEntity, '_id' | 'name' | 'email' | 'mobile_number' | 'profile_picture'>
 }
 
 export interface ITheaterTicketDataResponse {
   maxPage: number,
   data: ITheaterTicketData[]
-}
+}   
 
 
 interface IUserTicketData {

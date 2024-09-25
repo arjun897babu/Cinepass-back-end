@@ -1,10 +1,12 @@
-  import { TicketFilter } from "../../../../utils/interface"
-import { calculateSkip } from "../../../../utils/FilterAndPagination"
- import { ITheaterTicketDataResponse } from "../../../../domain/domainUsecases/common"
+import { TicketFilter } from "../../../../utils/interface"
+import { calculateSkip, getMaxPage } from "../../../../utils/FilterAndPagination"
+import { ITheaterTicketDataResponse } from "../../../../domain/domainUsecases/common"
 import { Tickets } from "../../model/user/ticket-schema"
+import { CustomError } from "../../../../utils/CustomError"
+import { HttpStatusCode } from "../../../../utils/enum"
 
-const getTheaterTicketData = async (_id: string, pageNumber: number, filter?: TicketFilter):Promise<ITheaterTicketDataResponse> => {
-
+const getTheaterTicketData = async (_id: string, pageNumber: number, filter?: TicketFilter): Promise<ITheaterTicketDataResponse> => {
+  console.log(_id,pageNumber)
   const limit = 3
   const skip = calculateSkip(pageNumber, limit);
 
@@ -13,18 +15,34 @@ const getTheaterTicketData = async (_id: string, pageNumber: number, filter?: Ti
       {
         $match: {
           theaterId: _id,
-         }
+        }
+      },
+      {
+        $addFields: {
+          userObjId: { $toObjectId: '$userId' }
+        }
       },
       {
         $lookup: {
           from: 'users',
-          localField: 'userId',
+          localField: 'userObjId',
           foreignField: '_id',
-          as: 'UserInfo'
+          as: 'userInfo'
         }
       },
       {
-        $unwind: 'userInfo'
+        $unwind: '$userInfo'
+      },
+      {
+        $lookup: {
+          from: 'payments',
+          localField: 'paymentId',
+          foreignField: 'paymentIntentId',
+          as: 'paymentInfo'
+        }
+      },
+      {
+        $unwind: '$paymentInfo'
       },
       {
         $facet: {
@@ -32,9 +50,7 @@ const getTheaterTicketData = async (_id: string, pageNumber: number, filter?: Ti
             { $count: 'total' }
           ],
           data: [
-            {
-              $sort: { createdAt: -1 }
-            },
+
             { $skip: skip },
             { $limit: limit },
             {
@@ -46,25 +62,24 @@ const getTheaterTicketData = async (_id: string, pageNumber: number, filter?: Ti
                   bookingDate: '$bookingDate',
                   seats: '$seats'
                 },
-                movieInfo: {
-                  movie_name: '$paymentInfo.movie.movie_name',
-                  movie_poster: '$paymentInfo.movie.movie_poster',
-                  release_date: '$paymentInfo.movie.release_date'
-                },
-                theaterInfo: {
-                  theater_name: '$paymentInfo.theater.theater_name',
-                  city: '$paymentInfo.theater.city'
-                },
+                movieInfo: '$paymentInfo.movie',
+                theaterInfo: '$paymentInfo.theater',
                 screenInfo: '$paymentInfo.screen',
                 showInfo: '$paymentInfo.showDetail',
-
+                 userInfo: {
+                    _id:'$userInfo._id',
+                    name:'$userInfo.name',
+                    email:'$userInfo.email',
+                    mobile_number:'$userInfo.mobile_number',
+                    profile_picture:'$userInfo.profile_picture'
+                },
                 paymentInfo: {
                   _id: '$paymentInfo._id',
                   totalAmount: '$paymentInfo.totalAmount',
                   serviceCharge: '$paymentInfo.serviceCharge',
                   extraCharge: '$paymentInfo.extraCharge',
                   status: '$paymentInfo.status',
-                  paymentId: '$paymentInfo.paymentId'
+                  paymentId: '$paymentInfo.paymentIntentId'
                 }
               }
             }
@@ -81,8 +96,15 @@ const getTheaterTicketData = async (_id: string, pageNumber: number, filter?: Ti
         }
       }
     ])
+    // console.log('in get theater ticket data repositories', ticketData)
+    if (!ticketData) {
+      throw new CustomError('no tickets found', HttpStatusCode.NOT_FOUND, 'tickets')
+    }
 
-    return ticketData
+    return { 
+      maxPage: getMaxPage(ticketData.totalDocument, limit),
+      data: ticketData.data
+    }
   } catch (error) {
     throw error
   }

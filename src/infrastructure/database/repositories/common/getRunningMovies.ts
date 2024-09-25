@@ -6,7 +6,7 @@ import { MovieShow } from "../../model/theaters";
 const getRunningMovies = async ({ role, _id, city, filter }: GetShowsParams) => {
 
   try {
-    // console.log(`get running movie repository for ${role} with ${city}`, filter);
+    console.log(`get running movie repository for ${role} with ${city}`, filter);
     const matchQuery = role === Role.theaters
       ? { 'theaterId': new Types.ObjectId(_id), 'theater.status': true }
       : {
@@ -66,7 +66,7 @@ const getRunningMovies = async ({ role, _id, city, filter }: GetShowsParams) => 
       },
     ]);
 
-    // console.log('get running movies repository', movies)
+    console.log('get running movies repository', movies)
 
     return movies ? movies.movies : []
   } catch (error) {

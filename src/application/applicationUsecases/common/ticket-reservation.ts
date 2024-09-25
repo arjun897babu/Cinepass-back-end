@@ -29,7 +29,7 @@ const ticketReservation = (dependencies: ICommonDependencies) => {
           payload.reservedSeats.length,
           isShowAvailable.screenDetails[0].chargePerSeat
         ) //calculating payment amount
-
+        console.log('in ticekt reservation use case: ',isShowAvailable.theaterDetails)
         const { clientSecret, paymentIntentId } = await createPaymentIntent(
           totalAmount,
           {

@@ -9,8 +9,8 @@ const getTickets = (dependencies: ICommonDependencies) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { roles, _id } = req.params
-      console.log('in get ticket controller', req.params)
-      const pageNumber = getPageNumber(req.query)
+      const pageNumber = getPageNumber(req.query.pageNumber)
+      // console.log('in get ticket controller', pageNumber)
       validateRole(roles)
       const response = await getTicketDataUsecase(dependencies).execute(roles as Role, _id,pageNumber)
       return res.status(HttpStatusCode.OK).json({

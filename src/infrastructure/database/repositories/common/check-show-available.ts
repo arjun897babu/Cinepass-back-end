@@ -87,7 +87,7 @@ const checkShowAvailable = async (showId: string, payload: IReservedSeats): Prom
             {
 
               $project: {
-                _id:1,
+                _id:'$theater._id',
                 theater_name: '$theater.theater_name',
                 city: '$theater.city',
                 slug: '$theater.slug',
