@@ -45,12 +45,12 @@ const checkShowAvailable = async (showId: string, payload: IReservedSeats): Prom
       { $unwind: '$screen' },
       {
         $facet: {
-          movieDetails:[
+          movieDetails: [
             {
-              $project:{
-                movie_name:'$movie.movie_name',
-                movie_poster:'$movie.movie_poster',
-                release_date:'$movie.release_date'
+              $project: {
+                movie_name: '$movie.movie_name',
+                movie_poster: '$movie.movie_poster',
+                release_date: '$movie.release_date'
               }
             }
           ],
@@ -60,7 +60,7 @@ const checkShowAvailable = async (showId: string, payload: IReservedSeats): Prom
                 _id: 0,
                 movieId: '$movieId',
                 screenId: '$screenId',
-                showId:'$_id',
+                showId: '$_id',
                 reserved: {
                   $filter: {
                     input: '$reserved',
@@ -74,7 +74,8 @@ const checkShowAvailable = async (showId: string, payload: IReservedSeats): Prom
                 format: "$format",
                 language: "$language",
                 showTime: "$showTime",
-                endTime:'$endTime'
+                endTime: '$endTime',
+                cancelationDeadline: '$cancelationDeadline'
               }
             }
           ],
@@ -87,7 +88,7 @@ const checkShowAvailable = async (showId: string, payload: IReservedSeats): Prom
             {
 
               $project: {
-                _id:'$theater._id',
+                _id: '$theater._id',
                 theater_name: '$theater.theater_name',
                 city: '$theater.city',
                 slug: '$theater.slug',
@@ -119,7 +120,7 @@ const checkShowAvailable = async (showId: string, payload: IReservedSeats): Prom
             },
             {
               $project: {
-                _id:'$screen._id',
+                _id: '$screen._id',
                 chargePerSeat: '$screen.chargePerSeat',
                 screen_name: '$screen.screen_name',
                 amenity: '$screen.amenity',
@@ -134,7 +135,7 @@ const checkShowAvailable = async (showId: string, payload: IReservedSeats): Prom
           showDetails: { $arrayElemAt: ['$showDetails', 0] },
           theaterDetails: { $arrayElemAt: ['$theaterDetails', 0] },
           screenDetails: 1,
-          movieDetails:{$arrayElemAt:['$movieDetails',0]}
+          movieDetails: { $arrayElemAt: ['$movieDetails', 0] }
         }
       },
 
@@ -148,7 +149,7 @@ const checkShowAvailable = async (showId: string, payload: IReservedSeats): Prom
               'showDetails.reserved': {
                 $not: {
                   $elemMatch: {
-                    reservedSeats: { $in: payload.reservedSeats }  
+                    reservedSeats: { $in: payload.reservedSeats }
                   }
                 }
               }

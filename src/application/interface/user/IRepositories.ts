@@ -22,6 +22,7 @@ interface IRepositories {
   updatePaymentStatus: (paymentIntentId: string, newStatus: PaymentStatus) => Promise<void>,
   createTickets: (data: Pick<ITickets, 'userId' | 'showId' | 'bookingDate' | 'bookingStatus' | 'seats' | 'paymentId'>) => Promise<ITickets>;
   getTicketData: (_id: string, pageNumber: number, filter?: TicketFilter) => Promise<IUserTicketDataResponse>
+  updateTicketStatus: (paymentIntent: string) => Promise<void>
 
 }
 

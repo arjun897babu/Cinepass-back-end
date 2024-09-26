@@ -53,7 +53,8 @@ function generatePaymentData(
           format: showDetails.format,
           language: showDetails.language,
           showTime: showDetails.showTime,
-          endTime:showDetails.endTime
+          endTime: showDetails.endTime,
+          cancelationDeadline: showDetails.cancelationDeadline
         }
       paymentData.showId = showDetails.showId
       paymentData.seats = seats

@@ -61,7 +61,8 @@ const ticketReservation = (dependencies: ICommonDependencies) => {
           status: ResponseStatus.SUCCESS,
           message: 'Payment initiated',
           data: {
-            clientSecret: clientSecret
+            clientSecret: clientSecret,
+            paymentIntentId
           }
         }
 

@@ -10,7 +10,7 @@ const stripeWebhookEvents = (dependencies: ICommonDependencies) => {
 
   const { commonUsecases: { } } = dependencies
   const { theaterRepositories: { removeReservedSeats } } = dependencies
-  const { userRepositories: { updatePaymentStatus, createTickets } } = dependencies
+  const { userRepositories: { updatePaymentStatus, createTickets, updateTicketStatus } } = dependencies
 
   return {
     execute: async (payload: Buffer, signature: string) => {
@@ -28,7 +28,7 @@ const stripeWebhookEvents = (dependencies: ICommonDependencies) => {
 
             if (metadata.purchasedItem === PurchasedItem.TICKET) {
               await createTickets(ticketData)
-            } 
+            }
             await updatePaymentStatus(paymentIntent.id, PaymentStatus.PAID)
 
             break;
@@ -44,6 +44,33 @@ const stripeWebhookEvents = (dependencies: ICommonDependencies) => {
               }
             )
             break;
+          case StripeWebhookEventType.PaymentIntentCancel:
+
+            await updatePaymentStatus(id, PaymentStatus.FAILED)
+            await removeReservedSeats(
+              metadata.showId,
+              {
+                bookingDate: new Date(metadata.bookingDate),
+                reservedSeats
+              }
+            )
+
+            break;
+
+          case StripeWebhookEventType.Refund:
+            console.log('amount refunded', metadata)
+            if (metadata.purchasedItem === PurchasedItem.TICKET) {
+              await updateTicketStatus(id)
+              await removeReservedSeats(
+                metadata.showId,
+                {
+                  bookingDate: new Date(metadata.bookingDate),
+                  reservedSeats
+                }
+              )
+            }
+
+            break
 
           default:
 

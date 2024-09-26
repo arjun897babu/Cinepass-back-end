@@ -11,7 +11,7 @@ export enum HttpStatusCode {
   FORBIDDEN = 403,
   NOT_FOUND = 404,
   INTERNAL_SERVER_ERROR = 500,
-  CONFLICT=409
+  CONFLICT = 409
 }
 
 /**payment */
@@ -109,10 +109,13 @@ enum MovieFilterEnum {
 /**movie */
 
 // Define an enum for Stripe Payment Intent events
- enum StripeWebhookEventType { 
+enum StripeWebhookEventType {
   PaymentIntentSucceeded = 'payment_intent.succeeded',
   PaymentIntentFailed = 'payment_intent.payment_failed',
   PaymentIntentProcessing = 'payment_intent.processing',
+  PaymentIntentCancel = 'payment_intent.canceled',
+  Refund = 'charge.refunded'
+
 }
 
 

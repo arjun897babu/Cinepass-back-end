@@ -9,7 +9,8 @@ import {
   IResetPasswordUsecase,
   IGetCities,
   IGetUserProfile,
-  IUpdateUserProfile
+  IUpdateUserProfile,
+  ICancelPayment
 } from "../../../domain/domainUsecases/user"
 import { IDependencies } from "./IDependencies";
 
@@ -24,7 +25,9 @@ interface IUseCases {
   googleAuthUsecase: (dependencies: IDependencies) => IGoogleAuth
   getAllCitiesUsecase: (dependencies: IDependencies) => IGetCities
   getUserProfileUsecase: (dependencies: IDependencies) => IGetUserProfile
-  updateUserProfileUsecase: (dependencies: IDependencies)=>IUpdateUserProfile
+  updateUserProfileUsecase: (dependencies: IDependencies) => IUpdateUserProfile
+  cancelPayments: (dependencies: IDependencies) => ICancelPayment
+  cancelTickets: (dependencies: IDependencies) => ICancelPayment
 }
 
 export {

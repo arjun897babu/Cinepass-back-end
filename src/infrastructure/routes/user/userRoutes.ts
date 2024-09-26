@@ -19,7 +19,9 @@ const userRoutes = (dependencies: IDependencies, commonDependencies: ICommonDepe
     googleSignUp,
     getCities,
     getUserProfile,
-    updateUserProfile
+    updateUserProfile,
+    cancelUserPayments,
+    cancelUserTicket
   } = userController(dependencies)
 
   const {
@@ -61,6 +63,10 @@ const userRoutes = (dependencies: IDependencies, commonDependencies: ICommonDepe
   router
     .route('/tickets')
     .get(verifyUser, getTickets)
+    .post(verifyUser, cancelUserTicket)//to cancel ticket
+  router
+    .route('/payment/:paymentIntent')
+    .post(verifyUser, cancelUserPayments) //to cancel payments
 
   return router
 }

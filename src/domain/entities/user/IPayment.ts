@@ -19,7 +19,7 @@ interface IPayment extends Document {
   serviceCharge?: number;
   extraCharge?: number;
   movie: Pick<IMovie, 'movie_name' | 'movie_poster'|'release_date'>;
-  showDetail?: Pick<IMovieShow, 'format' | 'language' | 'showTime'|'endTime'>;
+  showDetail?: Pick<IMovieShow, 'format' | 'language' | 'showTime'|'endTime'|'cancelationDeadline'>;
   theater?: Pick<ITheaterOwnerEntity, 'theater_name' | 'city'>;
   screen?: Pick<ITheaterScreen, 'chargePerSeat' | 'screen_name'>
   rentalPlan?:IRental

@@ -3,12 +3,13 @@ import { MovieShow } from "../../model/theaters"
 
 const removeReservedSeats = async (showId: string, data: IReservedSeats) => {
   try {
+    console.log(showId, data)
     await MovieShow.findByIdAndUpdate({ _id: showId }, {
       $pull: {
         reserved: {
           $and: [
             { bookingDate: data.bookingDate },
-            { removeReservedSeats: { $all: data.reservedSeats } }
+            { reservedSeats: { $all: data.reservedSeats } }
           ]
         }
       }

@@ -8,4 +8,5 @@ export * from './IResetPassword'
 export * from './IGetCities'
 export * from './IGetUserProfile'
 export * from './IUpdateUserProfile'
+export * from './ICancelPatment'
 

@@ -22,9 +22,8 @@ const getRunningMovies = async ({ role, _id, city, filter }: GetShowsParams) => 
           { $lte: new Date() }
           : { $gt: new Date() }
       };
-
-
-    const [movies] = await MovieShow.aggregate([
+      
+     const [movies] = await MovieShow.aggregate([
       {
         $lookup: {
           from: 'theaterowners',

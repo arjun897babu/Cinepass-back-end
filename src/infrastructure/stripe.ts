@@ -40,8 +40,28 @@ const constructWebhook = async (payload: Buffer, signature: string) => {
   }
 }
 
+const cancelPaymentIntent = async (paymentIntent: string) => {
+  try {
+    console.log('cancel payment intent created')
+    const canceledPaymentIntent = await stripe.paymentIntents.cancel(paymentIntent)
+    console.log(cancelPaymentIntent)
+    return canceledPaymentIntent
+  } catch (error) {
+    throw error
+  }
+}
+const createRefund = async (paymentIntentId: string) => {
+  try {
+    const refund = await stripe.refunds.create({ payment_intent: paymentIntentId })
+    return refund
+  } catch (error) {
+    throw error
+  }
+}
 
 export {
+  createRefund,
+  cancelPaymentIntent,
   createPaymentIntent,
   constructWebhook
 }

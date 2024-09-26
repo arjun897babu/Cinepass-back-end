@@ -115,7 +115,7 @@ interface IRental {
 interface ICheckShowAvailableResponse {
   theaterDetails: Pick<ITheaterOwnerEntity, 'theater_name' | 'city' | '_id' | 'slug'>,
   screenDetails: Pick<ITheaterScreen, 'chargePerSeat' | 'screen_name' | 'layout' | 'amenity' | '_id'>[],
-  showDetails: Pick<IMovieShow, 'movieId' | 'screenId' | 'reserved' | 'slug' | 'format' | 'language' | 'showTime'|'endTime'> & { showId: ObjectId },
+  showDetails: Pick<IMovieShow, 'movieId' | 'screenId' | 'reserved' | 'slug' | 'format' | 'language' | 'showTime'|'endTime'|'cancelationDeadline'> & { showId: ObjectId },
   movieDetails: Pick<IMovie, 'movie_name' | 'movie_poster' | 'release_date'>
 }
 

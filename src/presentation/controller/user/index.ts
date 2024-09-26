@@ -1,4 +1,6 @@
 import { IDependencies } from "../../../application/interface/user/IDependencies";
+import { cancelUserPayments } from "./cancel-user-payments";
+import { cancelUserTicket } from "./cancel-user-ticket";
 import { forgotPassword } from "./forgotPasswordController";
 import { getAllCities } from "./getAllCities";
 import { getUserData } from "./getUserDataController";
@@ -24,7 +26,10 @@ const userController = (dependencies: IDependencies) => {
     googleSignUp: googleSignUp(dependencies),
     getCities: getAllCities(dependencies),
     getUserProfile:getUserData(dependencies),
-    updateUserProfile:updateProfile(dependencies)
+    updateUserProfile:updateProfile(dependencies),
+    cancelUserPayments:cancelUserPayments(dependencies),
+    cancelUserTicket:cancelUserTicket(dependencies),
+
   }
 }
 

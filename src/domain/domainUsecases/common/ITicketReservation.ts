@@ -5,6 +5,7 @@ import { IReservedSeats } from "../../entities/theaters";
 interface ITicketReservationResponse extends IResponse2 {
   data: {
     clientSecret: string
+    paymentIntentId:string
   }
 }
 
