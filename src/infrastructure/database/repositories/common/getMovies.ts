@@ -59,7 +59,7 @@ const getMovies = async (movieType: MovieType, role: Role, pageNumber: number): 
         }
       }
     ]);
-console.log('response in get movies repository',response)
+// console.log('response in get movies repository',response)
     return {
       maxPage:getMaxPage( response.totalDocument,limit),
       movies: response.movies
