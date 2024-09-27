@@ -1,6 +1,7 @@
 import { model, Schema } from "mongoose";
 import { ITickets } from "../../../../domain/entities/user/ITickets";
 import { BookingStatus } from "../../../../utils/enum";
+import { generateTicketCode } from "../../../../utils/paymentHelper";
 
 const ticketSchema = new Schema<ITickets>({
   userId: {
@@ -32,7 +33,17 @@ const ticketSchema = new Schema<ITickets>({
     {
       type: String
     }
-  ]
+  ],
+  bookingCode: {
+    type: String
+  }
 });
+
+ticketSchema.pre(('save'), function (next) {
+  if (!this.bookingCode) {
+    this.bookingCode = generateTicketCode(this.bookingDate,this.userId)
+  }
+  next()
+})
 
 export const Tickets = model('Tickets', ticketSchema) 

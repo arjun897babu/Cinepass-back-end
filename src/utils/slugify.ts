@@ -2,10 +2,14 @@ import slugify from "slugify";
 import crypto from 'node:crypto'
 
 function generateRandomId(): string {
-  const uniqueId = crypto.randomBytes(8).toString('hex');
+  const uniqueId = crypto.randomBytes(3).toString('hex');
   return uniqueId;
 }
-
+function stringToNumberId(str: string): string {
+  const hash = crypto.createHash('sha256').update(str).digest('hex'); 
+  const numberId = parseInt(hash.substring(0, 6), 16); 
+  return numberId.toString(); 
+}
 const createMovieSlug = (movieName: string, id: string): string => {
 
   const slugifiedMovieName = slugify(movieName, {
@@ -29,4 +33,4 @@ const createTheaterSlug = (theaterName: string, city: string): string => {
 }
 
 
-export { createMovieSlug, createTheaterSlug, generateRandomId };
+export { createMovieSlug, createTheaterSlug, generateRandomId,stringToNumberId };

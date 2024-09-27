@@ -58,7 +58,7 @@ const stripeWebhookEvents = (dependencies: ICommonDependencies) => {
             break;
 
           case StripeWebhookEventType.Refund:
-            console.log('amount refunded', metadata)
+    
             if (metadata.purchasedItem === PurchasedItem.TICKET) {
               await updateTicketStatus(id)
               await removeReservedSeats(

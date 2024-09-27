@@ -2,6 +2,7 @@ import { Document } from "mongoose";
 import { BookingStatus } from "../../../utils/enum";
 
 interface ITickets extends Document {
+
   userId: string;
   theaterId:string;
   showId: string;
@@ -9,6 +10,7 @@ interface ITickets extends Document {
   bookingDate: Date;
   seats: string[];
   bookingStatus: BookingStatus;
+  bookingCode?:string
 }
 
 export {

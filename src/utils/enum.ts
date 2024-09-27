@@ -115,11 +115,14 @@ enum StripeWebhookEventType {
   PaymentIntentProcessing = 'payment_intent.processing',
   PaymentIntentCancel = 'payment_intent.canceled',
   Refund = 'charge.refunded'
-
+}
+enum PaymentIntentStatus {
+  PENDING = "requires_payment_method"
 }
 
 
 export {
+  PaymentIntentStatus,
   StripeWebhookEventType,
   Role,
   AuthSource,

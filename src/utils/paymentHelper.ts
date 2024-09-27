@@ -2,12 +2,12 @@ import mongoose, { ObjectId, Types } from "mongoose";
 import { IPayment } from "../domain/entities/user/IPayment";
 import { ICheckShowAvailableResponse, IPaymentMetaData, IRental, TicketDataParams } from "./interface";
 import { BookingStatus, PaymentStatus, PurchasedItem } from "./enum";
-import { ITickets } from "../domain/entities/user/ITickets";
 import Stripe from "stripe";
+import { generateRandomId, stringToNumberId } from "./slugify";
 
 function calculateTotalAmount(totalSeat: number, chargePerSeat: number, serviceCharge: number = 20): number {
   console.log(totalSeat, chargePerSeat, serviceCharge)
-  return (totalSeat * chargePerSeat) + serviceCharge;
+  return (totalSeat * chargePerSeat) + (totalSeat * serviceCharge);
 }
 
 function generatePaymentData(
@@ -90,7 +90,16 @@ function generateTicketData(metaData: Stripe.Metadata, paymentIntentId: string):
   }
 }
 
+function generateTicketCode(bookingDate: Date, userId: string): string {
+
+  const formattedDate = bookingDate.toISOString().split('T')[0].split('-').reverse().join('');
+
+  return `${formattedDate}/${stringToNumberId(userId).substring(-1,4)}${generateRandomId()}`;
+}
+
+
 export {
+  generateTicketCode,
   generateTicketData,
   generateReservedSeats,
   calculateTotalAmount,

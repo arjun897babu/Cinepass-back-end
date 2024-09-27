@@ -46,7 +46,8 @@ const getTicketData = async (_id: string, pageNumber: number, filter?: TicketFil
                   _id: '$_id',
                   bookingStatus: '$bookingStatus',
                   bookingDate: '$bookingDate',
-                  seats: '$seats'
+                  seats: '$seats',
+                  bookingCode:'$bookingCode'
                 },
                 movieInfo: {
                   movie_name: '$paymentInfo.movie.movie_name',

@@ -18,7 +18,7 @@ export interface ITheaterTicketDataResponse {
 
 interface IUserTicketData {
   paymentInfo: Pick<IPayment, 'extraCharge' | 'serviceCharge' | 'status' | 'totalAmount' | '_id'|'paymentIntentId'>;
-  TicketInfo: Pick<ITickets, '_id' | 'bookingStatus' | 'bookingDate' | 'seats'>;
+  TicketInfo: Pick<ITickets, '_id' | 'bookingStatus' | 'bookingDate' | 'seats'|'bookingCode'>;
   movieInfo: Pick<IGetSingleShow, 'movie'>;
   theaterInfo: Pick<IGetSingleShow, 'theater'>;
   screenInfo: Pick<IGetSingleShow, 'screen'>;

@@ -1,9 +1,9 @@
 import mongoose, { ObjectId, Types } from "mongoose"
 import { IReservedSeats } from "../../../domain/entities/theaters"
 import { IPayment } from "../../../domain/entities/user/IPayment"
-import { createPaymentIntent } from "../../../infrastructure/stripe"
+import { cancelPaymentIntent, createPaymentIntent, retrievePaymentIntent } from "../../../infrastructure/stripe"
 import { CustomError } from "../../../utils/CustomError"
-import { HttpStatusCode, PaymentStatus, PurchasedItem, ResponseStatus, Role } from "../../../utils/enum"
+import { HttpStatusCode, PaymentIntentStatus, PaymentStatus, PurchasedItem, ResponseStatus, Role } from "../../../utils/enum"
 import { calculateTotalAmount, generatePaymentData } from "../../../utils/paymentHelper"
 import { ICommonDependencies } from "../../interface/common/ICommonDependencies"
 
@@ -29,7 +29,9 @@ const ticketReservation = (dependencies: ICommonDependencies) => {
           payload.reservedSeats.length,
           isShowAvailable.screenDetails[0].chargePerSeat
         ) //calculating payment amount
-        console.log('in ticekt reservation use case: ',isShowAvailable.theaterDetails)
+
+        // console.log('in ticket reservation use case: ', isShowAvailable.theaterDetails)
+
         const { clientSecret, paymentIntentId } = await createPaymentIntent(
           totalAmount,
           {
@@ -41,6 +43,14 @@ const ticketReservation = (dependencies: ICommonDependencies) => {
             seats: payload.reservedSeats.join(',')
           }
         );//creating payment
+
+        setTimeout(async () => {
+          console.log(paymentIntentId)
+          const status = await retrievePaymentIntent(paymentIntentId)
+          if (status === PaymentIntentStatus.PENDING) {
+            await cancelPaymentIntent(paymentIntentId)
+          }
+        }, (1000 * 60 * 1) / 2) 
 
         const paymentData = generatePaymentData(
           PurchasedItem.TICKET,

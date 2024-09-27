@@ -1,6 +1,6 @@
  
 import { Document } from "mongoose";
-import { ApprovalStatus } from "../common";
+import { ApprovalStatus } from "../../../utils/enum";
 
 
 interface ITheaterOwnerEntity extends Document {
