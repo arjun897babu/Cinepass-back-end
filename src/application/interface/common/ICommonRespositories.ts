@@ -4,7 +4,7 @@ import { MovieResponse, GetShowsParams, IGetMovieShowResponse, IGetShowByTheater
 
 interface ICommonRepositories {
   getTheaterDetails: (_id: string) => Promise<ITheaterOwnerEntity>;
-  getMovies: (movieType: MovieType, role: Role, pageNumber: number) => Promise<MovieResponse>
+  getMovies: (movieType: MovieType, role: Role, pageNumber: number) => Promise<MovieResponse|null>
   getShows: ({ role, _id, city }: GetShowsParams) => Promise<IGetMovieShowResponse[] | []>
   getRunningMovies: ({ role, _id, city, filter }: GetShowsParams) => Promise<any>
   getSingleRunningMovie: (movieId: string, city: string, { }: Partial<MovieFilter>) => Promise<any>

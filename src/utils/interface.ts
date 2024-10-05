@@ -1,7 +1,7 @@
 import { ObjectId } from "mongoose";
 import { IMovie } from "../domain/entities/admin/ITheaterMovie";
 import { IMovieShow, ITheaterOwnerEntity, ITheaterScreen } from "../domain/entities/theaters";
-import { BookingStatus, MovieType, PaymentStatus, PurchasedItem, Role } from "./enum"
+import { BookingStatus, HTTPActions, MovieType, PaymentStatus, PurchasedItem, Role } from "./enum"
 import { ITickets } from "../domain/entities/user/ITickets";
 
 
@@ -112,14 +112,30 @@ interface IRental {
   listed: boolean
 }
 
+interface IStreamPlanFilter {
+  pageNumber: number,
+  listed: boolean,
+  search: string,
+  sort: boolean,
+  all:boolean
+}
+
+interface IStreamPlanProps {
+  action: HTTPActions,
+  data?: Omit<IRental, 'listed'>,
+  planId?: string,
+  filter?: Partial<IStreamPlanFilter>
+}
+
+
 interface ICheckShowAvailableResponse {
   theaterDetails: Pick<ITheaterOwnerEntity, 'theater_name' | 'city' | '_id' | 'slug'>,
   screenDetails: Pick<ITheaterScreen, 'chargePerSeat' | 'screen_name' | 'layout' | 'amenity' | '_id'>[],
-  showDetails: Pick<IMovieShow, 'movieId' | 'screenId' | 'reserved' | 'slug' | 'format' | 'language' | 'showTime'|'endTime'|'cancelationDeadline'> & { showId: ObjectId },
+  showDetails: Pick<IMovieShow, 'movieId' | 'screenId' | 'reserved' | 'slug' | 'format' | 'language' | 'showTime' | 'endTime' | 'cancelationDeadline'> & { showId: ObjectId },
   movieDetails: Pick<IMovie, 'movie_name' | 'movie_poster' | 'release_date'>
 }
 
-type TicketDataParams = Pick<ITickets, 'userId' | 'showId' | 'bookingDate' | 'bookingStatus' | 'seats' | 'paymentId'|'theaterId'>
+type TicketDataParams = Pick<ITickets, 'userId' | 'showId' | 'bookingDate' | 'bookingStatus' | 'seats' | 'paymentId' | 'theaterId'>
 
 interface TicketFilter {
 
@@ -127,6 +143,7 @@ interface TicketFilter {
 }
 
 export {
+  IStreamPlanProps,
   TicketFilter,
   TicketDataParams,
   IPaymentMetaData,
@@ -144,7 +161,8 @@ export {
   GetShowsParams,
   IGetMovieShowResponse,
   IManageMovie,
-  MovieFilter
+  MovieFilter,
+  IStreamPlanFilter
 
 }
 

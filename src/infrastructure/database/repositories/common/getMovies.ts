@@ -3,15 +3,18 @@ import { MovieType, Role } from "../../../../utils/enum";
 import { TheaterMovie } from "../../model/admin/theaterMovieSchema";
 import { calculateSkip, getMaxPage } from "../../../../utils/FilterAndPagination";
 import { MovieResponse } from "../../../../utils/interface";
+import { StreamingMovie } from "../../model/admin/streaming-movie";
+import { IMovie } from "../../../../domain/entities/admin/ITheaterMovie";
 
 
 //for getting all the available movies for admin side and theater owners side
 
-const model: Record<string, Model<any>> = {
-  [MovieType.THEATER]: TheaterMovie
+const model: Record<string, Model<IMovie>> = {
+  [MovieType.THEATER]: TheaterMovie,
+  [MovieType.STREAM]: StreamingMovie
 };
 
-const getMovies = async (movieType: MovieType, role: Role, pageNumber: number): Promise<MovieResponse> => {
+const getMovies = async (movieType: MovieType, role: Role, pageNumber: number): Promise<MovieResponse | null> => {
   try {
 
     const db = model[movieType];
@@ -27,7 +30,7 @@ const getMovies = async (movieType: MovieType, role: Role, pageNumber: number): 
       }
 
 
-    const [response] = await db.aggregate([
+    const [response = null] = await db.aggregate([
       {
         $facet: {
           movies: [
@@ -59,17 +62,19 @@ const getMovies = async (movieType: MovieType, role: Role, pageNumber: number): 
         }
       }
     ]);
-// console.log('response in get movies repository',response)
+    console.log('response in get movies repository', response)
+    if (!response) return null
+
     return {
-      maxPage:getMaxPage( response.totalDocument,limit),
+      maxPage: getMaxPage(response.totalDocument, limit),
       movies: response.movies
     }
 
   } catch (error) {
-    console.log('reahing error in getmovie error catch',error)
+    console.log('reaching error in get movie error catch', error)
     throw error
-  }  
-} 
+  }
+}
 
 export {
   getMovies

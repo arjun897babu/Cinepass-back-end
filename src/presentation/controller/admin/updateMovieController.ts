@@ -10,7 +10,7 @@ const updateMovie = (dependencies: IAdminDependencies) => {
     try {
       const { movieType, movieId } = req.params
       const { payload } = req.body
-      console.log('updatemovie controller payload : ', payload)
+      console.log('update movie controller payload : ', payload)
       validateMovieType(movieType)
 
       const response = await updateMovieUsecase(dependencies).execute(movieId, payload, movieType as MovieType)

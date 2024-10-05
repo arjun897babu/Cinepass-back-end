@@ -13,6 +13,7 @@ const getEntityData = (dependencies: IAdminDependencies) => {
       const pageNumber = getPageNumber(req.query.pageNumber)
 
       if (role !== Role.users && role !== Role.theaters) {
+        console.log('reaching  in get entity data')
         throw new CustomError('InValid Request', 400, 'role')
       }
 

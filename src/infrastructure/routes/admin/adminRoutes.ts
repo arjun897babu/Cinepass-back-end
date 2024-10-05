@@ -4,6 +4,7 @@ import { adminController } from "../../../presentation/controller/admin";
 import { verifyAdmin } from "../middleware/adminMiddleware";
 import { ICommonDependencies } from "../../../application/interface/common/ICommonDependencies";
 import { commonController } from "../../../presentation/controller/common";
+import { upload } from "../middleware/multer";
 
 const adminRoutes = (dependency: IAdminDependencies, commonDependencies: ICommonDependencies) => {
 
@@ -17,7 +18,11 @@ const adminRoutes = (dependency: IAdminDependencies, commonDependencies: ICommon
     updateTheaterCity,
     addMovie,
     deleteMovie,
-    updateMovie
+    addStreamingPlan,
+    editStreamingPlan,
+    deleteStreamingPlan,
+    updateMovie,
+    getStreamingPlan
   } = adminController(dependency)
 
   const { getMovies } = commonController(commonDependencies)
@@ -31,9 +36,9 @@ const adminRoutes = (dependency: IAdminDependencies, commonDependencies: ICommon
 
   /*......................................... Entity Manage........................................... */
 
-  adminRouter.route('/:role').get(verifyAdmin, getEntityData)
+  adminRouter.route('/entity/:role').get(verifyAdmin, getEntityData)
   adminRouter.route('/approval/:theaterOwnerId').patch(verifyAdmin, updateTheaterOwnerApproval)
-  adminRouter.route('/:role/:entityId').patch(verifyAdmin, manageEntity);
+  adminRouter.route('/entity/:role/:entityId').patch(verifyAdmin, manageEntity);
   // adminRouter.route('/update-city/:_id').patch(verifyAdmin, updateTheaterCity);
 
   /*......................................... Entity Manage........................................... */
@@ -45,13 +50,27 @@ const adminRoutes = (dependency: IAdminDependencies, commonDependencies: ICommon
   adminRouter
     .route('/movie/:movieType')
     .get(verifyAdmin, getMovies)// for getting avaiable movies 
-    .post(verifyAdmin, addMovie)//adding movies into theater and stream
+    .post(verifyAdmin, upload.single('file'), addMovie)//adding movies into theater and stream
   adminRouter
     .route('/movie/:movieType/:movieId')
     .patch(verifyAdmin, deleteMovie)//unlisting movie 
     .put(verifyAdmin, updateMovie)//updating  a existing movies
 
   /*......................................... Movies........................................... */
+
+
+  /*......................................... streaming-plan........................................... */
+  adminRouter
+    .route('/stream-plan')
+    .get(verifyAdmin, getStreamingPlan)
+    .post(verifyAdmin, addStreamingPlan)
+  adminRouter
+    .route('/stream-plan/:planId')
+    .put(verifyAdmin, editStreamingPlan)
+    .delete(verifyAdmin, deleteStreamingPlan)
+  /*......................................... streaming-plan........................................... */
+
+
 
   return adminRouter
 };

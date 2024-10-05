@@ -20,6 +20,7 @@ const verifyAdmin = (req: Request, res: Response, next: NextFunction) => {
       mongodbIdValidator(decoded._id);
       req.params._id = decoded._id
       req.params.roles = decoded.role
+      // console.log('admin verified in admin jwt middle ware')
       next()
     } else {
       res.clearCookie(Cookie.userJWT, {

@@ -20,15 +20,12 @@ app.use(cors({
   credentials: true
 }));
 
-
-// app.use(express.json())
+ 
 app.use(morgan('tiny'))
-app.use('/webhooks',express.raw({ type: 'application/json' }), webhookRoutes(commonDependencies))
-app.use(express.json({ limit: '50mb' }))
+app.use('/webhooks', express.raw({ type: 'application/json' }), webhookRoutes(commonDependencies))
+app.use(express.json({ limit: '100mb' }))
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser());
-
-
 
 app.use('/users', userRoutes(dependencies, commonDependencies));
 app.use('/theaters', theaterRoutes(theaterDependencies, commonDependencies));
@@ -37,6 +34,7 @@ app.use('/admin', adminRoutes(adminDependencies, commonDependencies));
 app.use(errorHandler);
 
 app.all("*", (req: Request, res: Response) => {
+  console.log('server end point is not found')
   res.status(404).json({
     status: false,
     message: 'The requested URL not found on this server'

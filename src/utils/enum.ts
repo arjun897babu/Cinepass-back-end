@@ -11,7 +11,8 @@ export enum HttpStatusCode {
   FORBIDDEN = 403,
   NOT_FOUND = 404,
   INTERNAL_SERVER_ERROR = 500,
-  CONFLICT = 409
+  CONFLICT = 409,
+  CONTENT_TOO_LARGE = 413
 }
 
 /**payment */
@@ -119,9 +120,12 @@ enum StripeWebhookEventType {
 enum PaymentIntentStatus {
   PENDING = "requires_payment_method"
 }
-
+enum HTTPActions {
+  get, add, edit, delete
+}
 
 export {
+  HTTPActions,
   PaymentIntentStatus,
   StripeWebhookEventType,
   Role,
@@ -135,5 +139,6 @@ export {
   Genres,
   Languages,
   BookingStatus,
-  PurchasedItem
+  PurchasedItem,
+   
 }

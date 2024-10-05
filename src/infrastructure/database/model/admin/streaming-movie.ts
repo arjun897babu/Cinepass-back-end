@@ -1,11 +1,10 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, Types } from "mongoose";
 import { IMovie } from "../../../../domain/entities/admin/ITheaterMovie";
-import slugify from "slugify";
 import { createMovieSlug } from "../../../../utils/slugify";
 import { MovieType } from "../../../../utils/enum";
 
 
-const theaterMovieSchema = new Schema<IMovie>({
+const streamingMovieSchema = new Schema<IMovie>({
   movie_name: {
     type: String,
     required: true,
@@ -46,20 +45,34 @@ const theaterMovieSchema = new Schema<IMovie>({
     type: [String],
     required: true,
   },
+  plan: {
+    type: Types.ObjectId,
+    required: true
+  },
   slug: {
     type: String,
     unique: true
+  },
+  file: {
+    secure_url: {
+      type: String,
+      required: true
+    },
+    public_id: {
+      type: String,
+      required: true
+    },
   }
 });
 
 
-theaterMovieSchema.pre('save', function (next) {
+streamingMovieSchema.pre('save', function (next) {
 
   if (!this.slug) {
-    this.slug = createMovieSlug(this.movie_name,MovieType.THEATER )
+    this.slug = createMovieSlug(this.movie_name, MovieType.STREAM)
   }
   next();
 });
 
 
-export const TheaterMovie = model<IMovie>('TheaterMovie', theaterMovieSchema);
+export const StreamingMovie = model<IMovie>('StreamingMovie', streamingMovieSchema);

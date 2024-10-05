@@ -4,11 +4,12 @@ import { MovieType, Role } from "../../../../utils/enum";
 import { TheaterMovie } from "../../model/admin/theaterMovieSchema";
 import { isCloudinaryUrl } from "../../../../utils/validator";
 import { uploadImage } from "../../../cloudinary";
+import { StreamingMovie } from "../../model/admin/streaming-movie";
 
 
 const model: Record<string, Model<IMovie>> = {
   [MovieType.THEATER]: TheaterMovie,
-
+  [MovieType.STREAM]: StreamingMovie, 
 }
 
 const updateMovie = async (movieId: string, payload: IMovie, movieType: MovieType): Promise<IMovie | null> => {
@@ -23,8 +24,8 @@ const updateMovie = async (movieId: string, payload: IMovie, movieType: MovieTyp
       payload.movie_poster = await uploadImage(payload.movie_poster, Role.theaters)
     }
 
-    const movie = await db.findOneAndUpdate({ _id: movieId }, { ...payload }, { new: true })
-     
+    const movie = await db.findOneAndUpdate({ _id: movieId }, { ...payload }, { new: true }).lean()
+
 
     return movie ? movie : null
 

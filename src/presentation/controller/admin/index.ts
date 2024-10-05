@@ -8,6 +8,7 @@ import { updateTheaterCity } from "./updateTheaterCityController"
 import { addMovie } from "./addMovieController"
 import { deleteMovie } from "./deleteMovie"
 import { updateMovie } from "./updateMovieController"
+import { addStreamPlan, deleteStreamPlan, editStreamPlan, getStreamPlan } from "./stream-plan-controller"
 
 const adminController = (dependencies: IAdminDependencies) => {
   return {
@@ -19,7 +20,11 @@ const adminController = (dependencies: IAdminDependencies) => {
     updateTheaterCity: updateTheaterCity(dependencies),
     addMovie: addMovie(dependencies),
     deleteMovie: deleteMovie(dependencies),
-    updateMovie:updateMovie(dependencies)
+    updateMovie: updateMovie(dependencies),
+    addStreamingPlan: addStreamPlan(dependencies),
+    editStreamingPlan: editStreamPlan(dependencies),
+    deleteStreamingPlan: deleteStreamPlan(dependencies),
+    getStreamingPlan: getStreamPlan(dependencies)
   }
 }
 

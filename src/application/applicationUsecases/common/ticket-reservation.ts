@@ -1,9 +1,7 @@
-import mongoose, { ObjectId, Types } from "mongoose"
 import { IReservedSeats } from "../../../domain/entities/theaters"
-import { IPayment } from "../../../domain/entities/user/IPayment"
 import { cancelPaymentIntent, createPaymentIntent, retrievePaymentIntent } from "../../../infrastructure/stripe"
 import { CustomError } from "../../../utils/CustomError"
-import { HttpStatusCode, PaymentIntentStatus, PaymentStatus, PurchasedItem, ResponseStatus, Role } from "../../../utils/enum"
+import { HttpStatusCode, PaymentIntentStatus, PurchasedItem, ResponseStatus, Role } from "../../../utils/enum"
 import { calculateTotalAmount, generatePaymentData } from "../../../utils/paymentHelper"
 import { ICommonDependencies } from "../../interface/common/ICommonDependencies"
 
@@ -50,7 +48,7 @@ const ticketReservation = (dependencies: ICommonDependencies) => {
           if (status === PaymentIntentStatus.PENDING) {
             await cancelPaymentIntent(paymentIntentId)
           }
-        }, (1000 * 60 * 1) / 2) 
+        }, (1000 * 60 * 1) ) 
 
         const paymentData = generatePaymentData(
           PurchasedItem.TICKET,
@@ -63,10 +61,7 @@ const ticketReservation = (dependencies: ICommonDependencies) => {
         )
 
         await createPayment(paymentData)
-        await addReservedSeats(showId, payload)
-
-
-
+        await addReservedSeats(showId, payload) 
         return {
           status: ResponseStatus.SUCCESS,
           message: 'Payment initiated',

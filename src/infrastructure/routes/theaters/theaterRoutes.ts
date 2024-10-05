@@ -45,15 +45,17 @@ const theaterRoutes = (dependencies: ITheaterDependencies, commonDependencies: I
   theaterRouter
     .route('/theater')
     .get(verifyTheaterOwner, getTheater)//for getting theater Details
-    .put(verifyTheaterOwner, updateTheaterInfo)//for updating the theater deatails
+    .put(verifyTheaterOwner, updateTheaterInfo)//for updating the theater details
   theaterRouter.route('/screen')
     .post(verifyTheaterOwner, addScreen)//adding screen to the theater
     .get(verifyTheaterOwner, getAllTheaterScreen)//get all screen in a single theater
   theaterRouter.route('/screen/:screenId')
     .put(verifyTheaterOwner, updateTheaterScreen) //for updating a theater screen
-    .patch(verifyTheaterOwner, deleteScreen)//for unlisting a screen
+    .patch(verifyTheaterOwner, deleteScreen)//for un-listing a screen
 
-  theaterRouter.route('/movie/:movieType').get(verifyTheaterOwner, getMovies)//for get all the movies available for shows
+  theaterRouter
+    .route('/movie/:movieType')
+    .get(verifyTheaterOwner, getMovies)//for get all the movies available for shows
 
   theaterRouter
     .route('/shows')

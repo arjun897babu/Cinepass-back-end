@@ -4,10 +4,12 @@ import { TheaterMovie } from "../../model/admin/theaterMovieSchema";
 import { IMovie } from "../../../../domain/entities/admin/ITheaterMovie";
 import { CustomError } from "../../../../utils/CustomError";
 import { uploadImage } from "../../../cloudinary";
+import { StreamingMovie } from "../../model/admin/streaming-movie";
 
 
-const model: Record<string, Model<any>> = {
+const model: Record<string, Model<IMovie>> = {
   [MovieType.THEATER]: TheaterMovie,
+  [MovieType.STREAM]:StreamingMovie
 
 };
 
@@ -34,10 +36,7 @@ const addMovie = async (payload: IMovie, movieType: MovieType): Promise<IMovie> 
     payload.movie_poster = movie_poster
     payload.cover_photo= cover_photo
 
-    const newMovie = movieType === MovieType.THEATER ?
-      await db.create(payload)
-      : await db.create(payload)
-
+    const newMovie = await db.create(payload)
     return newMovie
 
   } catch (error) {

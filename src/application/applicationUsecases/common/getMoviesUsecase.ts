@@ -1,4 +1,5 @@
- import { MovieType, ResponseStatus, Role } from "../../../utils/enum";
+import { CustomError } from "../../../utils/CustomError";
+import { HttpStatusCode, MovieType, ResponseStatus, Role } from "../../../utils/enum";
 import { ICommonDependencies } from "../../interface/common/ICommonDependencies";
 
 //use case for fetch all movies (theater movies and streaming movies) 
@@ -10,10 +11,14 @@ const getMoviesUsecase = (dependencies: ICommonDependencies) => {
       try {
         const movies = await getMovies(movieType, role, pageNumber);
 
+        if (!movies) {
+          throw new CustomError('No movies found', HttpStatusCode.NOT_FOUND, 'movies')
+        }
+
         return {
           status: ResponseStatus.SUCCESS,
           message: 'Movie data fetched successfully',
-          data:  movies ,
+          data: movies,
           redirectURL: '#'
         }
       } catch (error) {

@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { IAdminDependencies } from "../../../application/interface/admin/IAdminDependencies";
 import { HttpStatusCode, MovieType } from "../../../utils/enum";
 import { validateMovieType } from "../../../utils/validator";
+import { CustomError } from "../../../utils/CustomError";
 
 const addMovie = (dependencies: IAdminDependencies) => {
   const { adminUsecase: { addMovieUsecase } } = dependencies
@@ -11,10 +12,14 @@ const addMovie = (dependencies: IAdminDependencies) => {
       const { movieType } = req.params
       // Validate movieType
       validateMovieType(movieType)
+      const filePath = req.file?.path
+      if (movieType === MovieType.STREAM && !req.file) {
+        throw new CustomError('please upload a movie file', HttpStatusCode.BAD_REQUEST, 'file')
+      }
 
       const payload = req.body;
- 
-      const response = await addMovieUsecase(dependencies).execute(payload, movieType as MovieType)
+
+      const response = await addMovieUsecase(dependencies).execute(payload, movieType as MovieType, filePath)
 
       res.status(HttpStatusCode.OK).json({
         status: response.status,

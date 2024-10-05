@@ -10,6 +10,15 @@ const getPageNumber = (query: IQueryParam): number => {
   return page < 1 || isNaN(page) ? 1 : page
 }
 
+function convertBoolean(query: IQueryParam): boolean {
+  if (typeof query !== 'string') {
+    return false
+  }
+  else {
+    return true
+  }
+}
+
 const getMaxPage = (totalDocument: number, limit: number): number => Math.ceil(totalDocument / limit)
 
 const calculateSkip = (pageNumber: number, limit: number): number => (pageNumber - 1) * limit
@@ -89,6 +98,7 @@ function generateMovieFilterConditions(filter?: Partial<MovieFilter>) {
 
 
 export {
+  convertBoolean,
   generateMovieFilterConditions,
   validateFilterQueryString,
   validateNowShowingFilter,

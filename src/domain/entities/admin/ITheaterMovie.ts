@@ -1,3 +1,5 @@
+import { Document, ObjectId } from "mongoose";
+import { ImageUploadResult } from "../../../infrastructure/cloudinary";
 
 interface ICast {
   image: string;
@@ -12,12 +14,13 @@ interface IMovie extends Document {
   genres: string[];
   format: string[];
   cover_photo: string;
-  listed?: boolean;
+  listed: boolean;
   movie_poster: string;
   cast?: ICast[];
   trailer?: string;
-  file?: string
-  slug?: string
+  plan?: ObjectId;
+  file?: ImageUploadResult
+  slug: string
 }
 
 
