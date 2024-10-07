@@ -3,6 +3,7 @@ import { IMovie } from "../domain/entities/admin/ITheaterMovie";
 import { IMovieShow, ITheaterOwnerEntity, ITheaterScreen } from "../domain/entities/theaters";
 import { BookingStatus, HTTPActions, MovieType, PaymentStatus, PurchasedItem, Role } from "./enum"
 import { ITickets } from "../domain/entities/user/ITickets";
+import { ImageUploadResult } from "../infrastructure/cloudinary";
 
 
 interface IPaymentMetaData {
@@ -101,9 +102,50 @@ interface IGetShowByTheater {
 
 }
 
+export interface TheaterMovieResponse {
+  _id: string;
+  movie_name: string;
+  languages: string[];
+  release_date: Date;
+  run_time: string;
+  genres: string[];
+  format: string[];
+  cover_photo: string;
+  listed: boolean;
+  movie_poster: string;
+  slug: string
+}
+
+interface IStreamMovieFilter {
+  pageNumber: number,
+  listed: boolean,
+  nowShowing: boolean
+}
+
+interface IUserStreamProps {
+  _id: string,
+  movieId: string,
+  publicId: string
+  filter: Partial<IStreamMovieFilter>
+}
+
+type IPlan = {
+  _id: string;
+  planName: string;
+  price: number;
+  validity: number;
+  listed: boolean;
+}
+
+export interface StreamingMovieResponse extends TheaterMovieResponse {
+  plan: string;
+  file: ImageUploadResult;
+  streamingPlan: IPlan
+  isPurchased:boolean
+}
 interface MovieResponse {
   maxPage: number,
-  movies: IMovie[] | []
+  movies: (TheaterMovieResponse | StreamingMovieResponse)[]
 }
 interface IRental {
   planName: string,
@@ -117,7 +159,7 @@ interface IStreamPlanFilter {
   listed: boolean,
   search: string,
   sort: boolean,
-  all:boolean
+  all: boolean
 }
 
 interface IStreamPlanProps {
@@ -143,6 +185,8 @@ interface TicketFilter {
 }
 
 export {
+  IStreamMovieFilter,
+  IUserStreamProps,
   IStreamPlanProps,
   TicketFilter,
   TicketDataParams,

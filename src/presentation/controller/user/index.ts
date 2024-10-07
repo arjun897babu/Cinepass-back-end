@@ -10,6 +10,7 @@ import { logout } from "./logoutController";
 import { resendOTP } from "./resendOTPController";
 import { resetPassword } from "./resetPasswordController";
 import { signup } from "./signUpController";
+import {   getStreamMovies } from "./stream-movie";
 import { updateProfile } from "./updateProfileController";
 import { verifyOTP } from "./verifyOTPController";
 
@@ -25,10 +26,11 @@ const userController = (dependencies: IDependencies) => {
     resendOTP: resendOTP(dependencies),
     googleSignUp: googleSignUp(dependencies),
     getCities: getAllCities(dependencies),
-    getUserProfile:getUserData(dependencies),
-    updateUserProfile:updateProfile(dependencies),
-    cancelUserPayments:cancelUserPayments(dependencies),
-    cancelUserTicket:cancelUserTicket(dependencies),
+    getUserProfile: getUserData(dependencies),
+    updateUserProfile: updateProfile(dependencies),
+    cancelUserPayments: cancelUserPayments(dependencies),
+    cancelUserTicket: cancelUserTicket(dependencies),
+    getStreamingMovies: getStreamMovies(dependencies), 
 
   }
 }

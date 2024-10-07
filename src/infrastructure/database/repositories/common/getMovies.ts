@@ -27,9 +27,8 @@ const getMovies = async (movieType: MovieType, role: Role, pageNumber: number): 
       : {
         listed: true,
         release_date: { $gt: new Date() }
-      }
-
-
+      } 
+      
     const [response = null] = await db.aggregate([
       {
         $facet: {
@@ -62,7 +61,7 @@ const getMovies = async (movieType: MovieType, role: Role, pageNumber: number): 
         }
       }
     ]);
-    console.log('response in get movies repository', response)
+    // console.log('response in get movies repository', response)
     if (!response) return null
 
     return {

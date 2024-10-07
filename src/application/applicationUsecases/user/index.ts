@@ -10,5 +10,6 @@ export * from './getUserProfileUsecase'
 export * from './updateUserProfileUsecase'
 export * from './cancel-payment'
 export * from './cancel-ticket'
+export * from './stream-movies'
 
 

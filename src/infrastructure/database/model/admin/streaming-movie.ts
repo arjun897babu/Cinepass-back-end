@@ -46,7 +46,7 @@ const streamingMovieSchema = new Schema<IMovie>({
     required: true,
   },
   plan: {
-    type: Types.ObjectId,
+    type: Schema.Types.ObjectId,
     required: true
   },
   slug: {

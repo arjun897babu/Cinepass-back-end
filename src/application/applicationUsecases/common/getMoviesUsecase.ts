@@ -9,7 +9,9 @@ const getMoviesUsecase = (dependencies: ICommonDependencies) => {
   return {
     execute: async (movieType: MovieType, role: Role, pageNumber: number) => {
       try {
+
         const movies = await getMovies(movieType, role, pageNumber);
+
 
         if (!movies) {
           throw new CustomError('No movies found', HttpStatusCode.NOT_FOUND, 'movies')

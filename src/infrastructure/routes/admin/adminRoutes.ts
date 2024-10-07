@@ -49,7 +49,7 @@ const adminRoutes = (dependency: IAdminDependencies, commonDependencies: ICommon
 
   adminRouter
     .route('/movie/:movieType')
-    .get(verifyAdmin, getMovies)// for getting avaiable movies 
+    .get(verifyAdmin, getMovies)// for getting  movies [streaming movies/theater movies]
     .post(verifyAdmin, upload.single('file'), addMovie)//adding movies into theater and stream
   adminRouter
     .route('/movie/:movieType/:movieId')

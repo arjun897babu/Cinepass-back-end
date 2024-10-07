@@ -21,7 +21,8 @@ const userRoutes = (dependencies: IDependencies, commonDependencies: ICommonDepe
     getUserProfile,
     updateUserProfile,
     cancelUserPayments,
-    cancelUserTicket
+    cancelUserTicket, 
+    getStreamingMovies
   } = userController(dependencies)
 
   const {
@@ -67,6 +68,12 @@ const userRoutes = (dependencies: IDependencies, commonDependencies: ICommonDepe
   router
     .route('/payment/:paymentIntent')
     .post(verifyUser, cancelUserPayments) //to cancel payments
+  router
+    .route('/stream')
+    .get(getStreamingMovies)//all available movie lists
+  router
+    .route('/stream/:movieId')
+    .get(getStreamingMovies)//single streaming movie details
 
   return router
 }

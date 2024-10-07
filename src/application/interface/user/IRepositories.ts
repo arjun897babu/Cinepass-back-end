@@ -1,10 +1,11 @@
 import { IUserTicketDataResponse } from "../../../domain/domainUsecases/common";
+import { IStreamingMovieResponse } from "../../../domain/domainUsecases/user/IGetStreamingMovies";
 import { OTPEntity } from "../../../domain/entities/common";
 import { IPayment } from "../../../domain/entities/user/IPayment";
 import { ITickets } from "../../../domain/entities/user/ITickets";
 import { UserEntity } from "../../../domain/entities/user/IUserEntity";
 import { PaymentStatus } from "../../../utils/enum";
-import { IResetPassword, TicketFilter } from "../../../utils/interface";
+import { IResetPassword, IStreamMovieFilter, StreamingMovieResponse, TicketFilter } from "../../../utils/interface";
 
 interface IRepositories {
   signUp: (data: UserEntity) => Promise<UserEntity | null>;
@@ -23,6 +24,8 @@ interface IRepositories {
   createTickets: (data: Pick<ITickets, 'userId' | 'showId' | 'bookingDate' | 'bookingStatus' | 'seats' | 'paymentId'>) => Promise<ITickets>;
   getTicketData: (_id: string, pageNumber: number, filter?: TicketFilter) => Promise<IUserTicketDataResponse>
   updateTicketStatus: (paymentIntent: string) => Promise<void>
+  getStreamingMovies: (filter: Partial<IStreamMovieFilter>) => Promise<IStreamingMovieResponse | null>
+  getSingleStreamingMovie: (movieId: string) => Promise<StreamingMovieResponse | null>
 
 }
 

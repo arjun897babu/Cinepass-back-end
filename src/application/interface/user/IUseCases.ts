@@ -12,6 +12,7 @@ import {
   IUpdateUserProfile,
   ICancelPayment
 } from "../../../domain/domainUsecases/user"
+import { IGetStreamingMovies } from "../../../domain/domainUsecases/user/IGetStreamingMovies";
 import { IDependencies } from "./IDependencies";
 
 
@@ -28,6 +29,7 @@ interface IUseCases {
   updateUserProfileUsecase: (dependencies: IDependencies) => IUpdateUserProfile
   cancelPayments: (dependencies: IDependencies) => ICancelPayment
   cancelTickets: (dependencies: IDependencies) => ICancelPayment
+  streamMovies:(dependencies: IDependencies)=>IGetStreamingMovies
 }
 
 export {
