@@ -94,7 +94,7 @@ function generateTicketCode(bookingDate: Date, userId: string): string {
 
   const formattedDate = bookingDate.toISOString().split('T')[0].split('-').reverse().join('');
 
-  return `${formattedDate}/${stringToNumberId(userId).substring(-1,4)}${generateRandomId()}`;
+  return `${formattedDate}/${stringToNumberId(userId).substring(-1, 4)}${generateRandomId()}`;
 }
 
 

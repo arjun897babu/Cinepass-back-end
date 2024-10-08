@@ -130,7 +130,7 @@ interface IUserStreamProps {
 }
 
 type IPlan = {
-  _id: string;
+  _id: ObjectId ;
   planName: string;
   price: number;
   validity: number;
@@ -141,7 +141,7 @@ export interface StreamingMovieResponse extends TheaterMovieResponse {
   plan: string;
   file: ImageUploadResult;
   streamingPlan: IPlan
-  isPurchased:boolean
+  isPurchased: boolean
 }
 interface MovieResponse {
   maxPage: number,

@@ -8,7 +8,7 @@ const cancelTickets = (dependencies: IDependencies) => {
   return {
     execute: async (_id: string, paymentIntent: string) => {
       try {
-
+        
         await createRefund(paymentIntent)
 
         return {

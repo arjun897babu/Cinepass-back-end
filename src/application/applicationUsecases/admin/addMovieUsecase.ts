@@ -15,7 +15,7 @@ const addMovieUsecase = (dependencies: IAdminDependencies) => {
  
           const response = await uploadVideo(filePath, Role.admin)
 
-          console.log('in add movie use case admin side', response)
+          // console.log('in add movie use case admin side', response)
           
           unlink(filePath, (err) => {
             if (err) {

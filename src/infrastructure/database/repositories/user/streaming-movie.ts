@@ -1,6 +1,4 @@
-import { Types } from "mongoose";
-import { StreamingMovie } from "../../model/admin/streaming-movie"
-import { payments } from "../../model/user/payment-schema";
+ import { StreamingMovie } from "../../model/admin/streaming-movie" 
 import { IStreamMovieFilter, StreamingMovieResponse } from "../../../../utils/interface";
 import { IStreamingMovieResponse } from "../../../../domain/domainUsecases/user";
 

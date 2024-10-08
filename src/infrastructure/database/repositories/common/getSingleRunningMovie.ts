@@ -16,6 +16,8 @@ const getSingleRunningMovie = async (
   try {
 
     const today = new Date()
+    console.log(today.toDateString().split('T')[0], bookingDate.toDateString().split('T')[0])
+    console.log(today.toDateString().split('T')[0] === bookingDate.toDateString().split('T')[0])
 
     const movies = await MovieShow.aggregate([
       {
@@ -90,7 +92,7 @@ const getSingleRunningMovie = async (
                   { 'theater.status': true },
                   { 'movie.listed': true },
                   { 'movie.slug': { $regex: `^${movieId}$`, $options: 'i' } },
-                  {openingDate:{ $lte: today }}
+                  { openingDate: { $lte: today } }
 
                 ]
               }
@@ -119,7 +121,7 @@ const getSingleRunningMovie = async (
                           $dateAdd: {
                             startDate: '$movie.release_date',
                             unit: 'day',
-                            amount:{$subtract:[ '$advanceBookingPeriod',1]}
+                            amount: { $subtract: ['$advanceBookingPeriod', 1] }
                           }
                         }
                       ]
@@ -137,20 +139,77 @@ const getSingleRunningMovie = async (
                               }
                             },
                             unit: 'day',
-                            amount:{$subtract:[ '$advanceBookingPeriod',1]}
+                            amount: { $subtract: ['$advanceBookingPeriod', 1] }
                           }
                         }
                       ]
                     }
                   }
+                },
+                bookingClosed: {
+                  $cond: {
+                    if: {
+                      $and: [
+                        {
+                          $eq: [
+                            { $dateToString: { date: today, format: '%Y-%m-%d' } },
+                            { $dateToString: { date: bookingDate, format: '%Y-%m-%d' } }
+                          ]
+                        },
+                        {
+                          $gte: [
+                            today,
+                            // {
+                            //   $dateSubtract: {
+                            //     startDate: {
+                            //       $concat: [
+                            //         { $dateToString: { date: today, format: "%Y-%m-%d" } }, 
+                            //         "T",   
+                            //         "$showTime"   
+                            //       ]
+                            //     },
+                            //     unit: 'minute',
+                            //     amount: 30
+                            //   }
+                            // }
+                            {
+                              $dateSubtract: {
+                                startDate: {
+                                   $dateFromString: {
+                                    dateString: {
+                                      $concat: [
+                                        { $dateToString: { date: today, format: "%Y-%m-%d" } }, 
+                                        "T",   
+                                        "$showTime"   
+                                      ]
+                                    },
+                                    format: "%Y-%m-%dT%H:%M"   
+                                  }
+                                },
+                                unit: 'minute',
+                                amount: 30   
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    then: true,
+                    else: false
+
+                  }
                 }
-              }
+
+              },
+
             },
             {
               $match: {
-                isWithinBookingPeriod: true
+                isWithinBookingPeriod: true,
+                bookingClosed: false
               }
             },
+
             {
               $group: {
                 _id: '$theater._id',
@@ -186,7 +245,7 @@ const getSingleRunningMovie = async (
                 shows: {
                   $sortArray: {
                     input: '$shows',
-                    sortBy: { 'showDetails.showTime': 1 } 
+                    sortBy: { 'showDetails.showTime': 1 }
                   }
                 },
                 maxAllocatedDays: {
@@ -200,16 +259,16 @@ const getSingleRunningMovie = async (
       {
         $project: {
           movie: { $arrayElemAt: ['$movieDetails.movie', 0] },
-          theaters:{
+          theaters: {
             $sortArray: {
               input: '$theaterDetails',
-              sortBy: { 'theater.theater_name': 1 }  
+              sortBy: { 'theater.theater_name': 1 }
             }
+          }
         }
       }
-    }
     ]);
- 
+
     return movies;
   } catch (error) {
     throw error;

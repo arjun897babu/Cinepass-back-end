@@ -20,7 +20,7 @@ interface IAdminRepositories {
   addStreamPlan: (data: Omit<IRental, 'listed'>) => Promise<IStreamRentalPlan>
   editStreamPlan: (planId: string, data: Omit<IRental, 'listed'>) => Promise<IStreamRentalPlan | null>
   getStreamPlan: (filter: Partial<IStreamPlanFilter>) => Promise<IGetStreamPlanResponse | null>
-  isPlanExists: (planName: string) => Promise<boolean>
+  isPlanExists: (planName: string,planId?:string) => Promise<boolean>
   deleteStreamPlan: (planId: string) => Promise<IStreamRentalPlan | null>
 }
 

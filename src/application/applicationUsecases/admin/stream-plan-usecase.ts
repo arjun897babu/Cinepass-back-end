@@ -17,7 +17,7 @@ const streamPlanUsecase = (dependencies: IAdminDependencies) => {
             || streamPlanProps.action === HTTPActions.edit
           )
           && streamPlanProps.data) {
-          const isExists = await isPlanExists(streamPlanProps.data.planName)
+          const isExists = await isPlanExists(streamPlanProps.data.planName,streamPlanProps.planId)
           if (isExists) {
             throw new CustomError('Plan already exists', HttpStatusCode.BAD_REQUEST, 'planName')
           }

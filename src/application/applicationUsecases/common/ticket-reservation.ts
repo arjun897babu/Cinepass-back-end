@@ -43,12 +43,11 @@ const ticketReservation = (dependencies: ICommonDependencies) => {
         );//creating payment
 
         setTimeout(async () => {
-          console.log(paymentIntentId)
           const status = await retrievePaymentIntent(paymentIntentId)
           if (status === PaymentIntentStatus.PENDING) {
             await cancelPaymentIntent(paymentIntentId)
           }
-        }, (1000 * 60 * 1) ) 
+        }, (1000 * 60 * 1))
 
         const paymentData = generatePaymentData(
           PurchasedItem.TICKET,
@@ -61,7 +60,7 @@ const ticketReservation = (dependencies: ICommonDependencies) => {
         )
 
         await createPayment(paymentData)
-        await addReservedSeats(showId, payload) 
+        await addReservedSeats(showId, payload)
         return {
           status: ResponseStatus.SUCCESS,
           message: 'Payment initiated',

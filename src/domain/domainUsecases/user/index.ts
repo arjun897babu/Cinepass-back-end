@@ -10,4 +10,5 @@ export * from './IGetUserProfile'
 export * from './IUpdateUserProfile'
 export * from './ICancelPatment'
 export * from './IGetStreamingMovies'
+export * from './IPurchaseStream'
 

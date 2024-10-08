@@ -43,8 +43,8 @@ const getStreamPlan = async (filter: Partial<IStreamPlanFilter>): Promise<IGetSt
             { $count: 'total' }
           ],
           data: [
-            ...(filter.all ? [] : [{ $skip: skip }, { $limit: limit }]),
             { $sort: { createdAt: -1 } },
+            ...(filter.all ? [] : [{ $skip: skip }, { $limit: limit }]),
             {
               $project: {
                 createdAt: 0,
@@ -92,9 +92,9 @@ const deleteStreamPlan = async (planId: string): Promise<IStreamRentalPlan | nul
   }
 }
 
-const isPlanExists = async (planName: string): Promise<boolean> => {
+const isPlanExists = async (planName: string, planId?: string): Promise<boolean> => {
   try {
-    const exists = await StreamPlans.exists({ planName: { $regex: planName, $options: 'i' } }).lean()
+    const exists = await StreamPlans.exists({ planName: { $regex: planName.trim(), $options: 'i' }, _id: { $ne: planId } }).lean()
     return exists == null
       ? false
       : true
