@@ -20,7 +20,8 @@ function generatePaymentData(
   showDetail?: ICheckShowAvailableResponse,
   rentalPlan?: IRental,
   rentalId?: ObjectId,
-  movieId?: ObjectId
+  movieId?: ObjectId,
+  movieDetails?: IPayment['movie']
 ) {
   const paymentData: Partial<IPayment> = {
     userId: new mongoose.Types.ObjectId(ownerId),
@@ -62,9 +63,14 @@ function generatePaymentData(
     }
   }
   else if (purchasedItem === PurchasedItem.RENTAL) {
-    if (rentalId && rentalPlan) {
+    if (rentalId && rentalPlan && movieDetails) {
       paymentData.rentalId = rentalId
       paymentData.rentalPlan = rentalPlan
+      paymentData.movie = {
+        movie_name: movieDetails.movie_name,
+        movie_poster: movieDetails.movie_poster,
+        release_date: movieDetails.release_date
+      }
     }
   }
 

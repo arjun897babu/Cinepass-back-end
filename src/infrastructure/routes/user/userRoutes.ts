@@ -71,11 +71,11 @@ const userRoutes = (dependencies: IDependencies, commonDependencies: ICommonDepe
     .post(verifyUser, cancelUserPayments) //to cancel payments
   router
     .route('/stream')
-    .get(getStreamingMovies)//all available movie lists
+    .get(verifyUser,getStreamingMovies)//all available movie lists
   router
     .route('/stream/:movieId')
-    .get(getStreamingMovies)//single streaming movie details
-    .post(purchaseStreaming)
+    .get(verifyUser,getStreamingMovies)//single streaming movie details
+    .post(verifyUser,purchaseStreaming)
 
   return router
 }

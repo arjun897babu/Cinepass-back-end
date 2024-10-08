@@ -44,9 +44,14 @@ const purchaseStream = (dependencies: IDependencies) => {
           undefined, undefined,
           response.streamingPlan,
           response.streamingPlan._id,
-          new Schema.Types.ObjectId(movieId)
+          response._id,
+          {
+            movie_name: response.movie_name,
+            movie_poster: response.movie_poster,
+            release_date: response.release_date
+          }
         )
-
+        
         await createPayment(paymentData)
 
         return {

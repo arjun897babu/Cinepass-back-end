@@ -1,6 +1,9 @@
- import { StreamingMovie } from "../../model/admin/streaming-movie" 
+import { StreamingMovie } from "../../model/admin/streaming-movie"
 import { IStreamMovieFilter, StreamingMovieResponse } from "../../../../utils/interface";
 import { IStreamingMovieResponse } from "../../../../domain/domainUsecases/user";
+import { payments } from "../../model/user/payment-schema";
+import { PurchasedItem } from "../../../../utils/enum";
+import { ObjectId } from "mongoose";
 
 const getStreamingMovies = async (filter: Partial<IStreamMovieFilter>): Promise<IStreamingMovieResponse | null> => {
   try {
@@ -33,7 +36,7 @@ const getStreamingMovies = async (filter: Partial<IStreamMovieFilter>): Promise<
         }
       }
     ]);
-    console.log('in get all  stream  movie repo :', response)
+    // console.log('in get all  stream  movie repo :', response)
 
     return response
   } catch (error) {
@@ -65,9 +68,37 @@ const getSingleStreamingMovie = async (movieId: string): Promise<StreamingMovieR
       }
     ])
 
-    console.log('in single streaming repo :', movie)
+    // console.log('in single streaming repo :', movie)
 
     return !movie ? null : movie
+  } catch (error) {
+    throw error
+  }
+}
+
+const isUserRented = async (userId: string, movieId: ObjectId): Promise<boolean> => {
+  try {
+    const isRented = await payments.exists({
+      userId, purchasedItem: PurchasedItem.RENTAL, movieId,
+      $expr: {
+        $gte: [
+          {
+            $dateAdd: {
+              startDate: '$bookingDate',
+              unit: 'month',
+              amount: '$rentalPlan.validity',
+              timezone: 'Asia/Kolkata'
+            }
+          },
+          new Date()
+        ]
+      }
+    })
+
+    return isRented ?
+      true
+      : false
+
   } catch (error) {
     throw error
   }
@@ -76,5 +107,5 @@ const getSingleStreamingMovie = async (movieId: string): Promise<StreamingMovieR
 
 
 export {
-  getSingleStreamingMovie, getStreamingMovies,
+  getSingleStreamingMovie, getStreamingMovies,isUserRented
 }

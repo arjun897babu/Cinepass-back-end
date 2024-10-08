@@ -103,7 +103,7 @@ interface IGetShowByTheater {
 }
 
 export interface TheaterMovieResponse {
-  _id: string;
+  _id: ObjectId;
   movie_name: string;
   languages: string[];
   release_date: Date;

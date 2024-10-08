@@ -1,3 +1,4 @@
+import { ObjectId } from "mongoose";
 import { IUserTicketDataResponse } from "../../../domain/domainUsecases/common";
 import { IStreamingMovieResponse } from "../../../domain/domainUsecases/user/IGetStreamingMovies";
 import { OTPEntity } from "../../../domain/entities/common";
@@ -26,6 +27,7 @@ interface IRepositories {
   updateTicketStatus: (paymentIntent: string) => Promise<void>
   getStreamingMovies: (filter: Partial<IStreamMovieFilter>) => Promise<IStreamingMovieResponse | null>
   getSingleStreamingMovie: (movieId: string) => Promise<StreamingMovieResponse | null>
+  isUserRented: (userId: string, movieId: ObjectId) => Promise<boolean>
 
 }
 
