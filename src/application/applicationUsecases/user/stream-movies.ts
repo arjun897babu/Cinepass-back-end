@@ -1,3 +1,4 @@
+import { getHlsUrl } from "../../../infrastructure/cloudinary"
 import { isUserRented } from "../../../infrastructure/database/repositories/user"
 import { CustomError } from "../../../utils/CustomError"
 import { HttpStatusCode, ResponseStatus } from "../../../utils/enum"
@@ -12,18 +13,19 @@ const streamMovies = (dependencies: IDependencies) => {
       try {
         let response
 
-        if (props.movieId) {
-          console.log('reaching in get single stream movie use case')
+        if (props.movieId && props.publicId && props._id) {
+          console.log('reaching in get hls url usecase')
+          response = getHlsUrl(props.publicId, props.movieId, props._id)
+
+        } 
+        else if (props.movieId) {
           response = await getSingleStreamingMovie(props.movieId)
-          console.log('userId:', props._id, 'movieId:',response?._id)
           if (response?._id && props._id) {
             const isRented = await isUserRented(props._id, response._id)
             console.log(isRented)
             response.isPurchased = isRented
           }
-          console.log(response)
-
-        } else if (props.filter) {
+        }else if (props.filter) {
           response = await getStreamingMovies(props.filter)
         }
 

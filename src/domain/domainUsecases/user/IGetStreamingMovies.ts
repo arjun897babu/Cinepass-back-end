@@ -1,6 +1,9 @@
 import { IResponse2 } from "..";
 import { IUserStreamProps, StreamingMovieResponse } from "../../../utils/interface";
 
+export type IHlsUrlResponse = {
+  hlsURL: string
+}
 
 export interface IStreamingMovieResponse {
   maxPage: number;
@@ -8,7 +11,7 @@ export interface IStreamingMovieResponse {
 }
 
 interface IGetStreamingMoviesResponse extends IResponse2 {
-  data: IStreamingMovieResponse | StreamingMovieResponse
+  data: IStreamingMovieResponse | StreamingMovieResponse | IHlsUrlResponse
 }
 
 interface IGetStreamingMovies {

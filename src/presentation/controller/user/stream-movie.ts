@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { IDependencies } from "../../../application/interface/user/IDependencies";
 import { getPageNumber } from "../../../utils/FilterAndPagination";
-import { HttpStatusCode } from "../../../utils/enum"; 
+import { HttpStatusCode } from "../../../utils/enum";
 
 const getStreamMovies = (dependencies: IDependencies) => {
   const { useCases: { streamMovies } } = dependencies;
@@ -31,8 +31,8 @@ const purchaseStreaming = (dependencies: IDependencies) => {
     try {
 
       console.log('reaching in purchase streaming controller')
-      const { _id, role, movieId } = req.params 
-      
+      const { _id, role, movieId } = req.params
+
       const response = await purchaseStream(dependencies).execute(_id, movieId)
 
       return res.status(HttpStatusCode.OK).json({
@@ -47,11 +47,32 @@ const purchaseStreaming = (dependencies: IDependencies) => {
   }
 }
 
+const getHlsUrl = (dependencies: IDependencies) => {
+  const { useCases: { streamMovies } } = dependencies
+  return async (req: Request, res: Response, next: NextFunction) => {
+    try {
+
+      console.log('reaching in purchase streaming controller')
+      const { _id, role, movieId, publicId } = req.params
+      const response = await streamMovies(dependencies).execute({ _id, movieId, publicId })
+
+      return res.status(HttpStatusCode.OK).json({
+        status: response.status,
+        message: response.message,
+        data: response.data
+      })
+
+    } catch (error) {
+      next(error)
+    }
+  }
+}
 
 
 export {
   getStreamMovies,
-  purchaseStreaming
+  purchaseStreaming,
+  getHlsUrl
 
 
 }

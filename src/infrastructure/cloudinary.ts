@@ -2,6 +2,7 @@ import { v2 } from 'cloudinary'
 import { config } from '../config/envConfig';
 import { HttpStatusCode, Role } from '../utils/enum';
 import { CustomError } from '../utils/CustomError';
+import { IHlsUrlResponse } from '../domain/domainUsecases/user';
 
 
 v2.config({
@@ -42,19 +43,19 @@ const uploadVideo = async (videoPath: string, folder: Role): Promise<ImageUpload
   try {
     const result = await v2.uploader.upload(videoPath, {
       resource_type: 'video',
-      chunk_size:10 * 1024 * 1024,
-      eager:[
-        {streaming_profile:'full_hd',format:'m3u8'}
+      chunk_size: 10 * 1024 * 1024,
+      eager: [
+        { streaming_profile: 'full_hd', format: 'm3u8' }
       ],
-      eager_async:true,
-     });
- 
+      eager_async: true,
+    });
+
     console.log('Cloudinary Upload Complete:', result);
- 
+
     if (!result.secure_url || !result.public_id) {
       throw new CustomError('Unexpected Error: Missing secure_url or public_id', HttpStatusCode.INTERNAL_SERVER_ERROR, 'video');
     }
- 
+
     return {
       secure_url: result.secure_url,
       public_id: result.public_id,
@@ -67,12 +68,15 @@ const uploadVideo = async (videoPath: string, folder: Role): Promise<ImageUpload
 };
 
 
-const getHlsUrl = async (publicId: string): Promise<string> => {
-  return v2.url(publicId, {
+const getHlsUrl =  (publicId: string, movieId: string, _id: string): IHlsUrlResponse => {
+  const hlsURL =  v2.url(publicId, {
     resource_type: 'video',
     format: 'm3u8',
-    secure: true,
   })
+
+  return {
+    hlsURL
+  }
 }
 
 export {

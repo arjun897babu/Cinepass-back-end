@@ -138,8 +138,8 @@ const validateFormat = (format: string[]): void => {
 };
 
 const mongodbIdValidator = (_id: string): void => {
-  console.log('In mongo validator : invalid mongodb id')
   if (!_id || !isValidObjectId(_id)) {
+    console.log('In mongo validator : invalid mongodb id')
     throw new CustomError('Invalid request', HttpStatusCode.BAD_REQUEST, '_id');
   }
 };
