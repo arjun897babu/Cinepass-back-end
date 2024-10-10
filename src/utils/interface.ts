@@ -116,6 +116,20 @@ export interface TheaterMovieResponse {
   slug: string
 }
 
+
+ type IGetUserCount = {
+  verified: number,
+  active: number,
+  blocked: number,
+  nonVerified: number
+}
+
+ type IGetTheaterOwnersCount = IGetUserCount & {
+  approved:number
+  rejected: number
+  pending: number
+}
+
 interface IStreamMovieFilter {
   pageNumber: number,
   listed: boolean,
@@ -130,7 +144,7 @@ interface IUserStreamProps {
 }
 
 type IPlan = {
-  _id: ObjectId ;
+  _id: ObjectId;
   planName: string;
   price: number;
   validity: number;
@@ -206,7 +220,9 @@ export {
   IGetMovieShowResponse,
   IManageMovie,
   MovieFilter,
-  IStreamPlanFilter
+  IStreamPlanFilter,
+  IGetTheaterOwnersCount,
+  IGetUserCount
 
 }
 

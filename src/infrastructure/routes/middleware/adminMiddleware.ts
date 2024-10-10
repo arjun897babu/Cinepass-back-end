@@ -2,15 +2,13 @@ import { NextFunction, Request, Response } from "express"
 import { Cookie, verifyToken } from "../../../utils/jwtHandler";
 import { config } from "../../../config/envConfig";
 import { CustomError } from "../../../utils/CustomError";
-import { Role } from "../../../utils/enum";
+import { HttpStatusCode, Role } from "../../../utils/enum";
 import { mongodbIdValidator } from "../../../utils/validator";
 
 const verifyAdmin = (req: Request, res: Response, next: NextFunction) => {
-  try {
-    console.log('admin middle ware is called')
+  try { 
     const adminJWT = req.cookies[Cookie.adminJWT];
-    if (!adminJWT) {
-      console.log(`adminJWT: ${false}`)
+    if (!adminJWT) { 
       throw new CustomError('unAuthorized', 401, 'token')
     }
 
@@ -20,16 +18,17 @@ const verifyAdmin = (req: Request, res: Response, next: NextFunction) => {
       mongodbIdValidator(decoded._id);
       req.params._id = decoded._id
       req.params.roles = decoded.role
-      // console.log('admin verified in admin jwt middle ware')
-      next()
-    } else {
-      res.clearCookie(Cookie.userJWT, {
-        httpOnly: true,
-      })
-      throw new CustomError('Access Denied', 401, 'token')
+       next()
     }
 
   } catch (error) {
+    if (error instanceof CustomError) {
+      if (error.statusCode === HttpStatusCode.UNAUTHORIZED) {
+        res.clearCookie(Cookie.adminJWT, {
+          httpOnly: true,
+        })
+      }
+    }
     next(error)
   }
 }

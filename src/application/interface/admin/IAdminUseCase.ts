@@ -1,6 +1,7 @@
 import {
   IAdminAddMovie,
   IAdminLogin,
+  IEntityStat,
   IGetEntityDataForAdmin,
   IManageEntityStatus,
   IManageMovieList,
@@ -21,6 +22,7 @@ interface IAdminUsecase {
   updateMovieUsecase: (dependencies: IAdminDependencies) => IUpdateMovie
   manangeMovieUsecase: (dependencies: IAdminDependencies) => IManageMovieList
   streamPlanUsecase: (dependencies: IAdminDependencies) => IStreamPlan
+  entityStat: (dependencies: IAdminDependencies) => IEntityStat
 }
 
 export {

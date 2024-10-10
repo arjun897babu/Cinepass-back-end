@@ -32,7 +32,6 @@ const verifyTheaterOwner = async (req: Request, res: Response, next: NextFunctio
     } else {
       res.clearCookie(Cookie.theaterJWT, {
         httpOnly: true,
-        
       })
       throw new CustomError('unauthorized', 401, 'token')
     }
