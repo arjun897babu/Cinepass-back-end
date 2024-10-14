@@ -38,7 +38,8 @@ const ticketReservation = (dependencies: ICommonDependencies) => {
             showId: `${isShowAvailable.showDetails.showId}`,
             bookingDate: `${payload.bookingDate}`,
             purchasedItem: PurchasedItem.TICKET,
-            seats: payload.reservedSeats.join(',')
+            seats: payload.reservedSeats.join(','),
+            screenId: `${isShowAvailable.screenDetails[0]._id}`
           }
         );//creating payment
 

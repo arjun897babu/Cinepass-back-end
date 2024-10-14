@@ -2,7 +2,11 @@ enum ResponseStatus {
   SUCCESS = 'Success',
   ERROR = 'Error',
 }
-
+export enum Period {
+  WEEK = 'week',
+  MONTH = 'month',
+  YEAR = 'year',
+}
 export enum HttpStatusCode {
   OK = 200,
   CREATED = 201,

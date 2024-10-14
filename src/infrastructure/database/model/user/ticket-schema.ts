@@ -12,6 +12,10 @@ const ticketSchema = new Schema<ITickets>({
     type: String,
     required: true
   },
+  screenId: {
+    type: String,
+    required: true
+  },
   showId: {
     type: String,
     required: true
@@ -41,7 +45,7 @@ const ticketSchema = new Schema<ITickets>({
 
 ticketSchema.pre(('save'), function (next) {
   if (!this.bookingCode) {
-    this.bookingCode = generateTicketCode(this.bookingDate,this.userId)
+    this.bookingCode = generateTicketCode(this.bookingDate, this.userId)
   }
   next()
 })

@@ -7,7 +7,7 @@ import { HttpStatusCode } from "../../../../utils/enum"
 
 const getTheaterTicketData = async (_id: string, pageNumber: number, filter?: TicketFilter): Promise<ITheaterTicketDataResponse> => {
   console.log(_id,pageNumber)
-  const limit = 1
+  const limit = 3
   const skip = calculateSkip(pageNumber, limit);
 
   try {

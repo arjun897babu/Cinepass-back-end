@@ -1,10 +1,30 @@
 import { ObjectId } from "mongoose";
 import { IMovie } from "../domain/entities/admin/ITheaterMovie";
 import { IMovieShow, ITheaterOwnerEntity, ITheaterScreen } from "../domain/entities/theaters";
-import { BookingStatus, HTTPActions, MovieType, PaymentStatus, PurchasedItem, Role } from "./enum"
+import { BookingStatus, HTTPActions, MovieType, Period, PurchasedItem, Role } from "./enum"
 import { ITickets } from "../domain/entities/user/ITickets";
 import { ImageUploadResult } from "../infrastructure/cloudinary";
+ 
 
+type IGetScreenCount = {
+  total:number;
+  available: number;
+  'under-maintenance': number
+}
+
+type IGetTicketCount = {
+  total: number,
+  canceled: number
+}
+
+type IGetShowCountByScreen = {
+  screenName: string,
+  showCount: number
+}
+type RevenueByFilter = {
+  period: Period
+  screenId?: string;
+}
 
 interface IPaymentMetaData {
   userId: string;
@@ -14,6 +34,7 @@ interface IPaymentMetaData {
   theaterId?: string;
   rentalId?: string;
   seats?: string;
+  screenId?:string
 }
 interface ICityUpdate {
   _id: string,
@@ -117,15 +138,15 @@ export interface TheaterMovieResponse {
 }
 
 
- type IGetUserCount = {
+type IGetUserCount = {
   verified: number,
   active: number,
   blocked: number,
   nonVerified: number
 }
 
- type IGetTheaterOwnersCount = IGetUserCount & {
-  approved:number
+type IGetTheaterOwnersCount = IGetUserCount & {
+  approved: number
   rejected: number
   pending: number
 }
@@ -191,7 +212,7 @@ interface ICheckShowAvailableResponse {
   movieDetails: Pick<IMovie, 'movie_name' | 'movie_poster' | 'release_date'>
 }
 
-type TicketDataParams = Pick<ITickets, 'userId' | 'showId' | 'bookingDate' | 'bookingStatus' | 'seats' | 'paymentId' | 'theaterId'>
+type TicketDataParams = Pick<ITickets, 'userId' | 'showId' | 'bookingDate' | 'bookingStatus' | 'seats' | 'paymentId' | 'theaterId'|'screenId'>
 
 interface TicketFilter {
 
@@ -222,7 +243,11 @@ export {
   MovieFilter,
   IStreamPlanFilter,
   IGetTheaterOwnersCount,
-  IGetUserCount
+  IGetUserCount,
+  IGetScreenCount,
+  IGetShowCountByScreen,
+  IGetTicketCount,
+  RevenueByFilter
 
 }
 

@@ -3,7 +3,7 @@ import { ITheaterTicketDataResponse } from "../../../domain/domainUsecases/commo
 import { OTPEntity } from "../../../domain/entities/common";
 import { IMovieShow, IReservedSeats, ITheaterScreen } from "../../../domain/entities/theaters";
 import { ITheaterOwnerEntity } from "../../../domain/entities/theaters/ITheaterOwners"
-import { IResetPassword, ITheaterDetailResponse, TheaterOwnerProfile, TheaterProfile, TicketFilter } from "../../../utils/interface";
+import { IGetScreenCount, IGetShowCountByScreen, IGetTicketCount, IResetPassword, ITheaterDetailResponse, RevenueByFilter, TheaterOwnerProfile, TheaterProfile, TicketFilter } from "../../../utils/interface";
 
 interface ITheaterRepositories {
   createTheaterOwner: (data: ITheaterOwnerEntity) => Promise<ITheaterOwnerEntity | null>
@@ -24,7 +24,11 @@ interface ITheaterRepositories {
   updateTheaterScreen: (screenId: string, payload: ITheaterScreen) => Promise<ITheaterScreen | null>
   addReservedSeats: (showId: string, data: IReservedSeats) => Promise<void>
   removeReservedSeats: (showId: string, data: IReservedSeats) => Promise<void>
-  getTheaterTicketData:  (_id: string, pageNumber: number, filter?: TicketFilter)=> Promise<ITheaterTicketDataResponse>
+  getTheaterTicketData: (_id: string, pageNumber: number, filter?: TicketFilter) => Promise<ITheaterTicketDataResponse>
+  getScreenCount: (theaterId: string) => Promise<IGetScreenCount>
+  getTicketCount: (theaterId: string) => Promise<IGetTicketCount>
+  getShowCountByScreen: (theaterId: string) => Promise<IGetShowCountByScreen[]>
+  getRevenueByScreen:(theaterId:string,filter:RevenueByFilter)=>Promise<any>
 }
 
 export {

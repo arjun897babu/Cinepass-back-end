@@ -26,7 +26,7 @@ const getMovies = async (movieType: MovieType, role: Role, pageNumber: number): 
       { listed: true }
       : {
         listed: true,
-        release_date: { $gt: new Date() }
+        
       } 
       
     const [response = null] = await db.aggregate([

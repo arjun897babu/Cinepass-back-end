@@ -76,7 +76,7 @@ const userRoutes = (dependencies: IDependencies, commonDependencies: ICommonDepe
   router
     .route('/stream/:movieId')
     .get(verifyUser, getStreamingMovies)//single streaming movie details
-    .post(verifyUser, purchaseStreaming)
+    .post(verifyUser, purchaseStreaming)//purchase streaming movie 
   router
     .route('/stream/:movieId/:publicId')
     .get(verifyUser, getHlsUrl)

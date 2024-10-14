@@ -13,8 +13,10 @@ import {
   IDeleteMovieShow,
   IDeleteTheaterScreen,
   IUpdateTheaterScreen,
+  IGetCountStat,
 
 } from '../../../domain/domainUsecases/theaters'
+import { IGetRevenueByScreen } from '../../../domain/domainUsecases/theaters/IGetRevenueByScreen';
 import { ITheaterDependencies } from './ITheaterDependencies';
 
 interface ITheaterUseCase {
@@ -32,6 +34,8 @@ interface ITheaterUseCase {
   deleteMovieShowUsecase: (dependencies: ITheaterDependencies) => IDeleteMovieShow
   deleteTheaterScreenUsecase: (dependencies: ITheaterDependencies) => IDeleteTheaterScreen
   updateTheaterScreenUsecase: (dependencies: ITheaterDependencies) => IUpdateTheaterScreen
+  getCountStat: (dependencies: ITheaterDependencies) => IGetCountStat
+  getRevenueByScreen: (dependencies: ITheaterDependencies) => IGetRevenueByScreen
 
 }
 

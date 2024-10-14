@@ -24,7 +24,9 @@ const theaterRoutes = (dependencies: ITheaterDependencies, commonDependencies: I
     updateMovieShow,
     deleteMovieShow,
     deleteScreen,
-    updateTheaterScreen
+    updateTheaterScreen,
+    theaterCountStat,
+    theaterRevenueByScreen
   } = theaterController(dependencies);
 
   const { getMovies, getShows, getRunningMovies, getTheater, getTickets } = commonController(commonDependencies);
@@ -74,6 +76,12 @@ const theaterRoutes = (dependencies: ITheaterDependencies, commonDependencies: I
   theaterRouter
     .route('/tickets')
     .get(verifyTheaterOwner, getTickets)
+  theaterRouter
+    .route('/dashboard/stat')
+    .get(verifyTheaterOwner, theaterCountStat)
+  theaterRouter
+    .route('/dashboard/revenue/screen')
+    .get(verifyTheaterOwner, theaterRevenueByScreen)
 
   return theaterRouter
 }

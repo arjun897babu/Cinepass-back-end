@@ -55,7 +55,7 @@ const adminRoutes = (dependency: IAdminDependencies, commonDependencies: ICommon
     .post(verifyAdmin, upload.single('file'), addMovie)//adding movies into theater and stream
   adminRouter
     .route('/movie/:movieType/:movieId')
-    .patch(verifyAdmin, deleteMovie)//unlisting movie 
+    .patch(verifyAdmin, deleteMovie)//un listing movie 
     .put(verifyAdmin, updateMovie)//updating  a existing movies
 
   /*......................................... Movies........................................... */

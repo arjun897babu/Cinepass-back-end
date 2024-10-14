@@ -80,7 +80,7 @@ const getTheaterOwnersCount = async (): Promise<IGetTheaterOwnersCount> => {
         verified: { $ifNull: [{ $arrayElemAt: ["$verified.count", 0] }, 0] },
         active: { $ifNull: [{ $arrayElemAt: ["$active.count", 0] }, 0] },
         blocked: { $ifNull: [{ $arrayElemAt: ["$blocked.count", 0] }, 0] },
-        nonVerified: { $ifNull: [{ $arrayElemAt: ["$nonVerified.count", 0] }, 0] },
+        'non-verified': { $ifNull: [{ $arrayElemAt: ["$nonVerified.count", 0] }, 0] },
         approved: { $ifNull: [{ $arrayElemAt: ["$approved.count", 0] }, 0] },
         rejected: { $ifNull: [{ $arrayElemAt: ["$rejected.count", 0] }, 0] },
         pending: { $ifNull: [{ $arrayElemAt: ["$pending.count", 0] }, 0] }

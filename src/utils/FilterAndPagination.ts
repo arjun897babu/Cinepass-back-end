@@ -1,6 +1,7 @@
 import { ParsedQs } from 'qs'
 import { MovieFilter } from './interface';
-import { Formats, Genres, Languages, MovieFilterEnum } from './enum';
+import { Formats, Genres, Languages, MovieFilterEnum, Period } from './enum';
+import moment from 'moment';
 type IQueryParam = string | ParsedQs | string[] | ParsedQs[] | undefined;
 
 const getPageNumber = (query: IQueryParam): number => {
@@ -95,9 +96,41 @@ function generateMovieFilterConditions(filter?: Partial<MovieFilter>) {
   return conditions.length > 0 ? conditions : [true];
 }
 
+function validatePeriod(query: IQueryParam): Period {
+  if (typeof query !== 'string') return Period.WEEK
+
+  return Object.values(Period).includes(query as Period) ? query as Period : Period.WEEK
+}
+
+function generateRevenueFilterDate(period: Period) {
+  const today = moment()
+
+  let matchDate;
+  // const weekStart = today.clone().startOf('week').add(1, 'day').utc().startOf('day')
+  const weekStart = today.clone().startOf('week').utc().startOf('day')
+  const weekEnd = today.clone().endOf('week').utc().endOf('day')
+
+
+
+  const monthStart = today.clone().startOf('month').utc().startOf('day')
+  const monthEnd = today.clone().endOf('month').utc().endOf('day')
+  const yearStart = today.clone().startOf('year').utc().endOf('day')
+  const yearEnd = today.clone().endOf('year').utc().endOf('day')
+
+  if (period === 'week') {
+    matchDate = { $gte: weekStart.toDate(), $lte: weekEnd.toDate() };
+  } else if (period === 'month') {
+    matchDate = { $gte: monthStart.toDate(), $lte: monthEnd.toDate() };
+  } else if (period === 'year') {
+    matchDate = { $gte: yearStart.toDate(), $lte: yearEnd.toDate() };
+  }
+  return matchDate;
+
+}
 
 
 export {
+  generateRevenueFilterDate,
   convertBoolean,
   generateMovieFilterConditions,
   validateFilterQueryString,
@@ -105,5 +138,6 @@ export {
   getPageNumber,
   getMaxPage,
   calculateSkip,
-  toValidJSDate
+  toValidJSDate,
+  validatePeriod
 }

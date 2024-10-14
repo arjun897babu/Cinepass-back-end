@@ -89,6 +89,7 @@ function generateTicketData(metaData: Stripe.Metadata, paymentIntentId: string):
     userId: metaData.userId,
     theaterId: metaData.theaterId,
     showId: metaData.showId,
+    screenId:metaData.screenId,
     seats: generateReservedSeats(metaData.seats!),
     bookingDate: new Date(metaData.bookingDate),
     paymentId: paymentIntentId,

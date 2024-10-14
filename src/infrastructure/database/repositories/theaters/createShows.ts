@@ -4,13 +4,28 @@ import { MovieShow } from "../../model/theaters";
 
 const createMovieShows = async (_id: string, payload: Omit<IMovieShow, 'theaterId'>): Promise<IMovieShow> => {
   try {
+
     // const isExists = await MovieShow.exists({
-    //   screenId: payload.screenId,
-    //   movieId: payload.movieId,
-    //   language: payload.language,
-    //   format: payload.format,
+
+    //   $or: [
+    //     {
+    //       $and: [
+    //         { screenId: payload.screenId },
+    //         { showTime: payload.endTime },
+    //         { endTime: payload.endTime }
+    //       ]
+    //     },
+    //     {
+    //       $amd: [
+    //         { screen: payload.screenId },               
+    //         { language: payload.language },      
+    //         { format: payload.format }
+    //       ]
+    //     }
+    //   ]
+
     // })
-    // console.log('in create movieshow repositories', isExists)
+    // console.log('in create movie show repositories', isExists)
     // if (isExists) {
     //   throw new CustomError('show exists', 400, 'movieId')
     // }

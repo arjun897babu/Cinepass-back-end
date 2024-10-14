@@ -11,7 +11,7 @@ const verifyUser = async (req: Request, res: Response, next: NextFunction) => {
     const userJWT = req.cookies[Cookie.userJWT];
 
     if (!userJWT) {
-      if (req.path.startsWith('/stream')) {
+      if (req.path.startsWith('/stream')&&req.method==='GET') {
         return next()
       }
       throw new CustomError('unAuthorized', 401, 'token')
