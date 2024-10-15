@@ -2,9 +2,9 @@ import mongoose from "mongoose";
 import { BookingStatus, Period } from "../../../../utils/enum";
 import { MovieShow, TheaterScreen } from "../../model/theaters"
 import { Tickets } from "../../model/user/ticket-schema"
-import { IGetScreenCount, IGetShowCountByScreen, IGetTicketCount, RevenueByFilter } from "../../../../utils/interface";
+import { IGetScreenCount, IGetShowCountByScreen, IGetTicketCount, IRevenueResponse, RevenueByFilter, RevenueDetails } from "../../../../utils/interface";
 import { generateRevenueFilterDate } from "../../../../utils/FilterAndPagination";
-import { generatePeriodQuery, generateRevenueFilterQuery } from "../../../../utils/mongod-query-generator";
+import { generatePeriodQuery, generateRevenueFilterQuery, getDefaultData, mergeRevenueData } from "../../../../utils/mongod-query-generator";
 
 
 
@@ -142,13 +142,12 @@ const getShowCountByScreen = async (theaterId: string): Promise<IGetShowCountByS
   }
 }
 
-const getRevenueByScreen = async (theaterId: string, filter: RevenueByFilter) => {
+const getRevenueByScreen = async (theaterId: string, filter: RevenueByFilter):Promise<IRevenueResponse> => {
 
   const matchDate = generateRevenueFilterDate(filter.period)
-  console.log('filter:', filter, matchDate)
   try {
 
-    const defaultScreenId = await TheaterScreen.findOne({}).sort({ screen_name: 1 }).limit(1).select('_id')
+    const defaultScreenId = await TheaterScreen.findOne({}).sort({ screen_name: 1 }).limit(1).select('_id').lean()
 
     const [response] = await Tickets.aggregate([
       { $match: { theaterId } },
@@ -198,12 +197,11 @@ const getRevenueByScreen = async (theaterId: string, filter: RevenueByFilter) =>
                 screenId: { $first: '$screen._id' },
               },
             },
-
             {
               $project: {
                 _id: 0,
-                screenName: 1,
-                screenId: 1,
+                name: '$screenName',
+                id: '$screenId',
                 data: generateRevenueFilterQuery(filter.period)
               }
             },
@@ -213,9 +211,12 @@ const getRevenueByScreen = async (theaterId: string, filter: RevenueByFilter) =>
             {
               $project: {
                 _id: 0,
-                screenId: '$_id.screenId',
-                screenName: '$_id.screenName'
+                id: '$_id.screenId',
+                label: '$_id.screenName'
               }
+            },
+            {
+              $sort: { name: 1 }
             }
 
           ]
@@ -223,32 +224,16 @@ const getRevenueByScreen = async (theaterId: string, filter: RevenueByFilter) =>
       },
       {
         $project: {
-          screenList: '$screenList',
-          screenRevenue: '$screenRevenue'
+          list: '$screenList',
+          revenue: '$screenRevenue'
         }
-      }
-
+      },
     ])
 
-    const mergedData = response.screenRevenue.reduce((acc: any, current: any) => {
-      acc.screenName = current.screenName;
-      acc.screenId = current.screenId;
 
-      if (!acc.data) {
-        acc.data = {};
-      }
+    const mergedData = mergeRevenueData(response.revenue)
+    response.revenue = mergedData
 
-      for (const key in current.data) {
-        if (current.data.hasOwnProperty(key)) {
-          acc.data[key] = (acc.data[key] || 0) + current.data[key];
-        }
-      }
-
-      return acc;
-    }, {});
-
-
-    response.screenRevenue = mergedData
     return response
   } catch (error) {
     throw error

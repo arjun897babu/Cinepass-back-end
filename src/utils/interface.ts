@@ -4,10 +4,10 @@ import { IMovieShow, ITheaterOwnerEntity, ITheaterScreen } from "../domain/entit
 import { BookingStatus, HTTPActions, MovieType, Period, PurchasedItem, Role } from "./enum"
 import { ITickets } from "../domain/entities/user/ITickets";
 import { ImageUploadResult } from "../infrastructure/cloudinary";
- 
+
 
 type IGetScreenCount = {
-  total:number;
+  total: number;
   available: number;
   'under-maintenance': number
 }
@@ -24,6 +24,7 @@ type IGetShowCountByScreen = {
 type RevenueByFilter = {
   period: Period
   screenId?: string;
+  movieId?: string
 }
 
 interface IPaymentMetaData {
@@ -34,7 +35,7 @@ interface IPaymentMetaData {
   theaterId?: string;
   rentalId?: string;
   seats?: string;
-  screenId?:string
+  screenId?: string
 }
 interface ICityUpdate {
   _id: string,
@@ -212,14 +213,35 @@ interface ICheckShowAvailableResponse {
   movieDetails: Pick<IMovie, 'movie_name' | 'movie_poster' | 'release_date'>
 }
 
-type TicketDataParams = Pick<ITickets, 'userId' | 'showId' | 'bookingDate' | 'bookingStatus' | 'seats' | 'paymentId' | 'theaterId'|'screenId'>
+type TicketDataParams = Pick<ITickets, 'userId' | 'showId' | 'bookingDate' | 'bookingStatus' | 'seats' | 'paymentId' | 'theaterId' | 'screenId'>
 
 interface TicketFilter {
-
   status: BookingStatus
+}
+type IList = {
+  name: string,
+  id: string
+}
+
+type RevenueData = {
+  [key: string]: number
+}
+
+type RevenueDetails = {
+  name: string;
+  id: string;
+  data: RevenueData
+}
+
+interface IRevenueResponse {
+  list: IList[]
+  revenue: RevenueDetails
 }
 
 export {
+  IRevenueResponse,
+  RevenueData,
+  RevenueDetails,
   IStreamMovieFilter,
   IUserStreamProps,
   IStreamPlanProps,

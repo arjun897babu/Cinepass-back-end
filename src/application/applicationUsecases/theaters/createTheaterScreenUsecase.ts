@@ -2,8 +2,8 @@
 import { ResponseStatus } from "../../../utils/enum";
  import { ITheaterDependencies } from "../../interface/theaters/ITheaterDependencies";
 
-const createTheaterScreenUsecase = (dependecies: ITheaterDependencies) => {
-  const { theaterRepositories: { createTheaterScreen } } = dependecies;
+const createTheaterScreenUsecase = (dependencies: ITheaterDependencies) => {
+  const { theaterRepositories: { createTheaterScreen } } = dependencies;
 
   return {
     execute: async (_id: string, payload: ITheaterScreen) => {

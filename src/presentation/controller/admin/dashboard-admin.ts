@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { IAdminDependencies } from "../../../application/interface/admin/IAdminDependencies";
 import { HttpStatusCode } from "../../../utils/enum";
+import { validatePeriod } from "../../../utils/FilterAndPagination";
+import { mongodbIdValidator } from "../../../utils/validator";
 
 const getCountStatics = (dependencies: IAdminDependencies) => {
   const { adminUsecase: { entityStat } } = dependencies
@@ -23,10 +25,23 @@ const getCountStatics = (dependencies: IAdminDependencies) => {
 }
 
 const getMovieStatics = (dependencies: IAdminDependencies) => {
-  const { adminUsecase: { } } = dependencies
+  const { adminUsecase: { streamingMovieStat } } = dependencies
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { _id, roles } = req.body
+      const movieId = req.query.movieId as string
+      if (movieId !== undefined) {
+        mongodbIdValidator(movieId)
+      }
+
+      const period = validatePeriod(req.query.period)
+      const response = await streamingMovieStat(dependencies).execute({ movieId, period })
+      console.log(response)
+      return res.status(HttpStatusCode.OK).json({
+        status: response.status,
+        message: response.message,
+        data: response.data
+      })
 
     } catch (error) {
       next(error)

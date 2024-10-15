@@ -1,9 +1,10 @@
-
-import { IResponse, IOTPVerifcation } from "../../../domain/domainUsecases"
-import { ResponseStatus } from "../../../utils/enum";
-
+import { ResponseStatus } from "../../../utils/enum"
 import { CustomError } from "../../../utils/CustomError"
 import { ITheaterDependencies } from "../../interface/theaters/ITheaterDependencies"
+import {
+  IResponse,
+  IOTPVerifcation
+} from "../../../domain/domainUsecases"
 
 const verifyTheaterOTPUsecase = (dependencies: ITheaterDependencies) => {
   const { theaterRepositories: { findTheaterOwnerOTP, verifyTheaterOwner, findTheaterOwnerByEmail } } = dependencies

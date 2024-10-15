@@ -98,7 +98,6 @@ function generateMovieFilterConditions(filter?: Partial<MovieFilter>) {
 
 function validatePeriod(query: IQueryParam): Period {
   if (typeof query !== 'string') return Period.WEEK
-
   return Object.values(Period).includes(query as Period) ? query as Period : Period.WEEK
 }
 
@@ -106,8 +105,8 @@ function generateRevenueFilterDate(period: Period) {
   const today = moment()
 
   let matchDate;
-  // const weekStart = today.clone().startOf('week').add(1, 'day').utc().startOf('day')
-  const weekStart = today.clone().startOf('week').utc().startOf('day')
+  const weekStart = today.clone().startOf('week').add(1, 'day').utc().startOf('day')
+  // const weekStart = today.clone().startOf('week').utc().startOf('day')
   const weekEnd = today.clone().endOf('week').utc().endOf('day')
 
 

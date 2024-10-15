@@ -1,9 +1,17 @@
-import { Schema } from "mongoose"
-import { cancelPaymentIntent, createPaymentIntent, retrievePaymentIntent } from "../../../infrastructure/stripe"
 import { CustomError } from "../../../utils/CustomError"
-import { HttpStatusCode, PaymentIntentStatus, PurchasedItem, ResponseStatus } from "../../../utils/enum"
 import { generatePaymentData } from "../../../utils/paymentHelper"
 import { IDependencies } from "../../interface/user/IDependencies"
+import {
+  cancelPaymentIntent,
+  createPaymentIntent,
+  retrievePaymentIntent
+} from "../../../infrastructure/stripe"
+import {
+  HttpStatusCode,
+  PaymentIntentStatus,
+  PurchasedItem,
+  ResponseStatus
+} from "../../../utils/enum"
 
 const purchaseStream = (dependencies: IDependencies) => {
   const { repositories: { getSingleStreamingMovie, createPayment } } = dependencies
@@ -51,7 +59,7 @@ const purchaseStream = (dependencies: IDependencies) => {
             release_date: response.release_date
           }
         )
-        
+
         await createPayment(paymentData)
 
         return {

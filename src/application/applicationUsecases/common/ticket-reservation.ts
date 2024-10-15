@@ -1,9 +1,22 @@
-import { IReservedSeats } from "../../../domain/entities/theaters"
-import { cancelPaymentIntent, createPaymentIntent, retrievePaymentIntent } from "../../../infrastructure/stripe"
-import { CustomError } from "../../../utils/CustomError"
-import { HttpStatusCode, PaymentIntentStatus, PurchasedItem, ResponseStatus, Role } from "../../../utils/enum"
-import { calculateTotalAmount, generatePaymentData } from "../../../utils/paymentHelper"
 import { ICommonDependencies } from "../../interface/common/ICommonDependencies"
+import { CustomError } from "../../../utils/CustomError"
+import { IReservedSeats } from "../../../domain/entities/theaters"
+import {
+  cancelPaymentIntent,
+  createPaymentIntent,
+  retrievePaymentIntent
+} from "../../../infrastructure/stripe"
+import {
+  HttpStatusCode,
+  PaymentIntentStatus,
+  PurchasedItem,
+  ResponseStatus,
+  Role
+} from "../../../utils/enum"
+import {
+  calculateTotalAmount,
+  generatePaymentData
+} from "../../../utils/paymentHelper"
 
 const ticketReservation = (dependencies: ICommonDependencies) => {
 

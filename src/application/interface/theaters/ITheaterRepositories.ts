@@ -3,7 +3,7 @@ import { ITheaterTicketDataResponse } from "../../../domain/domainUsecases/commo
 import { OTPEntity } from "../../../domain/entities/common";
 import { IMovieShow, IReservedSeats, ITheaterScreen } from "../../../domain/entities/theaters";
 import { ITheaterOwnerEntity } from "../../../domain/entities/theaters/ITheaterOwners"
-import { IGetScreenCount, IGetShowCountByScreen, IGetTicketCount, IResetPassword, ITheaterDetailResponse, RevenueByFilter, TheaterOwnerProfile, TheaterProfile, TicketFilter } from "../../../utils/interface";
+import { IGetScreenCount, IGetShowCountByScreen, IGetTicketCount, IResetPassword, IRevenueResponse, ITheaterDetailResponse, RevenueByFilter, TheaterOwnerProfile, TheaterProfile, TicketFilter } from "../../../utils/interface";
 
 interface ITheaterRepositories {
   createTheaterOwner: (data: ITheaterOwnerEntity) => Promise<ITheaterOwnerEntity | null>
@@ -28,7 +28,7 @@ interface ITheaterRepositories {
   getScreenCount: (theaterId: string) => Promise<IGetScreenCount>
   getTicketCount: (theaterId: string) => Promise<IGetTicketCount>
   getShowCountByScreen: (theaterId: string) => Promise<IGetShowCountByScreen[]>
-  getRevenueByScreen:(theaterId:string,filter:RevenueByFilter)=>Promise<any>
+  getRevenueByScreen:(theaterId:string,filter:RevenueByFilter)=>Promise<IRevenueResponse>
 }
 
 export {

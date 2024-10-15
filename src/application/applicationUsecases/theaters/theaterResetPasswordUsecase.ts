@@ -1,9 +1,12 @@
 import { IResponse } from "../../../domain/domainUsecases";
- import { comparePassword, hashPassword } from "../../../utils/bcrypt";
 import { CustomError } from "../../../utils/CustomError";
 import { ResponseStatus } from "../../../utils/enum";
 import { IResetPassword } from "../../../utils/interface";
 import { ITheaterDependencies } from "../../interface/theaters/ITheaterDependencies";
+import {
+  comparePassword,
+  hashPassword
+} from "../../../utils/bcrypt";
 
 
 const theaterResetPasswordUsecase = (dependencies: ITheaterDependencies) => {
@@ -17,11 +20,11 @@ const theaterResetPasswordUsecase = (dependencies: ITheaterDependencies) => {
         if (!existingTheaterOwner) {
           throw new CustomError('Account not found', 404, 'email')
         }
-        
+
         //For blocked accounts
         if (!existingTheaterOwner.status) {
           throw new CustomError('Your account is blocked', 403, 'blocked')
-        }; 
+        };
 
         const isPassword = await comparePassword(payload.password, existingTheaterOwner.password);
         if (isPassword) {

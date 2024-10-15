@@ -2,8 +2,8 @@
 import { ResponseStatus } from "../../../utils/enum";
 import { ITheaterDependencies } from "../../interface/theaters/ITheaterDependencies";
 
-const deleteMovieShowUsecase = (dependecies: ITheaterDependencies) => {
-  const { theaterRepositories: { deleteMovieshow } } = dependecies;
+const deleteMovieShowUsecase = (dependencies: ITheaterDependencies) => {
+  const { theaterRepositories: { deleteMovieshow } } = dependencies;
   return {
     execute: async (showId: string) => {
       try {

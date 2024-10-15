@@ -1,6 +1,11 @@
 import { CustomError } from "../../../utils/CustomError";
-import { HttpStatusCode, MovieType, ResponseStatus, Role } from "../../../utils/enum";
 import { ICommonDependencies } from "../../interface/common/ICommonDependencies";
+import {
+  HttpStatusCode,
+  MovieType,
+  ResponseStatus,
+  Role
+} from "../../../utils/enum";
 
 //use case for fetch all movies (theater movies and streaming movies) 
 const getMoviesUsecase = (dependencies: ICommonDependencies) => {

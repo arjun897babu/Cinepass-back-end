@@ -1,10 +1,16 @@
 import Stripe from "stripe";
 import { constructWebhook } from "../../../infrastructure/stripe";
-import { PaymentStatus, PurchasedItem, StripeWebhookEventType } from "../../../utils/enum";
 import { ICommonDependencies } from "../../interface/common/ICommonDependencies";
-
-import { generateReservedSeats, generateTicketData } from "../../../utils/paymentHelper";
 import { TicketDataParams } from "../../../utils/interface";
+import {
+  PaymentStatus,
+  PurchasedItem,
+  StripeWebhookEventType
+} from "../../../utils/enum";
+import {
+  generateReservedSeats,
+  generateTicketData
+} from "../../../utils/paymentHelper";
 
 
 const stripeWebhookEvents = (dependencies: ICommonDependencies) => {
@@ -44,7 +50,7 @@ const stripeWebhookEvents = (dependencies: ICommonDependencies) => {
 
             break;
 
-          case StripeWebhookEventType.PaymentIntentFailed: 
+          case StripeWebhookEventType.PaymentIntentFailed:
           case StripeWebhookEventType.PaymentIntentCancel:
 
             await updatePaymentStatus(id, PaymentStatus.FAILED)

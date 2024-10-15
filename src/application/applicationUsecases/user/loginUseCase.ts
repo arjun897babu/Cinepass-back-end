@@ -1,6 +1,4 @@
-
 import { config } from "../../../config/envConfig";
-
 import { LoginResponse } from "../../../domain/domainUsecases/user";
 import { ResponseStatus } from "../../../utils/enum";;
 import { OTPTemplate, sendMail } from "../../../infrastructure/nodeMailer";

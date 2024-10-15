@@ -1,10 +1,13 @@
- import { config } from "../../../config/envConfig"
-import { ILogin,   LoginResponse } from "../../../domain/domainUsecases"
- import { comparePassword } from "../../../utils/bcrypt"
+import { config } from "../../../config/envConfig"
+import { comparePassword } from "../../../utils/bcrypt"
 import { CustomError } from "../../../utils/CustomError"
 import { generateToken } from "../../../utils/jwtHandler"
 import { IAdminDependencies } from "../../interface/admin/IAdminDependencies"
-import { Role ,ResponseStatus} from "../../../utils/enum"
+import { Role, ResponseStatus } from "../../../utils/enum"
+import {
+  ILogin,
+  LoginResponse
+} from "../../../domain/domainUsecases"
 
 const adminLoginUseCase = (dependencies: IAdminDependencies) => {
   const { adminRepositories: { findAdmin } } = dependencies

@@ -1,4 +1,4 @@
- import { ResponseStatus } from "../../../utils/enum";
+import { ResponseStatus } from "../../../utils/enum";
 import { ITheaterDependencies } from "../../interface/theaters/ITheaterDependencies";
 
 const getAllTheaterScreenUseCase = (dependencies: ITheaterDependencies) => {
@@ -8,7 +8,7 @@ const getAllTheaterScreenUseCase = (dependencies: ITheaterDependencies) => {
     execute: async (_id: string, amenity?: string) => {
       try {
 
-        const screens = await getAllTheaterScreen(_id,amenity)
+        const screens = await getAllTheaterScreen(_id, amenity)
 
         return {
           status: ResponseStatus.SUCCESS,

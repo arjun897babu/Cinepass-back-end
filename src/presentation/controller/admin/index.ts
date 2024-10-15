@@ -27,7 +27,7 @@ const adminController = (dependencies: IAdminDependencies) => {
     deleteStreamingPlan: deleteStreamPlan(dependencies),
     getStreamingPlan: getStreamPlan(dependencies),
     getCountStatics: getCountStatics(dependencies),
-    getMovieStatics: getMovieStatics(dependencies)
+    getStreamStat: getMovieStatics(dependencies)
   }
 }
 

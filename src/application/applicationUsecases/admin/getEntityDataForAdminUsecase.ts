@@ -1,5 +1,8 @@
- import { Role,ResponseStatus } from "../../../utils/enum";
 import { IAdminDependencies } from "../../interface/admin/IAdminDependencies";
+import {
+  Role,
+  ResponseStatus
+} from "../../../utils/enum";
 
 const getEntityDataForAdminUsecase = (dependencies: IAdminDependencies) => {
   const { adminRepositories: { getEntityData } } = dependencies

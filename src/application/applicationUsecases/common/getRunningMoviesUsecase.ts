@@ -1,6 +1,5 @@
-
 import { ResponseStatus } from "../../../utils/enum";
-import { GetShowsParams, MovieFilter } from "../../../utils/interface";
+import { GetShowsParams } from "../../../utils/interface";
 import { ICommonDependencies } from "../../interface/common/ICommonDependencies";
 //use case for getting available movies in theater based on city
 const getRunningMoviesUsecase = (dependencies: ICommonDependencies) => {

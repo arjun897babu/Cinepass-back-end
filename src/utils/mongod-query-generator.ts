@@ -1,6 +1,7 @@
 import { Period } from "./enum";
+import { RevenueDetails } from "./interface";
 
-function generateRevenueFilterQuery(period:Period) {
+function generateRevenueFilterQuery(period: Period) {
   switch (period) {
     case 'week':
       return {
@@ -9,12 +10,12 @@ function generateRevenueFilterQuery(period:Period) {
             input: { $range: [1, 8] },
             as: 'day',
             in: {
-              k: { $toString: '$$day' }, 
+              k: { $toString: '$$day' },
               v: {
                 $sum: {
                   $cond: [
                     { $eq: ['$_id.period', '$$day'] },
-                    '$total', 
+                    '$total',
                     0
                   ]
                 }
@@ -28,7 +29,7 @@ function generateRevenueFilterQuery(period:Period) {
       return {
         $arrayToObject: {
           $map: {
-            input: { $range: [1, 32] }, 
+            input: { $range: [1, 32] },
             as: 'day',
             in: {
               k: { $toString: '$$day' },
@@ -96,7 +97,37 @@ function generatePeriodQuery(period: Period) {
 }
 
 
+function mergeRevenueData(revenue: RevenueDetails[]): RevenueDetails {
+  return revenue.reduce((acc: RevenueDetails, current: RevenueDetails) => {
+    acc.name = current.name;
+    acc.id = current.id;
+    if (!acc.data) {
+      acc.data = {};
+    }
+
+    for (const key in current.data) {
+      if (current.data.hasOwnProperty(key)) {
+        acc.data[key] = (acc.data[key] || 0) + current.data[key];
+      }
+    }
+
+    return acc;
+  }, { id: '', name: '', data: {} } as RevenueDetails);
+}
+
+
+function getDefaultData(period: Period) {
+  const length = period === Period.YEAR ? 12 : period === Period.MONTH ? 31 : 7
+  const defaultData = {}
+  for (let i = 0; i <= length; i++) {
+    Object.assign(defaultData, { [i + 1]: 0 })
+  }
+  return defaultData
+}
+
 export {
+  mergeRevenueData,
+  getDefaultData,
   generateRevenueFilterQuery,
   generatePeriodQuery
 }

@@ -1,12 +1,14 @@
 import { IResponse } from "../../../domain/domainUsecases"
 import { ResponseStatus } from "../../../utils/enum";
 import { UserEntity } from "../../../domain/entities/user/IUserEntity"
-import { OTPTemplate, sendMail } from "../../../infrastructure/nodeMailer"
 import { hashPassword } from "../../../utils/bcrypt"
 import { CustomError } from "../../../utils/CustomError"
-import { AuthSource } from "../../../utils/enum"
-import { generateOTP } from "../../../utils/OTPGenarator"
+ import { generateOTP } from "../../../utils/OTPGenarator"
 import { IDependencies } from "../../interface/user/IDependencies"
+import {
+  OTPTemplate,
+  sendMail
+} from "../../../infrastructure/nodeMailer"
 
 const signupUseCase = (dependencies: IDependencies) => {
   const { repositories: { signUp, findByEmail, createOTP } } = dependencies

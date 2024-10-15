@@ -1,4 +1,4 @@
-import { ResponseStatus, Role } from "../../../utils/enum";
+import { ResponseStatus } from "../../../utils/enum";
 import { GetShowsParams } from "../../../utils/interface";
 import { ICommonDependencies } from "../../interface/common/ICommonDependencies";
 

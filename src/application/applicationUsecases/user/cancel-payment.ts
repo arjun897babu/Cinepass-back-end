@@ -1,5 +1,5 @@
 import { cancelPaymentIntent } from "../../../infrastructure/stripe";
-import { HttpStatusCode, ResponseStatus } from "../../../utils/enum";
+import { ResponseStatus } from "../../../utils/enum";
 import { IDependencies } from "../../interface/user/IDependencies";
 
 const cancelPayments = (dependencies: IDependencies) => {

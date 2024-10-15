@@ -1,7 +1,10 @@
-import { IManageEntity, IResponse } from "../../../domain/domainUsecases";
- import { CustomError } from "../../../utils/CustomError";
+import { CustomError } from "../../../utils/CustomError";
 import { ResponseStatus } from "../../../utils/enum";
 import { IAdminDependencies } from "../../interface/admin/IAdminDependencies";
+import {
+  IManageEntity,
+  IResponse
+} from "../../../domain/domainUsecases";
 
 const manageEntityUsecase = (dependencies: IAdminDependencies) => {
   const { adminRepositories: { updateBlockStatus } } = dependencies

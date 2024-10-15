@@ -1,8 +1,15 @@
-import { promises, unlink } from "fs";
+import { unlink } from "fs";
 import { IMovie } from "../../../domain/entities/admin/ITheaterMovie";
-import { ImageUploadResult, uploadVideo } from "../../../infrastructure/cloudinary";
-import { MovieType, ResponseStatus, Role } from "../../../utils/enum";
 import { IAdminDependencies } from "../../interface/admin/IAdminDependencies";
+import {
+  ImageUploadResult,
+  uploadVideo
+} from "../../../infrastructure/cloudinary";
+import {
+  MovieType,
+  ResponseStatus,
+  Role
+} from "../../../utils/enum";
 
 const addMovieUsecase = (dependencies: IAdminDependencies) => {
   const { adminRepositories: { addMovie } } = dependencies
@@ -12,11 +19,11 @@ const addMovieUsecase = (dependencies: IAdminDependencies) => {
       try {
         console.log('filepath:', filePath)
         if (movieType === MovieType.STREAM && filePath) {
- 
+
           const response = await uploadVideo(filePath, Role.admin)
 
           // console.log('in add movie use case admin side', response)
-          
+
           unlink(filePath, (err) => {
             if (err) {
               console.log('error while deleting the file form the server:', err)

@@ -1,17 +1,23 @@
-import { log } from "node:console";
-import { ITheaterTicketDataResponse, IUserTicketDataResponse } from "../../../domain/domainUsecases/common";
-import { CustomError } from "../../../utils/CustomError";
-import { HttpStatusCode, ResponseStatus, Role } from "../../../utils/enum";
 import { TicketFilter } from "../../../utils/interface";
 import { ICommonDependencies } from "../../interface/common/ICommonDependencies";
+import { CustomError } from "../../../utils/CustomError";
+import {
+  HttpStatusCode,
+  ResponseStatus,
+  Role
+} from "../../../utils/enum";
+import {
+  ITheaterTicketDataResponse,
+  IUserTicketDataResponse
+} from "../../../domain/domainUsecases/common";
 
 const getTicketDataUsecase = (dependencies: ICommonDependencies) => {
-   const { theaterRepositories: { getTheaterTicketData } } = dependencies
+  const { theaterRepositories: { getTheaterTicketData } } = dependencies
   const { userRepositories: { getTicketData } } = dependencies
   return {
     execute: async (role: Role, _id: string, pageNumber: number, filer?: TicketFilter) => {
       try {
-        
+
         let data
 
         if (role === Role.users) {
@@ -22,14 +28,14 @@ const getTicketDataUsecase = (dependencies: ICommonDependencies) => {
 
         if (!data) {
           throw new CustomError('Tickets not booked yet', HttpStatusCode.NOT_FOUND, 'tickets')
-        }  
+        }
 
         return {
           status: ResponseStatus.SUCCESS,
           message: 'Ticket data fetched successfully',
           data
         }
-        
+
       } catch (error) {
         throw error
       }

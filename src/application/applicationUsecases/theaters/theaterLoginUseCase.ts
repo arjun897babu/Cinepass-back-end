@@ -1,12 +1,22 @@
 import { config } from "../../../config/envConfig"
-import { ILogin, LoginResponse } from "../../../domain/domainUsecases"
- import { OTPTemplate, sendMail } from "../../../infrastructure/nodeMailer"
 import { comparePassword } from "../../../utils/bcrypt"
 import { CustomError } from "../../../utils/CustomError"
- import { generateToken } from "../../../utils/jwtHandler"
+import { generateToken } from "../../../utils/jwtHandler"
 import { generateOTP } from "../../../utils/OTPGenarator"
 import { ITheaterDependencies } from "../../interface/theaters/ITheaterDependencies"
-import { ApprovalStatus, ResponseStatus, Role } from "../../../utils/enum";
+import {
+  ApprovalStatus,
+  ResponseStatus,
+  Role
+} from "../../../utils/enum";
+import {
+  ILogin,
+  LoginResponse
+} from "../../../domain/domainUsecases"
+import {
+  OTPTemplate,
+  sendMail
+} from "../../../infrastructure/nodeMailer"
 
 
 

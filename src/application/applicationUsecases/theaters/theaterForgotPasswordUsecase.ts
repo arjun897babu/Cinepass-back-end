@@ -1,10 +1,17 @@
 import { config } from "../../../config/envConfig";
 import { IResponse } from "../../../domain/domainUsecases";
- import { resetPasswordTemplate, sendMail } from "../../../infrastructure/nodeMailer";
 import { CustomError } from "../../../utils/CustomError";
-import { ApprovalStatus, ResponseStatus, Role } from "../../../utils/enum";
-import { generateToken } from "../../../utils/jwtHandler";
 import { ITheaterDependencies } from "../../interface/theaters/ITheaterDependencies";
+import { generateToken } from "../../../utils/jwtHandler";
+import {
+  resetPasswordTemplate,
+  sendMail
+} from "../../../infrastructure/nodeMailer";
+import {
+  ApprovalStatus,
+  ResponseStatus,
+  Role
+} from "../../../utils/enum";
 
 const theaterForgotPasswordUsecase = (dependencies: ITheaterDependencies) => {
   const { theaterRepositories: { findTheaterOwnerByEmail } } = dependencies
@@ -33,7 +40,7 @@ const theaterForgotPasswordUsecase = (dependencies: ITheaterDependencies) => {
         if (!existingTheaterOwner.status) {
           throw new CustomError('Your account is blocked', 403, 'blocked')
         }
-      
+
 
         const token = generateToken({ _id, role: Role.theaters }, config.secrets.short_lived_access_token, '5m')
         const link = `${config.http.origin}/${Role.theaters}/reset-password/${token}`;

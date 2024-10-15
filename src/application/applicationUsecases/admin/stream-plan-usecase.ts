@@ -1,7 +1,11 @@
 import { CustomError } from "../../../utils/CustomError";
-import { HTTPActions, HttpStatusCode, ResponseStatus } from "../../../utils/enum"
 import { IStreamPlanProps } from "../../../utils/interface"
 import { IAdminDependencies } from "../../interface/admin/IAdminDependencies"
+import {
+  HTTPActions,
+  HttpStatusCode,
+  ResponseStatus
+} from "../../../utils/enum"
 
 const streamPlanUsecase = (dependencies: IAdminDependencies) => {
   const { adminRepositories: { addStreamPlan, editStreamPlan, getStreamPlan, isPlanExists, deleteStreamPlan } } = dependencies
@@ -12,12 +16,12 @@ const streamPlanUsecase = (dependencies: IAdminDependencies) => {
       try {
 
         if (
-           (
+          (
             streamPlanProps.action === HTTPActions.add
             || streamPlanProps.action === HTTPActions.edit
           )
           && streamPlanProps.data) {
-          const isExists = await isPlanExists(streamPlanProps.data.planName,streamPlanProps.planId)
+          const isExists = await isPlanExists(streamPlanProps.data.planName, streamPlanProps.planId)
           if (isExists) {
             throw new CustomError('Plan already exists', HttpStatusCode.BAD_REQUEST, 'planName')
           }
@@ -31,7 +35,7 @@ const streamPlanUsecase = (dependencies: IAdminDependencies) => {
         ) {
           response = await addStreamPlan(streamPlanProps.data)
         }
-         
+
         else if (
           streamPlanProps.action === HTTPActions.edit
           && streamPlanProps.data

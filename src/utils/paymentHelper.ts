@@ -71,6 +71,7 @@ function generatePaymentData(
         movie_poster: movieDetails.movie_poster,
         release_date: movieDetails.release_date
       }
+      paymentData.serviceCharge = 0
     }
   }
 
@@ -89,7 +90,7 @@ function generateTicketData(metaData: Stripe.Metadata, paymentIntentId: string):
     userId: metaData.userId,
     theaterId: metaData.theaterId,
     showId: metaData.showId,
-    screenId:metaData.screenId,
+    screenId: metaData.screenId,
     seats: generateReservedSeats(metaData.seats!),
     bookingDate: new Date(metaData.bookingDate),
     paymentId: paymentIntentId,

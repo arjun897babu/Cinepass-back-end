@@ -1,4 +1,5 @@
- import { ResponseStatus } from "../../../utils/enum";
+import { ResponseStatus } from "../../../utils/enum";
+import { RevenueByFilter } from "../../../utils/interface";
 import { IAdminDependencies } from "../../interface/admin/IAdminDependencies";
 import { IDependencies } from "../../interface/user/IDependencies";
 
@@ -25,13 +26,19 @@ const entityStat = (dependencies: IAdminDependencies) => {
   }
 }
 
-const streamingMovieStat = (dependencies: IDependencies) => {
-  const { repositories: { } } = dependencies
+const streamingMovieStat = (dependencies: IAdminDependencies) => {
+  const { adminRepositories: { getRevenueByStreamingMovie } } = dependencies
 
   return {
-    execute: async () => {
+    execute: async (filter: RevenueByFilter) => {
       try {
+        const streamingRevenue = await getRevenueByStreamingMovie(filter)
 
+        return {
+          status: ResponseStatus.SUCCESS,
+          message: 'Data fetched successfully',
+          data: streamingRevenue
+        }
       } catch (error) {
         throw error
       }
@@ -39,7 +46,7 @@ const streamingMovieStat = (dependencies: IDependencies) => {
   }
 }
 
-const theaterMovieStat = (dependencies: IDependencies) => {
+const theaterMovieStat = (dependencies: IAdminDependencies) => {
   const { } = dependencies
 
   return {

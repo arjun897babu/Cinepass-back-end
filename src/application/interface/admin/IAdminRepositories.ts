@@ -2,7 +2,7 @@ import { IManageEntity, IUpdateApproval } from "../../../domain/domainUsecases";
 import { AdminEntity } from "../../../domain/entities/admin/IAdmin";
 import { ITheaterOwnerEntity, } from "../../../domain/entities/theaters";
 import { MovieType, Role } from "../../../utils/enum";
-import { ICityUpdate, IGetTheaterOwnersCount, IGetUserCount, IManageMovie, IRental, IStreamPlanFilter } from "../../../utils/interface";
+import { ICityUpdate, IGetTheaterOwnersCount, IGetUserCount, IManageMovie, IRental, IRevenueResponse, IStreamPlanFilter, RevenueByFilter } from "../../../utils/interface";
 import { IMovie } from "../../../domain/entities/admin/ITheaterMovie";
 import { EntityResponse } from "../../../domain/domainUsecases/admin/IGetEntityDataForAdmin";
 import { IStreamRentalPlan } from "../../../domain/entities/admin/IStreamRentalPlan";
@@ -23,7 +23,8 @@ interface IAdminRepositories {
   isPlanExists: (planName: string, planId?: string) => Promise<boolean>
   deleteStreamPlan: (planId: string) => Promise<IStreamRentalPlan | null>
   getTheaterOwnersCount: () => Promise<IGetTheaterOwnersCount>
-  getUserCount: () => Promise<IGetUserCount>
+  getUserCount: () => Promise<IGetUserCount>;
+  getRevenueByStreamingMovie: (filter: RevenueByFilter) => Promise<IRevenueResponse>
 }
 
 export {

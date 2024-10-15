@@ -2,7 +2,7 @@ import { StreamingMovie } from "../../model/admin/streaming-movie"
 import { IStreamMovieFilter, StreamingMovieResponse } from "../../../../utils/interface";
 import { IStreamingMovieResponse } from "../../../../domain/domainUsecases/user";
 import { payments } from "../../model/user/payment-schema";
-import { PurchasedItem } from "../../../../utils/enum";
+import { PaymentStatus, PurchasedItem } from "../../../../utils/enum";
 import { ObjectId } from "mongoose";
 
 const getStreamingMovies = async (filter: Partial<IStreamMovieFilter>): Promise<IStreamingMovieResponse | null> => {
@@ -79,21 +79,29 @@ const getSingleStreamingMovie = async (movieId: string): Promise<StreamingMovieR
 const isUserRented = async (userId: string, movieId: ObjectId): Promise<boolean> => {
   try {
     const isRented = await payments.exists({
-      userId, purchasedItem: PurchasedItem.RENTAL, movieId,
-      $expr: {
-        $gte: [
-          {
-            $dateAdd: {
-              startDate: '$bookingDate',
-              unit: 'month',
-              amount: '$rentalPlan.validity',
-              timezone: 'Asia/Kolkata'
-            }
-          },
-          new Date()
-        ]
-      }
-    })
+      $and: [
+        { userId: userId },
+        { purchasedItem: PurchasedItem.RENTAL },
+        { movieId: movieId },
+        { status: PaymentStatus.PAID },
+        {
+          $expr: {
+            $gte: [
+              {
+                $dateAdd: {
+                  startDate: '$bookingDate', 
+                  unit: 'month',
+                  amount: '$rentalPlan.validity', 
+                  timezone: 'Asia/Kolkata'
+                }
+              },
+              new Date() 
+            ]
+          }
+        }
+      ]
+    });
+    
 
     return isRented ?
       true

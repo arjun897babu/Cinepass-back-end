@@ -24,7 +24,7 @@ const adminRoutes = (dependency: IAdminDependencies, commonDependencies: ICommon
     updateMovie,
     getStreamingPlan,
     getCountStatics,
-    getMovieStatics
+    getStreamStat
   } = adminController(dependency)
 
   const { getMovies } = commonController(commonDependencies)
@@ -79,8 +79,8 @@ const adminRoutes = (dependency: IAdminDependencies, commonDependencies: ICommon
     .route('/dashboard/statics')
     .get(verifyAdmin, getCountStatics)
   adminRouter
-    .route('/dashboard/movie')
-    .get(verifyAdmin, getMovieStatics)
+    .route('/dashboard/stream')
+    .get(verifyAdmin, getStreamStat)
 
   /*......................................... dashboard........................................... */
 

@@ -1,12 +1,15 @@
 
 import { IResponse } from "../../../domain/domainUsecases";
- import { ITheaterOwnerEntity } from "../../../domain/entities/theaters/ITheaterOwners";
-import { OTPTemplate, sendMail } from "../../../infrastructure/nodeMailer";
+import { ITheaterOwnerEntity } from "../../../domain/entities/theaters/ITheaterOwners";
 import { hashPassword } from "../../../utils/bcrypt";
 import { CustomError } from "../../../utils/CustomError";
 import { ResponseStatus } from "../../../utils/enum";
 import { generateOTP } from "../../../utils/OTPGenarator";
 import { ITheaterDependencies } from "../../interface/theaters/ITheaterDependencies";
+import {
+  OTPTemplate,
+  sendMail
+} from "../../../infrastructure/nodeMailer";
 
 const theaterSignupUseCase = (dependencies: ITheaterDependencies) => {
   const { theaterRepositories: { findTheaterOwnerByEmail, createTheaterOwner, createTheatersOTP } } = dependencies;

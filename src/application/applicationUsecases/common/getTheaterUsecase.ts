@@ -1,4 +1,3 @@
- 
 import { ResponseStatus } from "../../../utils/enum";
 import { ICommonDependencies } from "../../interface/common/ICommonDependencies";
 //theater details for theater owners and user return array of list
