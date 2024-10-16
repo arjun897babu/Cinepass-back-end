@@ -5,8 +5,9 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node dist/index.js",
-    "dev": "nodemon src/index.ts"
+    "start": "nodemon dist/index.js",
+    "dev": "nodemon src/index.ts",
+    "dev2": "tsc-watch --onSuccess \"npm start\" "
   },
   "keywords": [],
   "author": "",
@@ -29,7 +30,8 @@
     "nodemailer": "^6.9.14",
     "otp-generator": "^4.0.1",
     "slugify": "^1.6.6",
-    "stripe": "^16.10.0"
+    "stripe": "^16.10.0",
+    "tsc-watch": "^6.2.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

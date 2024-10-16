@@ -29,7 +29,6 @@ export const config = {
     cloud_api: envString('CLOUDINARY_API'),
     cloud_secret: envString('CLOUDINARY_SECRET'),
     cloud_name: envString('CLOUDINARY_CLOUD_NAME'),
-    cloud_preset: envString('CLOUDINARY_PRESET'),
   },
   stripe:{
     stripe_secret:envString('STRIPE_SECRET_KEY'),
