@@ -36,7 +36,7 @@ const getMovieStatics = (dependencies: IAdminDependencies) => {
 
       const period = validatePeriod(req.query.period)
       const response = await streamingMovieStat(dependencies).execute({ movieId, period })
-      console.log(response)
+
       return res.status(HttpStatusCode.OK).json({
         status: response.status,
         message: response.message,
