@@ -21,7 +21,7 @@ const stripeWebhookEvents = (dependencies: ICommonDependencies) => {
 
 
   return {
-    execute: async (payload: Buffer, signature: string) => {
+    execute: async (payload: Buffer, signature: string|string[]) => {
       try {
 
         const event = await constructWebhook(payload, signature)

@@ -28,7 +28,7 @@ const createPaymentIntent = async (totalAmount: number, metaData: IPaymentMetaDa
   }
 }
 
-const constructWebhook = async (payload: Buffer, signature: string) => {
+const constructWebhook = async (payload: Buffer, signature: string | string[] ) => {
   try {
     const event = stripe.webhooks.constructEvent(
       payload, signature,
@@ -61,7 +61,7 @@ const createRefund = async (paymentIntentId: string) => {
 
 const retrievePaymentIntent = async (paymentIntentId: string) => {
   try {
-    const {status,id,metadata} = await stripe.paymentIntents.retrieve(paymentIntentId)
+    const { status, id, metadata } = await stripe.paymentIntents.retrieve(paymentIntentId)
     return status
   } catch (error) {
     throw error
