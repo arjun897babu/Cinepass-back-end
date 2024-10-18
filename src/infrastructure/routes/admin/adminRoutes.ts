@@ -69,7 +69,7 @@ const adminRoutes = (dependency: IAdminDependencies, commonDependencies: ICommon
   adminRouter
     .route('/stream-plan/:planId')
     .put(verifyAdmin, editStreamingPlan)
-    .delete(verifyAdmin, deleteStreamingPlan)
+    .patch(verifyAdmin, deleteStreamingPlan)
   /*......................................... streaming-plan........................................... */
 
 

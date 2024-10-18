@@ -50,18 +50,18 @@ const editStreamPlan = (dependencies: IAdminDependencies) => {
 }
 
 const deleteStreamPlan = (dependencies: IAdminDependencies) => {
-  const { adminUsecase: { } } = dependencies
+  const { adminUsecase: { streamPlanUsecase } } = dependencies
 
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
 
       const { planId } = req.params
       mongodbIdValidator(planId)
+      const response = await streamPlanUsecase(dependencies).execute({ action: HTTPActions.delete, planId })
 
       return res.status(HttpStatusCode.OK).json({
-        status: 'success',
-        message: 'streaming plan deleted successfully',
-        data: null
+        status:response.status,
+        message: response.message,
       })
     } catch (error) {
       next(error)

@@ -1,7 +1,7 @@
-import express, { Router } from "express";
+import { Router } from "express";
 import { IDependencies } from "../../../application/interface/user/IDependencies";
 import { userController } from "../../../presentation/controller/user";
-import { isUserBlocked, verifyResetPasswordRequest, verifyUser } from "../middleware/userMiddleware";
+import {  verifyResetPasswordRequest, verifyUser } from "../middleware/userMiddleware";
 import { commonController } from "../../../presentation/controller/common";
 import { ICommonDependencies } from "../../../application/interface/common/ICommonDependencies";
 

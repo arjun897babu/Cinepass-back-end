@@ -9,7 +9,7 @@ export interface IGetStreamPlanResponse {
 }
 
 interface IStreamPlanResponse extends IResponse2 {
-  data: IStreamRentalPlan | IGetStreamPlanResponse
+  data: boolean | IStreamRentalPlan | IGetStreamPlanResponse
 }
 
 interface IStreamPlan {

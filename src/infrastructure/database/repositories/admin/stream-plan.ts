@@ -78,15 +78,15 @@ const getStreamPlan = async (filter: Partial<IStreamPlanFilter>): Promise<IGetSt
   }
 }
 
-const deleteStreamPlan = async (planId: string): Promise<IStreamRentalPlan | null> => {
+const deleteStreamPlan = async (planId: string): Promise<boolean> => {
   try {
     const updated = await StreamPlans.findByIdAndUpdate(
-      { _id: planId },
-      { listed: false }
-    ).select('-_id ')
-      .lean()
-    return updated ? updated : null
-
+      planId,
+      { listed: false },
+      { new: true }
+    ).select('_id ')
+      .lean() 
+    return updated ? true : false
   } catch (error) {
     throw error
   }

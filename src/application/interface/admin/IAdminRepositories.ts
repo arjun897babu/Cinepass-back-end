@@ -21,7 +21,7 @@ interface IAdminRepositories {
   editStreamPlan: (planId: string, data: Omit<IRental, 'listed'>) => Promise<IStreamRentalPlan | null>
   getStreamPlan: (filter: Partial<IStreamPlanFilter>) => Promise<IGetStreamPlanResponse | null>
   isPlanExists: (planName: string, planId?: string) => Promise<boolean>
-  deleteStreamPlan: (planId: string) => Promise<IStreamRentalPlan | null>
+  deleteStreamPlan: (planId: string) => Promise<boolean>
   getTheaterOwnersCount: () => Promise<IGetTheaterOwnersCount>
   getUserCount: () => Promise<IGetUserCount>;
   getRevenueByStreamingMovie: (filter: RevenueByFilter) => Promise<IRevenueResponse>
