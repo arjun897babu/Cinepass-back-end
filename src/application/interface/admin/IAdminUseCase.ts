@@ -3,6 +3,7 @@ import {
   IAdminLogin,
   IEntityStat,
   IGetEntityDataForAdmin,
+  IGetStreamingUrl,
   IManageEntityStatus,
   IManageMovieList,
   IStreamingMovieStat,
@@ -11,7 +12,7 @@ import {
   IUpdateTheaterApproval,
   IUpdateTheaterCity
 } from "../../../domain/domainUsecases/admin";
-import { IAdminDependencies } from "./IAdminDependencies";
+ import { IAdminDependencies } from "./IAdminDependencies";
 
 interface IAdminUsecase {
   adminLoginUseCase: (dependency: IAdminDependencies) => IAdminLogin;
@@ -25,6 +26,7 @@ interface IAdminUsecase {
   streamPlanUsecase: (dependencies: IAdminDependencies) => IStreamPlan
   entityStat: (dependencies: IAdminDependencies) => IEntityStat
   streamingMovieStat: (dependencies: IAdminDependencies) => IStreamingMovieStat
+  getStreamingUrl:(dependencies: IAdminDependencies) => IGetStreamingUrl
 }
 
 export {

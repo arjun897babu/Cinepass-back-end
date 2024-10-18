@@ -17,7 +17,6 @@ const addMovieUsecase = (dependencies: IAdminDependencies) => {
   return {
     execute: async (payload: IMovie, movieType: MovieType, filePath?: string) => {
       try {
-        console.log('filepath:', filePath)
         if (movieType === MovieType.STREAM && filePath) {
 
           const response = await uploadVideo(filePath, Role.admin)

@@ -13,7 +13,7 @@ const addMovie = (dependencies: IAdminDependencies) => {
       // Validate movieType
       validateMovieType(movieType)
       const filePath = req.file?.path
-      if (movieType === MovieType.STREAM && !req.file) {
+      if (movieType === MovieType.STREAM && !req.file ) {
         throw new CustomError('please upload a movie file', HttpStatusCode.BAD_REQUEST, 'file')
       }
 

@@ -51,8 +51,7 @@ const getHlsUrl = (dependencies: IDependencies) => {
   const { useCases: { streamMovies } } = dependencies
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-
-      console.log('reaching in purchase streaming controller')
+ 
       const { _id, role, movieId, publicId } = req.params
       const response = await streamMovies(dependencies).execute({ _id, movieId, publicId })
 

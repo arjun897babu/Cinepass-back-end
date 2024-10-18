@@ -7,7 +7,7 @@ interface IMovieResponse extends IResponse2{
 }
 
 interface IUpdateMovie{
-  execute:(movieId:string,payload: IMovie, movieType: MovieType)=>Promise<IMovieResponse>
+  execute:(movieId:string,payload: IMovie, movieType: MovieType, filePath?: string,publicId?:string)=>Promise<IMovieResponse>
 }
 
 

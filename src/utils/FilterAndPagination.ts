@@ -1,7 +1,8 @@
 import { ParsedQs } from 'qs'
 import { MovieFilter } from './interface';
-import { Formats, Genres, Languages, MovieFilterEnum, Period } from './enum';
+import { Formats, Genres, HttpStatusCode, Languages, MovieFilterEnum, Period } from './enum';
 import moment from 'moment';
+import { CustomError } from './CustomError';
 type IQueryParam = string | ParsedQs | string[] | ParsedQs[] | undefined;
 
 const getPageNumber = (query: IQueryParam): number => {
@@ -17,6 +18,13 @@ function convertBoolean(query: IQueryParam): boolean {
   }
   else {
     return true
+  }
+}
+const validatePublicId = (query: IQueryParam): string => {
+  if (typeof query === 'string') {
+    return query
+  } else {
+    throw new CustomError('something went wrong', HttpStatusCode.INTERNAL_SERVER_ERROR, 'file')
   }
 }
 
@@ -129,6 +137,7 @@ function generateRevenueFilterDate(period: Period) {
 
 
 export {
+  validatePublicId,
   generateRevenueFilterDate,
   convertBoolean,
   generateMovieFilterConditions,

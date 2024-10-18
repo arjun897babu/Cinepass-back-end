@@ -18,6 +18,7 @@ const adminRoutes = (dependency: IAdminDependencies, commonDependencies: ICommon
     updateTheaterCity,
     addMovie,
     deleteMovie,
+    getStreamingUrl,
     addStreamingPlan,
     editStreamingPlan,
     deleteStreamingPlan,
@@ -56,7 +57,10 @@ const adminRoutes = (dependency: IAdminDependencies, commonDependencies: ICommon
   adminRouter
     .route('/movie/:movieType/:movieId')
     .patch(verifyAdmin, deleteMovie)//un listing movie 
-    .put(verifyAdmin, updateMovie)//updating  a existing movies
+    .put(verifyAdmin,upload.single('file'), updateMovie)//updating  a existing movies
+    adminRouter
+    .route('/stream/:publicId')
+    .get(verifyAdmin,getStreamingUrl)
 
   /*......................................... Movies........................................... */
 

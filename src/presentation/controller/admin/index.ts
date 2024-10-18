@@ -10,6 +10,7 @@ import { deleteMovie } from "./deleteMovie"
 import { updateMovie } from "./updateMovieController"
 import { addStreamPlan, deleteStreamPlan, editStreamPlan, getStreamPlan } from "./stream-plan-controller"
 import { getCountStatics, getMovieStatics } from "./dashboard-admin"
+import { getStreamingUrl } from "./get-streaming-url"
 
 const adminController = (dependencies: IAdminDependencies) => {
   return {
@@ -27,7 +28,8 @@ const adminController = (dependencies: IAdminDependencies) => {
     deleteStreamingPlan: deleteStreamPlan(dependencies),
     getStreamingPlan: getStreamPlan(dependencies),
     getCountStatics: getCountStatics(dependencies),
-    getStreamStat: getMovieStatics(dependencies)
+    getStreamStat: getMovieStatics(dependencies),
+    getStreamingUrl:getStreamingUrl(dependencies)
   }
 }
 

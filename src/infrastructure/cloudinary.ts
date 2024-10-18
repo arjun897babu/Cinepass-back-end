@@ -67,9 +67,25 @@ const uploadVideo = async (videoPath: string, folder: Role): Promise<ImageUpload
   }
 };
 
+const deleteVideo = async (publicId: string) => {
+  try {
+    const response = await v2.uploader.destroy(publicId, { resource_type: 'video' });
 
-const getHlsUrl =  (publicId: string, movieId: string, _id: string): IHlsUrlResponse => {
-  const hlsURL =  v2.url(publicId, {
+    if (response.result === 'ok') {
+      return true
+    } else {
+      throw new CustomError('Failed to delete video', HttpStatusCode.INTERNAL_SERVER_ERROR, 'file')
+    }
+
+   
+  } catch (error) {
+   
+    throw error;
+  }
+};
+
+const getHlsUrl = (publicId: string, movieId?: string, id?: string,): IHlsUrlResponse => {
+  const hlsURL = v2.url(publicId, {
     resource_type: 'video',
     format: 'm3u8',
   })
@@ -82,6 +98,7 @@ const getHlsUrl =  (publicId: string, movieId: string, _id: string): IHlsUrlResp
 export {
   getHlsUrl,
   uploadVideo,
+  deleteVideo,
   uploadImage,
   uploadImage2
 }
