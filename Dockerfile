@@ -8,6 +8,8 @@ RUN npm install
 
 COPY . .
 
+RUN mkdir -p /server/uploads
+
 EXPOSE 3001
 
 CMD [ "npm","run","dev2" ]
