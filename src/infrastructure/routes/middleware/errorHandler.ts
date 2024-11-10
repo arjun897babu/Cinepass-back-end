@@ -3,13 +3,16 @@ import { CustomError } from "../../../utils/CustomError";
 
 import { Request, Response, NextFunction } from "express";
 import { HttpStatusCode } from "../../../utils/enum";
+import { MulterRequest } from "../../../utils/interface";
+import { removeFiles } from "../../../utils/remove-file";
 
 
 const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
   console.log('reaching the error handler')
-
+  const filePath = (req as MulterRequest)?.movieFile
   if (err instanceof MulterError) {
     if (err.code === 'LIMIT_FILE_SIZE') {
+      removeFiles(filePath)
       return res.status(HttpStatusCode.CONTENT_TOO_LARGE).json({
         status: "Error",
         message: 'Size is too large',

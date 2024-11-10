@@ -4,6 +4,7 @@ import { IMovieShow, ITheaterOwnerEntity, ITheaterScreen } from "../domain/entit
 import { BookingStatus, HTTPActions, MovieType, Period, PurchasedItem, Role } from "./enum"
 import { ITickets } from "../domain/entities/user/ITickets";
 import { ImageUploadResult } from "../infrastructure/cloudinary";
+import { Request } from "express";
 
 
 type IGetScreenCount = {
@@ -238,7 +239,13 @@ interface IRevenueResponse {
   revenue: RevenueDetails
 }
 
+interface MulterRequest extends Request{
+  file?:Express.Multer.File
+  movieFile?:string
+}
+
 export {
+  MulterRequest,
   IRevenueResponse,
   RevenueData,
   RevenueDetails,

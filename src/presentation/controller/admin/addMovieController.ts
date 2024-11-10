@@ -3,6 +3,7 @@ import { IAdminDependencies } from "../../../application/interface/admin/IAdminD
 import { HttpStatusCode, MovieType } from "../../../utils/enum";
 import { validateMovieType } from "../../../utils/validator";
 import { CustomError } from "../../../utils/CustomError";
+import { MulterRequest } from "../../../utils/interface";
 
 const addMovie = (dependencies: IAdminDependencies) => {
   const { adminUsecase: { addMovieUsecase } } = dependencies
@@ -18,6 +19,7 @@ const addMovie = (dependencies: IAdminDependencies) => {
       }
 
       const payload = req.body;
+      (req as MulterRequest).movieFile = filePath
 
       const response = await addMovieUsecase(dependencies).execute(payload, movieType as MovieType, filePath)
 

@@ -1,4 +1,3 @@
-import { unlink } from "fs";
 import { IMovie } from "../../../domain/entities/admin/ITheaterMovie";
 import { IAdminDependencies } from "../../interface/admin/IAdminDependencies";
 import {
@@ -10,6 +9,7 @@ import {
   ResponseStatus,
   Role
 } from "../../../utils/enum";
+import { removeFiles } from "../../../utils/remove-file";
 
 const addMovieUsecase = (dependencies: IAdminDependencies) => {
   const { adminRepositories: { addMovie } } = dependencies
@@ -23,11 +23,7 @@ const addMovieUsecase = (dependencies: IAdminDependencies) => {
 
           // console.log('in add movie use case admin side', response)
 
-          unlink(filePath, (err) => {
-            if (err) {
-              console.log('error while deleting the file form the server:', err)
-            }
-          })
+          removeFiles(filePath)
 
           payload.file = {
             public_id: response.public_id,
