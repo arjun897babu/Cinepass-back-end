@@ -33,10 +33,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create PEM file from secret
-        run: echo "${{ secrets.SSH_PRIVATE_KEY }}" > cinepass.pem
+        run: echo "${{ secrets.SSH_PRIVATE_KEY }}" > cinepass-server.pem
 
       - name: Set permissions for PEM file
-        run: chmod 600 cinepass.pem
+        run: chmod 600 cinepass-server.pem
         
       - name: Pull Docker image and run container
         run: |
@@ -49,4 +49,4 @@ jobs:
           EOF
       
       - name: Cleanup PEM file
-        run: rm cinepass.pem
+        run: rm cinepass-server.pem
