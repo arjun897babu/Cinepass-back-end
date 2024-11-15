@@ -20,7 +20,9 @@ export const config = {
   },
   app: {
     email: envString('CINEPASS_AUTH_EMAIL'),
-    password: envString('CINEPASS_AUTH_PASSWORD')
+    password: envString('CINEPASS_AUTH_PASSWORD'),
+    node_env:envString('NODE_ENV'),
+    email_service:envString('EMAIL_SERVICE')
   },
   google: {
     client_id: envString('CLIENT_ID')

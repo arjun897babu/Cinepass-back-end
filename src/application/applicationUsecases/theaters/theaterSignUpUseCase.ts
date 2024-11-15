@@ -24,7 +24,7 @@ const theaterSignupUseCase = (dependencies: ITheaterDependencies) => {
         const hashedPassword = await hashPassword(data.password);
         const OTP = generateOTP();
         await createTheatersOTP(data.email, OTP)
-        sendMail(data.email, 'OTP Verification', OTPTemplate(OTP));
+        await sendMail(data.email, 'OTP Verification', OTPTemplate(OTP));
         data.password = hashedPassword
         await createTheaterOwner(data);
         return {

@@ -25,7 +25,8 @@ const signupUseCase = (dependencies: IDependencies) => {
 
         await createOTP(data.email, OTP)
 
-        sendMail(data.email, 'OTP verification', OTPTemplate(OTP));
+        await sendMail(data.email, 'OTP verification', OTPTemplate(OTP))
+
         await signUp({ ...data, password: hashedPassword });
 
         return {
