@@ -35,8 +35,8 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: '${{ secrets.DIGITAL_IP4_ADDRESS }}'
-          username: root
-          key: cinepass-server
+          username: "root"
+          key: "cinepass-server"
           passphrase: '${{ secrets.DIGITAL_OCEAN_PASSPHRASE }}'
           script: >
 
