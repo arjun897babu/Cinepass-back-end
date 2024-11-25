@@ -42,7 +42,7 @@ jobs:
         with:
           host: ${{ secrets.DIGITAL_IP4_ADDRESS }}
           username: root
-          key: ${{ github.workspace }}/cinepass-server  # Reference the key file correctly
+          key: cinepass-server
           passphrase: ${{ secrets.DIGITAL_OCEAN_PASSPHRASE }}
           script: |
             docker stop cinepass-server || true
