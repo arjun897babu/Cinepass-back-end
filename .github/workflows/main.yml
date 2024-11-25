@@ -31,14 +31,6 @@ jobs:
         run: 'echo "${{ secrets.SSH_PRIVATE_KEY }}" > cinepass-server.key'
       - name: Set Permissions for Private Key
         run: chmod 600 cinepass-server.key
-      - name: Add Public Key to Authorized Keys on Server
-        run: >
-          echo ssh-ed25519
-          AAAAC3NzaC1lZDI1NTE5AAAAIFP3stIr7NKBKfSAiApTvVsj/Up/QJmK9Tc5vEvLIwa8
-          user@DESKTOP-TEKL851 | ssh -i cinepass-server.key -o
-          StrictHostKeyChecking=no root@${{ secrets.DIGITAL_IP4_ADDRESS }}
-          'mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600
-          ~/.ssh/authorized_keys'
       - name: Deploy to DigitalOcean droplet via SSH
         uses: appleboy/ssh-action@v0.1.3
         with:
