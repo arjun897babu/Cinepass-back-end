@@ -28,9 +28,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create Private Key for SSH
-        run: 'echo "${{ secrets.SSH_PRIVATE_KEY }}" > cinepass-server.key'
+        run: 'echo "${{ secrets.SSH_PRIVATE_KEY }}" > cinepass-server'
       - name: Set Permissions for Private Key
-        run: chmod 600 cinepass-server.key
+        run: chmod 600 cinepass-server
       - name: Deploy to DigitalOcean droplet via SSH
         uses: appleboy/ssh-action@v0.1.3
         with:
@@ -48,4 +48,4 @@ jobs:
             docker run -d --name cinepass-server -p 3001:3001 --env-file .env
             arjunkan22/cinepass-server
       - name: Cleanup Private Key
-        run: rm cinepass-server.key
+        run: rm cinepass-server
