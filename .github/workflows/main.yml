@@ -43,13 +43,12 @@ jobs:
       - name: Deploy to DigitalOcean droplet via SSH
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.DIGITAL_IP4_ADDRESS }}  # Droplet IP address
-          username: root  # Root user (or appropriate user with Docker permissions)
-          key: cinepass-server  # Private key file created earlier
-          passphrase: ${{ secrets.DIGITAL_OCEAN_PASSPHRASE }}  # Optional if the private key requires a passphrase
+          host: ${{ secrets.DIGITAL_IP4_ADDRESS }}
+          username: root
+          key: cinepass-server
+          passphrase: ${{ secrets.DIGITAL_OCEAN_PASSPHRASE }}
           script: |
-
-            # Stop and remove the existing Docker container
+            # Stop and remove the existing Docker container if running
             docker stop cinepass-server || true
             docker rm cinepass-server || true
 
