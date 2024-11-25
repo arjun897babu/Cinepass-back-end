@@ -1,4 +1,4 @@
-name: CI/CD Build Docker Image, Push to Docker Hub, and Deploy to AWS EC2
+name: CI/CD Build Docker Image, Push to Docker Hub, and Deploy to DigitalOcean Droplet
 
 on:
   push:
@@ -9,7 +9,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -32,21 +31,31 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Create PEM file from secret
-        run: echo "${{ secrets.SSH_PRIVATE_KEY }}" > cinepass-server.pem
+      - name: Create Private Key for SSH
+        run: echo "${{ secrets.SSH_PRIVATE_KEY }}" > cinepass-server.key
 
-      - name: Set permissions for PEM file
-        run: chmod 600 cinepass-server.pem
+      - name: Set Permissions for Private Key
+        run: chmod 600 cinepass-server.key
         
-      - name: Pull Docker image and run container
+      - name: Deploy to DigitalOcean Droplet
         run: |
-          ssh -i "cinepass-server.pem" -o StrictHostKeyChecking=no ubuntu@ec2-15-206-90-84.ap-south-1.compute.amazonaws.com << 'EOF'
+          ssh -i "cinepass-server.key" -o StrictHostKeyChecking=no root@165.22.208.1 << 'EOF'
+            # Ensure the public key is authorized on the server (if not already)
+            echo "${{ secrets.SSH_PUBLIC_KEY }}" >> ~/.ssh/authorized_keys
+            
+            # Stop and remove existing container (if any)
             sudo docker stop cinepass-server || true
             sudo docker rm cinepass-server || true
+            
+            # Remove old image
             sudo docker rmi arjunkan22/cinepass-server:latest || true
+            
+            # Pull the latest Docker image
             sudo docker pull arjunkan22/cinepass-server:latest
+            
+            # Run the container
             sudo docker run -d --name cinepass-server -p 3001:3001 --env-file .env arjunkan22/cinepass-server
           EOF
       
-      - name: Cleanup PEM file
-        run: rm cinepass-server.pem
+      - name: Cleanup Private Key
+        run: rm cinepass-server.key
