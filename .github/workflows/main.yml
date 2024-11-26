@@ -35,26 +35,21 @@ jobs:
           key: '${{ secrets.SSH_PRIVATE_KEY }}'
           passphrase: '${{ secrets.DIGITAL_OCEAN_PASSPHRASE }}'
           script: |
+
             # Stop and remove the existing Docker container if running
-
             docker stop cinepass-server || true
-
             docker rm cinepass-server || true
 
 
             # Remove the old Docker image
-
             docker rmi arjunkan22/cinepass-server:latest || true
 
-
             # Pull the latest Docker image from Docker Hub
-
             docker pull arjunkan22/cinepass-server:latest
 
 
             # Run the container with the latest image
-
-            docker run -d --name cinepass-server -p 3001:3001 --env-file .env
-            arjunkan22/cinepass-server
+            docker run -d --name cinepass-server -p 3001:3001 --env-file .env arjunkan22/cinepass-server
+            
       - name: Cleanup Private Key
         run: rm cinepass-server
