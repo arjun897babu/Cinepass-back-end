@@ -50,6 +50,3 @@ jobs:
 
             # Run the container with the latest image
             docker run -d --name cinepass-server -p 3001:3001 --env-file .env arjunkan22/cinepass-server
-            
-      - name: Cleanup Private Key
-        run: rm cinepass-server
