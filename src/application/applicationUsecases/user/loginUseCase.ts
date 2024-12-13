@@ -45,14 +45,7 @@ const loginUseCase = (dependencies: IDependencies) => {
         const { googleId, password, ...rest } = existingUser;
 
         if (rest.isGoogleAuth) {
-          const accessToken = generateToken({ _id: rest._id!.toString(), role: Role.users }, config.secrets.access_token, '1h');
-          return {
-            status: ResponseStatus.SUCCESS,
-            message: 'User Logged successfully',
-            accessToken,
-            redirectURL: '/',
-            data: { user: rest },
-          };
+          throw new CustomError('Please use google login',400,'google')
         }
 
         const comparedPassword = await comparePassword(userPassword, password as string);

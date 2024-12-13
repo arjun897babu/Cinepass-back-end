@@ -44,6 +44,7 @@ const theaterForgotPasswordUsecase = (dependencies: ITheaterDependencies) => {
 
         const token = generateToken({ _id, role: Role.theaters }, config.secrets.short_lived_access_token, '5m')
         const link = `${config.http.origin}/${Role.theaters}/reset-password/${token}`;
+        console.log(link)
         sendMail(email, 'Reset Password', resetPasswordTemplate(link))
         return {
           status: ResponseStatus.SUCCESS,
